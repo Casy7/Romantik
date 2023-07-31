@@ -3,7 +3,8 @@
 
 <head>
   {% load static %} {%csrf_token%}
-  <link crossorigin="anonymous" href="{% static 'libs/modules/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+  <link crossorigin="anonymous" href="{% static 'libs/modules/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet"
+    type="text/css">
   <script crossorigin="anonymous" src="{% static 'libs/modules/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
 
 
@@ -96,6 +97,13 @@
 
     .roboto {
       font-family: "Roboto", "Roboto-medium", Tahoma;
+    }
+
+    .page-content {
+
+      background-image: url("{% static 'images/background.png' %}");
+
+
     }
   </style>
   <link rel="stylesheet" href="{% static 'css/base.css'%}">
