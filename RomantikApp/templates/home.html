@@ -3,57 +3,13 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/form.css' %}" />
 <link rel="stylesheet" href="{% static 'css/home.css' %}" />
-<link href="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css" rel="stylesheet">
-<script src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"></script>
+
 <div class="main-container">
     {%csrf_token%}
 
     <div class="card-body">
-        <h1>Добро пожаловать в BlackRock Rent!</h1>
-        <p>Мы предоставляем снаряжение для всех видов спортивного туризма. </p>
-        <div class="row">
-            <div class="col">
-                <p class="right">Наша команда ежедневно проводит ремонт и обслуживание снаряжения, и мы гарантируем
-                    качество и надёжность каждой
-                    его единицы.
-                </p>
-                <p class="right">
-                    Вы можете выбрать всё: от походной посуды до ледорубов и крючьев. Вы можете полностью укомплектовать
-                    группу и подготовиться
-                    к восхождению на самые сложные вершины с помощью нашей компании. Инструктора помогут подобрать и
-                    настроить снаряжение лично под вас.
-                </p>
-            </div>
-            <div class="col">
-                <img src="{% static 'images/home/equipment.bmp' %}" alt="">
-            </div>
-        </div>
-        <p>Вы можете заказать всё что вам необходимо на сайте или позвонив по номеру [Данные удалены], и к моменту вашего прибытия
-            снаряжение будет подготовлено.
-        </p>
+        <h1>Майже офіційний сайт туристичного клубу "Романтик"</h1>
 
-        <div class="row">
-            <div class="col">
-                <div id="map"></div>
-                <script src="{% static 'js/home.js' %}"></script>
-
-            </div>
-            <div class="col">
-                <p class="left">Наш штаб находится на улице ДефолтНеймовская д.2. Мы открыты с 9:00 до 19:00 третьего
-                    числа
-                    каждого месяца Синей луны по альтмерскому календарю, когда над морем восходит созвездие льва. Но
-                    сделать заказ вы можете в любое время!
-                </p>
-                <p class="left">
-                    Для этого просто нажмите на кнопку ниже:
-                </p>
-                <a href="/new_rent_accounting">
-                    <button class="btn btn-danger big-red-fucking-button">Заказать снаряжение!</button>
-                </a>
-
-            </div>
-
-        </div>
 
     </div>
 </div>
