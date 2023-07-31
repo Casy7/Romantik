@@ -3,17 +3,16 @@
 
 <head>
   {% load static %} {%csrf_token%}
-  <link crossorigin="anonymous" href="{% static 'libs/modules/bootstrap/dist/css/bootstrap.min.css' %}"
-    rel="stylesheet">
+  <link crossorigin="anonymous" href="{% static 'libs/modules/bootstrap/dist/css/bootstrap.min.css' %}"  rel="stylesheet" type="text/css">
   <script crossorigin="anonymous" src="{% static 'libs/modules/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
 
 
 
   <!-- TITLE AND PROPERTIES -->
   {% if title != 'none' %}
-  <title>BR: {{ title }}</title>
+  <title>Rm: {{ title }}</title>
   {% else %}
-  <title>BlackRock</title>
+  <title>Romantik</title>
   {% endif %}
 
   <!-- META CLASSES -->
@@ -100,7 +99,7 @@
     }
   </style>
   <link href="{% static 'css/base.css'%}" rel="stylesheet">
-  <link href="{% static 'libs/modules/multiselect/jquery.tree-multiselect.css'%}" rel="stylesheet">
+  <link href="{% static 'libs/modules/multiselect/jquery.tree-multiselect.css'%}" rel="stylesheet" type="text/css">
   <script src="{% static 'libs/modules/jquery/jquery.js' %}" type="text/javascript"></script>
 </head>
 
