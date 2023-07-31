@@ -1,0 +1,169 @@
+body {
+    background-color: #1b1f22;
+    margin-top: 54px;
+
+    /* background: linear-gradient(90deg, rgb(128, 75, 59) 0%, rgb(33, 37, 41) 15%, rgb(33, 37, 41) 85%, rgb(125, 64, 41) 100%); */
+    background-color: #19191c;
+    
+
+}
+
+.page-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 95vh;
+    padding-top: 78px;
+    background-image: url('https://www.wallpaperflare.com/static/894/597/232/starry-sky-mountains-radiance-stars-wallpaper.jpg');    
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+}
+
+#content {
+    /* margin-left: 20em;
+    margin-right: 20em; */
+    background-color: #212529;
+    /* width: 100rem; */
+    padding-bottom: 89px;
+    border-radius: 4px;
+
+}
+
+.main-container {
+    padding-top: 49px;
+}
+
+.bg-dark {
+    background-color: #1c1f22 !important;
+}
+
+h1, h2, h3, h4, p, small {
+    color: white;
+}
+
+h1 {
+    font-size: 50px;
+    font-family: 'Roboto-Light', sans-serif;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+h2 {
+    font-size: 40px;
+    font-family: 'Roboto-Light', sans-serif;
+    text-align: center;
+    margin-bottom: 40px;
+    padding-top: 40px;
+}
+
+
+p {
+    font-size: 23px;
+    font-family: 'Roboto-Light', sans-serif;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+p.right {
+    text-align: right;
+}
+
+p.left {
+    text-align: left;
+}
+
+img {
+    max-width: 100%;
+}
+
+select {
+    max-width: 30rem;
+}
+
+footer {
+    background-color: #202020;
+    margin-top: 40px;
+    position: inherit;
+    bottom: 0;
+    width: 100%;
+}
+
+
+
+.navbar_background_image {
+    max-height: 60px;
+    position: fixed;
+    right: 0;
+    top: 0;
+}
+
+
+.big-red-fucking-button {
+    background-color: #f4363b;
+    border: 1px solid orange;
+    border-radius: 0px;
+    align-self: center;
+    font-size: 20px;
+}
+
+.big-red-fucking-button:hover {
+    background-color: #f45c36;
+    border: 1.3px solid yellow;
+}
+
+.red_btn {
+    background-color: #f4363b;
+    border: 1px solid orange;
+}
+
+.red_btn:hover {
+    background-color: #ee3000;
+    border: 1.3px solid yellow;
+}
+
+/* 
+.form-control {
+    max-width: 40em;
+} */
+@media screen and (max-width: 481px) {
+    #content {
+        float: left;
+    }
+
+}
+
+@media (min-width: 992px) {
+    .navbar-expand-lg .navbar-nav .dropdown-menu {
+        background-color: #333;
+    }
+}
+
+.nav-item i {
+    width: 40px;
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+}
+
+.glyphicon.white {
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+    max-width: 30px;
+}
+
+.base_logo_mini {
+    width: 40px;
+}
+
+
+.user_credentials {
+    font-size: 20px;
+    margin-bottom: 0px;
+    margin-top: 7px;
+}
+
+.text-center {
+    color: white;
+}
