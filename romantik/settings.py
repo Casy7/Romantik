@@ -129,6 +129,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # see https://help.pythonanywhere.com/pages/DjangoStaticFiles for more info
 MEDIA_ROOT = '/home/romantik/romantik/media'
 MEDIA_URL = '/media/'
-STATIC_ROOT = '/home/romantik/romantik/static'
+STATIC_ROOT = '/home/romantik/RomantikApp/static'
 STATIC_URL = '/static/'
 
