@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'libs/modules/tabs/tabs.css' %}" />
+<link rel="stylesheet" href="{% static 'css/form.css' %}" />
+<link rel="stylesheet" href="{% static 'css/add_equipment.css' %}" />
+<script>
+    function collapse_folder() {
+      if ($(this).parent().parent().hasClass("collapsed")) {
+        $(this).parent().parent().removeClass("collapsed");
+      }
+      else {
+
+        $(this).parent().parent().addClass("collapsed");
+      }
+    };
+
+  function addCatButton() {
+	$(".tree-multiselect div.section").toArray().forEach(addButtonsToFolder);
+
+    function addButtonsToFolder(element) {
+      obj_path = getPath(element);
+      var title = $(element.firstChild);
+      var title_container = $(`<div class="flex-title gray"></div>`);
+      title.before(title_container);
+      title.on("click", collapse_folder);
+      title_container.append(title);
+      title_container.append(`<div class='item addCat'><a type='button' onclick="createNewFolderMenu('` + obj_path + `')"><img class="folder-icon" src="{% static 'icons/new_folder.svg' %}"></a><p class='p-tab'>/</p><a type='button' onclick="createNewItemMenu('` + obj_path + `')"><img class="add-item-btn" src="{% static 'icons/add_equipment.svg' %}"></a></div>`);
+    }
+  }
+  function editItemMenu(obj) {
+    let itemId = obj.id.replace("_text", "");
+    let itemPath = getPath(obj.parentNode);
+    createNewItemMenu("");
+    $('#addEquipmentHeader').text("Изменить снар в категории " +itemPath);
+    $('#newItemName').val(obj.innerText);
+    $('#newItemPrice').val(prices[itemId][0]);    
+    $('#newItemNumber').val(prices[itemId][1]);
+    $('#newItemDesc').val(obj.parentNode.getAttribute("data-description"));
+    $('#sendRequestBtn')[0].onclick = null;
+    $('#sendRequestBtn')[0].addEventListener("click", function () {
+      editEquipment(itemId, itemPath);
+    });
+    
+
+  }
+
+  function updatePrices() {
+    $(".item").toArray().forEach(countPrice);
+    function countPrice(line) {
+      if (line.className == "item") {
+        eqId = line.getAttribute("data-value");
+        line.querySelector("label.disabled").id = eqId+"_text"
+        line.querySelector("label.disabled").onclick = function () {
+          editItemMenu(this);
+        }
+        var price = prices[eqId][0];
+        var amount = prices[eqId][1];
+        line.id = eqId + "line";
+        sName = line.querySelector('.section-name');        
+        $('#' + line.id).append(`<span id="del_` + eqId + `" class='edit-col'><a type="button" onclick=deleteEquipment('` + eqId + `')><img class="delete-icon" src="{% static 'icons/delete_item.svg' %}"></a></span>`);
+        $('#' + line.id).append("<span class='number-col'>" + amount + " шт.</span>");
+        $('#' + line.id).append("<span class='price-col'>" + price + "₴\t</span>");
+      }
+    }
+  }
+
+</script>
+<div>
+
+    {%csrf_token%}
+
+    <div id="menu2">
+      <select id="demo2" multiple="multiple">
+        // {% for equipment in eq_list %}
+        <option readonly value="eq_{{equipment.0}}" data-section="{{equipment.2}}" data-description="{{equipment.3}}">
+          {{equipment.1}}</option>
+        // {% endfor %}
+        <option readonly value="eq_34235" data-section="Водное" data-description="Folder">Folder</option>
+        <option readonly value="eq_34236" data-section="Вело" data-description="Folder">Folder</option>
+        <option readonly value="eq_34237" data-section="Пешее" data-description="Folder">Folder</option>
+        <option readonly value="eq_34238" data-section="Другое" data-description="Folder">Folder</option>
+      </select>
+      <script>
+        var prices = {
+          "eq_34235": [0,0],
+          "eq_34236": [0,0],
+          "eq_34237": [0,0],
+          "eq_34238": [0,0],
+          //{% for equipment in eq_list %} 
+          "eq_{{equipment.0}}": ["{{equipment.4}}", "{{equipment.5}}"], {% endfor %}
+        };
+      </script>
+
+    </div>
+
+    
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+<!-- _____________________________________________ SCRIPTS _____________________________________________ -->
+
+<script src="{% static 'libs/modules/jquery/jquery-ui.min.js' %}"></script>
+<script src="{% static 'libs/modules/multiselect/jquery.tree-multiselect.js' %}"></script>
+<script src="{% static 'js/add_equipment.js' %}"></script>
+<script>
+  $("select#categorySelect").treeMultiselect({maxSelections: 3, enableSelectAll: true, unselectAllText: true});
+</script>
+<!-- 
+  let trees = $("select").treeMultiselect();
+let firstTree = trees[0];
+  $("select#id").append("<option value='newValue' data-section='New Section' selected='selected' data-description='New value'>New Value</option>");
+firstTree.reload();
+ -->
+{% endblock %}

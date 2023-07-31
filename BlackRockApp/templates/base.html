@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  {% load static %} {%csrf_token%}
+  <link crossorigin="anonymous" href="{% static 'libs/modules/bootstrap/dist/css/bootstrap.min.css' %}"
+    rel="stylesheet">
+  <script crossorigin="anonymous" src="{% static 'libs/modules/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+
+
+
+  <!-- TITLE AND PROPERTIES -->
+  {% if title != 'none' %}
+  <title>BR: {{ title }}</title>
+  {% else %}
+  <title>BlackRock</title>
+  {% endif %}
+
+  <!-- META CLASSES -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- STYLES -->
+  <link href="{% static 'libs/modules/bootstrap-select/css/bootstrap-select.min.css'%}" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: "Roboto-Thin";
+      src: url("{% static 'libs/fonts/roboto/Roboto-Thin.ttf' %}") format("truetype");
+    }
+
+    @font-face {
+      font-family: "Roboto";
+      src: url("{% static 'libs/fonts/roboto/Roboto-Regular.ttf' %}") format("truetype");
+    }
+
+    @font-face {
+      font-family: "Roboto-Black";
+      src: url("{% static 'libs/fonts/roboto/Roboto-Black.ttf' %}") format("truetype");
+    }
+
+    @font-face {
+      font-family: "Roboto-Light";
+      src: url("{% static 'libs/fonts/roboto/Roboto-Light.ttf' %}") format("truetype");
+    }
+
+    @font-face {
+      font-family: "Roboto-Medium";
+      src: url("{% static 'libs/fonts/roboto/Roboto-Medium.ttf' %}") format("truetype");
+    }
+
+    @font-face {
+      font-family: "Roboto-Bold";
+      src: url("{% static 'libs/fonts/roboto/Roboto-Bold.ttf' %}") format("truetype");
+    }
+
+
+    @font-face {
+      font-family: "Roboto-Black-Italic";
+      src: url("{% static 'libs/fonts/roboto/Roboto-BlackItalic.ttf' %}") format("truetype");
+    }
+
+    @font-face {
+      font-family: "Roboto-Bold-Italic";
+      src: url("{% static 'libs/fonts/roboto/Roboto-BoldItalic.ttf' %}") format("truetype");
+    }
+
+    @font-face {
+      font-family: "Roboto-Italic";
+      src: url("{% static 'libs/fonts/roboto/Roboto-Italic.ttf' %}") format("truetype");
+    }
+
+    @font-face {
+      font-family: "Roboto-Light-Italic";
+      src: url("{% static 'libs/fonts/roboto/Roboto-LightItalic.ttf' %}") format("truetype");
+    }
+
+
+    @font-face {
+      font-family: "Roboto-Medium-Italic";
+      src: url("{% static 'libs/fonts/roboto/Roboto-MediumItalic.ttf' %}") format("truetype");
+    }
+
+    @font-face {
+      font-family: "Roboto";
+      src: url("{% static 'libs/fonts/roboto/Roboto-Regular.ttf' %}") format("truetype");
+    }
+
+    @font-face {
+      font-family: "Roboto-Thin-Italic";
+      src: url("{% static 'libs/fonts/roboto/Roboto-ThinItalic.ttf' %}") format("truetype");
+    }
+
+    .new_header {
+      font-family: "Roboto-Medium", "Roboto", "Roboto-Black", Tahoma;
+      text-transform: none;
+    }
+
+    .roboto {
+      font-family: "Roboto", "Roboto-medium", Tahoma;
+    }
+  </style>
+  <link href="{% static 'css/base.css'%}" rel="stylesheet">
+  <link href="{% static 'libs/modules/multiselect/jquery.tree-multiselect.css'%}" rel="stylesheet">
+  <script src="{% static 'libs/modules/jquery/jquery.js' %}" type="text/javascript"></script>
+  <link rel="shortcut icon" href="{% static 'icons/logo_mini.svg'%}">
+</head>
+
+<body>
+  <!-- __________________________________________ NAVBAR __________________________________________ -->
+
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+
+      <a class="navbar-brand" href="/"><img class="base_logo_mini" src="{% static 'icons/logo_mini.svg' %}"></a>
+
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="display: ruby;">
+
+        {% if is_superuser %}
+        <li class="nav-item active">
+          <a class="nav-link" href="/add_equipment"><img class="glyphicon" src="{% static 'icons/add_equipment.svg' %}"
+              style="max-width: 30px;"><span class="sr-only"></span></a>
+        </li>
+        {% endif %}
+
+        {% if user != 'none' %}
+        <li class="nav-item active">
+          <a class="nav-link" href="/new_rent_accounting"><img class="glyphicon"
+              src="{% static 'icons/give_to_a_person.svg' %}" style="max-width: 30px;"><span class="sr-only"></span></a>
+        </li>
+        {% endif %}
+
+        {% if is_superuser %}
+        <li class="nav-item active">
+          <a class="nav-link" href="/rent_accountings_management">Manage</a>
+        </li>
+        {% endif %}
+
+        {% if user != 'none' %}
+        <li class="nav-item active">
+          <a class="nav-link" href="/my_rent_accountings">My accountings</a>
+        </li>
+        {% endif %}
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Other
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">There</a>
+            <a class="dropdown-item" href="#">are no</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">other choices</a>
+            <a class="dropdown-item" href="#">except</a>
+            <a class="dropdown-item" href="/admin">Admin panel</a>
+          </div>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-right-panel">
+
+        {% if user != 'none' %}
+        <li class="nav-item active">
+          <p class="user_credentials"> ({{ user.username }}) {{ full_name }}</p>
+        </li>
+        {% endif %}
+
+
+        {% if user != 'none' %}
+        <li class="nav-item active">
+          <a class="nav-link" href="/signout">
+            <img class="glyphicon white" src="{% static 'icons/sign_out.svg' %}">
+            <span class="sr-only"></span>
+          </a>
+        </li>
+        {% endif %}
+
+        {% if user == 'none' %}
+        <li class="nav-item active">
+          <a class="nav-link" href="/signin">
+            <img class="glyphicon white" src="{% static 'icons/sign_in.svg' %}">
+            <span class="sr-only"></span>
+          </a>
+        </li>
+        {% endif %}
+
+        {% if user == 'none' %}
+        <li class="nav-item active">
+          <a class="nav-link" href="/signup">
+            <img class="glyphicon white" src="{% static 'icons/sign_up.svg' %}">
+            <span class="sr-only"></span></a>
+        </li>
+        {% endif %}
+
+        <!-- <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form> -->
+        <li class="nav-item">
+          <img class="navbar_background_image" src="{% static 'icons/navbar_panel.svg' %}" alt="">
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+
+
+
+  <!-- __________________________________________ CONTENT __________________________________________ -->
+
+  <div class="page-content">
+    <div id="content" class="container content">
+
+      {% if header != 'none' %}
+      <h2>{{ title }}</h2>
+      {% endif %}
+
+      {%block content%}
+
+      {%endblock%}
+
+
+    </div>
+
+    <footer class="text-center text-white">
+
+      <!-- Copyright -->
+      <div class="text-center p-3">
+        Got any questions?
+        <a class="text-white" href="https://t.me/casy7/">Me too.</a>
+      </div>
+      <!-- Copyright -->
+    </footer>
+  </div>
+</body>
+
+
+
+
+<!-- __________________________________________ SCRIPTS __________________________________________ -->
+
+
+
+
+<script src="{% static 'libs/modules/tabs/tabs.js' %}" type="text/javascript"></script>
+
+
+<script src="{% static 'libs/modules/spinner/bootstrap-input-spinner.js' %}" type="text/javascript"></script>
+<script src="{% static 'libs/modules/bootstrap-select/js/bootstrap-select.min.js' %}" type="text/javascript"></script>
+<script>
+  $("input[type='number']").inputSpinner()
+</script>
+
+
+
+
+
+</html>

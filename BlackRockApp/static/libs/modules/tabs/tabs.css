@@ -1,0 +1,106 @@
+.process-step .btn:focus {
+    outline: none
+}
+
+.process {
+    display: table;
+    width: 100%;
+    position: relative
+}
+
+.process-row {
+    display: table-row
+}
+
+.process-step button[disabled] {
+    opacity: 1 !important;
+    filter: alpha(opacity=100) !important
+}
+
+.process-row:before {
+    top: 22px;
+    width: -moz-available;
+    bottom: 0;
+    position: absolute;
+    content: " ";
+    height: 1px;
+    background-color: #ccc;
+    z-order: 0
+}
+
+.process-step {
+    display: table-cell;
+    text-align: center;
+    position: relative
+}
+
+.process-step p {
+    margin-top: 4px
+}
+
+.btn-circle {
+    width: 80px;
+    height: 80px;
+    text-align: center;
+    font-size: 12px;
+    border-radius: 50%
+}
+
+body {
+    color: white;
+}
+
+.tab-content>.active {
+    display: contents;
+}
+
+.btn-scrollable {
+    width: -moz-available;
+    height: 5px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.active-tab-label {
+    background-color: #f4363b;
+    border-color: #f4363b;
+}
+
+.hidden-tab-label {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.steps-control-panel {
+    position: relative;
+    bottom: 20px;
+}
+
+.tab-content {
+    min-height: 40rem;
+}
+.next-step, .last-step {
+    position: sticky;
+    float: inline-end;
+}
+button:disabled,
+button[disabled]{
+  border: 1px solid #999999 !important;
+  background-color: #cccccc !important;
+  color: #666666;
+  box-shadow:none !important;
+}
+
+#selectedEquipmentCDataField {
+    background-color: #363a3e;
+}
+
+.CDataCol {
+    max-width: 120px;
+}
+
+.CDataMainCol {
+    max-width: 500px;
+    overflow: hidden;
+}
+

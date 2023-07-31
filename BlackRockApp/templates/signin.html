@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<!--<i class="fas fa-cog"></i>    fa-d-and-d-->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+	integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+<link href="{% static 'css/signin.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/form.css' %}" />
+<!-- <style>
+	#content {
+  /* height: 200px; */
+  background-color: #cccccc;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url("{% static 'icons/default.jpg' %}");
+  position: relative;
+}
+</style> -->
+<script src="{% static 'js/registration.js' %}" type="text/javascript"></script>
+<form method="POST">
+	<div class="container">
+		<div class="d-flex justify-content-center">
+			<div class="card bg-dark">
+
+				<div class="card-body">
+
+					{%csrf_token%}
+
+					<div class="text-center p-3">
+						Don't have an account?
+						<a class="text-white" href="/signup/">Sing up</a>
+					</div>
+					<div class="input-group form-group">
+						<!--USERNAME-->
+						<div class="input-group-prepend">
+							<span class="input-group-text bg-dark"><i class="far fa-copyright"> *</i></span>
+						</div>
+						<input type="text" name="username" required="" class="form-control dark-control dark"
+							placeholder="Username">
+					</div>
+			
+					<div class="input-group form-group">
+						<!--PASSWORD-->
+						<div class="input-group-prepend">
+							<span class="input-group-text bg-dark"><i class="fa fa-key" aria-hidden="true"></i> *</span>
+						</div>
+						<input id="password_field" type="password" required="" name="password"
+							class="form-control  dark-control dark" placeholder="Password">
+						<div class="input-group-append">
+							<button type="button" class="form-control dark bg-dark show_pwd_button" onclick="show_password()"><i class="fa fa-eye"></i></button>
+
+						</div>
+					</div>
+
+				</div>
+
+				<div class="card-footer">
+					{% if error == 1 %}
+					<div class="d-flex justify-content-center links error-message" style="text-align: center;">
+						Invalid username or password
+					</div>
+					{% endif %}
+
+					<input type="submit" value="Sign me in!" class="btn btn-outline-secondary btn-block"
+						style="width: 100%;">
+
+					<!-- <div class="d-flex justify-content-center">
+					<a href="#">Forgot your password?</a>
+				</div> -->
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+{% endblock %}
