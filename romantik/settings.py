@@ -127,8 +127,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # default static files settings for PythonAnywhere.
 # see https://help.pythonanywhere.com/pages/DjangoStaticFiles for more info
-MEDIA_ROOT = '/home/romantik/romantik/media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'RomantikApp', 'media')
 MEDIA_URL = '/media/'
-STATIC_ROOT = '/home/romantik/RomantikApp/static'
+
 STATIC_URL = '/static/'
 
