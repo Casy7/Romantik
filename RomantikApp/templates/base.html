@@ -112,32 +112,6 @@
 
       <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="display: ruby;">
 
-        {% if is_superuser %}
-        <li class="nav-item active">
-          <a class="nav-link" href="/add_equipment"><img class="glyphicon" src="{% static 'icons/add_equipment.svg' %}"
-              style="max-width: 30px;"><span class="sr-only"></span></a>
-        </li>
-        {% endif %}
-
-        {% if user != 'none' %}
-        <li class="nav-item active">
-          <a class="nav-link" href="/new_rent_accounting"><img class="glyphicon"
-              src="{% static 'icons/give_to_a_person.svg' %}" style="max-width: 30px;"><span class="sr-only"></span></a>
-        </li>
-        {% endif %}
-
-        {% if is_superuser %}
-        <li class="nav-item active">
-          <a class="nav-link" href="/rent_accountings_management">Manage</a>
-        </li>
-        {% endif %}
-
-        {% if user != 'none' %}
-        <li class="nav-item active">
-          <a class="nav-link" href="/my_rent_accountings">My accountings</a>
-        </li>
-        {% endif %}
-
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
             aria-expanded="false">
