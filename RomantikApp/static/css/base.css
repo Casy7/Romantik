@@ -176,3 +176,12 @@ footer {
 .text-center {
     color: white;
 }
+
+@media only screen and (max-device-width: 480px) {
+    p.right {
+		text-align: center !important;
+	}
+    .row {
+        display: block;
+    }
+}
