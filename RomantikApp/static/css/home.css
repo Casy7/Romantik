@@ -11,3 +11,21 @@
 	margin-bottom: 40px;
 }
 
+.size_70 {
+	height: 270px;
+}
+	
+.center {
+	text-align: center;
+	align-self: center;
+}
+
+.inline_container {
+	display: inline-flex;
+	align-content: center;
+	width: 100%;
+}
+
+.ruby {
+	display: ruby;
+}
