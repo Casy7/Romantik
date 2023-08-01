@@ -24,3 +24,9 @@ class HomePage(View):
     def get(self, request):
         context = base_context(request, title='Home')
         return render(request, "home.html", context)
+    
+
+class NewsPage(View):
+    def get(self, request):
+        context = base_context(request, title='Новини', header='Новини')
+        return render(request, "news.html", context)

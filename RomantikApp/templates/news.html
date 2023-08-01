@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+{%csrf_token%}
+
+<script src="{% static 'libs/modules/ckeditor/build/ckeditor.js' %}"></script>
+<link href="{% static 'css/news.css'%}" rel="stylesheet">
+<link href="{% static 'css/editor.css'%}" rel="stylesheet">
+
+<div class="editor-box">
+    <div id="editor"></div>
+    
+
+    <script>
+        ClassicEditor
+            .create( document.querySelector( '#editor' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+    
+</div>
+
+<div class="posts-list">
+    
+
+
+</div>
+
+
+{% endblock %}

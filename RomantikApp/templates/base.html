@@ -126,20 +126,23 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
             aria-expanded="false">
-            Other
+            Інше
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">There</a>
-            <a class="dropdown-item" href="#">are no</a>
+            <a class="dropdown-item" href="#">Опції</a>
+            <a class="dropdown-item" href="#">відсутні</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">other choices</a>
-            <a class="dropdown-item" href="#">except</a>
             <a class="dropdown-item" href="/admin">Admin panel</a>
           </div>
         </li>
       </ul>
 
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-right-panel">
+        
+      {% if header != 'none' %}
+      <h4 class="navbar-header">{{ title }}</h4>
+      {% endif %}
+
 
         {% if user != 'none' %}
         <li class="nav-item active">
@@ -192,10 +195,6 @@
 
   <div class="page-content">
     <div id="content" class="container h-100 content">
-
-      {% if header != 'none' %}
-      <h2>{{ title }}</h2>
-      {% endif %}
 
       {%block content%}
 

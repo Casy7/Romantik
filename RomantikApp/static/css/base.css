@@ -4,7 +4,7 @@ body {
 
     /* background: linear-gradient(90deg, rgb(128, 75, 59) 0%, rgb(33, 37, 41) 15%, rgb(33, 37, 41) 85%, rgb(125, 64, 41) 100%); */
     background-color: #19191c;
-    
+
 
 }
 
@@ -39,7 +39,7 @@ body {
     background-color: #1c1f22 !important;
 }
 
-h1, h2, h3, h4, p, small {
+h1, h2, h3, h4, h5, p, small, a, td {
     color: white;
 }
 
@@ -107,6 +107,21 @@ footer {
     position: fixed;
     right: 0;
     top: 0;
+}
+
+.dropdown-item {
+    color: white;
+}
+
+.dropdown-divider {
+    color: white;
+    background-color: white;
+}
+
+.navbar-header {
+    margin: 0px;
+    line-height: 1;
+    align-self: center;
 }
 
 
@@ -179,8 +194,13 @@ footer {
 
 @media only screen and (max-device-width: 480px) {
     p.right {
-		text-align: center !important;
-	}
+        text-align: center !important;
+    }
+    p.left {
+        text-align: center !important;
+    }
+       
+
     .row {
         display: block;
     }
