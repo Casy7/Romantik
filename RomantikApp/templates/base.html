@@ -146,7 +146,7 @@
 
         {% if user != 'none' %}
         <li class="nav-item active">
-          <p class="user_credentials"> {{ user.username }} {{ full_name }}</p>
+          <p class="user_credentials"> {{ user.username }}</p>
         </li>
         {% endif %}
 
@@ -160,7 +160,7 @@
         </li>
         {% endif %}
 
-        {% if user == 'none' %}
+        {% if user == 'none' and header != 'Вхід' %}
         <li class="nav-item active">
           <a class="nav-link" href="/signin">
             <img class="glyphicon white" src="{% static 'icons/sign_in.svg' %}">
@@ -169,7 +169,7 @@
         </li>
         {% endif %}
 
-        {% if user == 'none' %}
+        {% if user == 'none' and header != 'Реєстрація' %}
         <li class="nav-item active">
           <a class="nav-link" href="/signup">
             <img class="glyphicon white" src="{% static 'icons/sign_up.svg' %}">

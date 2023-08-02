@@ -1,0 +1,171 @@
+.form-group {
+    line-height: 1.5;
+}
+
+.dark {
+    background-color: #333333;
+    color: white;
+}
+
+.dark-control {
+    appearance: searchfield;
+}
+
+.dark:active {
+    background-color: #333333;
+    color: white;
+}
+
+.dark:focus {
+    background-color: #333333;
+    color: white;
+}
+
+.dark.dark-childs>* {
+    background-color: #333333 !important;
+    color: white !important;
+}
+
+.dropdown-menu>* {
+    background-color: #333333 !important;
+    color: white !important;
+}
+
+.dropdown-menu .text {
+    color: white;
+}
+
+.dropdown-menu .dropdown-item:hover {
+    background-color: rgb(165, 165, 165);
+}
+
+.dropdown-menu .dropdown-item:active {
+    background-color: rgb(165, 165, 165);
+}
+
+.dropdown-menu .dropdown-item:focus {
+    background-color: rgb(165, 165, 165);
+}
+
+.bs-searchbox .form-control {
+    background-color: #333333;
+    color: white;
+}
+
+li.active>.dropdown-item.selected {
+    background-color: rgb(152, 190, 202);
+}
+
+.inner.show {
+    min-width: 25rem;
+    overflow-x: hidden;
+}
+
+input[type=number].dark-control::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number].dark-control {
+    max-width: 10rem !important;
+    box-shadow: none;
+    border-radius: 1px;
+    line-height: 1.5;
+}
+
+.inline-form-group {
+    display: inline-flex;
+}
+
+.input-number .form-control {
+    max-width: 7rem !important;
+    background-color: #333333;
+    color: white;
+}
+
+/* .item {
+    background: #333333;
+}
+div.tree-multiselect > div.selected > div.item {
+    background: #646464;
+    } */
+
+div.tree-multiselect>div.selected>div.item {
+    /*! background: #EAEAEA; */
+    border-radius: 2px;
+    padding: 2px 5px;
+    overflow: auto;
+}
+
+p.right {
+    position: relative;
+    float: inline-end;
+}
+
+.price-col, .edit-col, .number-col {
+    float: inline-end;
+    padding-right: 15px;
+    min-width: 60px;
+    text-align: right;
+}
+
+.amount-selector {
+    float: inline-end;
+    max-width: 80px;
+    max-height: 26px;
+    border: none;
+}
+
+.amount-selector:active, .amount-selector:hover {
+    box-shadow: none;
+    border: #333333;
+    border-bottom: none;
+
+}
+
+.amount-limit {
+    float: inline-end;
+    margin-bottom: 0px;
+    font-size: 18px;
+}
+
+.datepicker {
+    max-width: 18rem;
+}
+
+.datepicker-row {
+    max-width: 40rem;
+}
+
+.required-alert {
+    color: orange;
+}
+
+.form-radiobutton {
+    display: ruby;
+}
+
+.form-radiobutton .rorm-radio-option {
+    display: inline;
+}
+
+.form-radiobutton p {
+    font-size: 20px;
+}
+
+.input-group-prepend span {
+    height: 40px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.show_pwd_button {
+    height: 40px;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.show_pwd_button i.fa-eye ::before {
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+}

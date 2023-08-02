@@ -28,6 +28,7 @@ body {
     /* width: 100rem; */
     padding-bottom: 89px;
     border-radius: 4px;
+    padding-top: 10px;
 
 }
 
@@ -122,6 +123,8 @@ footer {
     margin: 0px;
     line-height: 1;
     align-self: center;
+    padding-left: 30px;
+    padding-right: 30px;
 }
 
 
