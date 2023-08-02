@@ -101,6 +101,10 @@ footer {
     width: 100%;
 }
 
+hr {
+    background-color: white;
+}
+
 
 
 .navbar_background_image {

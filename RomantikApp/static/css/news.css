@@ -1,7 +1,15 @@
 p, h1, h2 {
 	text-align: initial;
 }
-h1, h2 {
+h1, h2, p {
 	margin: initial;
 	padding: initial;
+}
+
+small {
+	color: wheat;
+}
+
+.author {
+	color: wheat;
 }

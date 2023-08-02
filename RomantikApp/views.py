@@ -1,3 +1,4 @@
+import datetime
 import json
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
@@ -6,6 +7,8 @@ from django.views.generic import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User, AnonymousUser
+
+from .models import NewsPost
 # Create your views here.
 
 
@@ -55,16 +58,27 @@ class HomePage(View):
 
 class NewsPage(View):
     def get(self, request):
+
         context = base_context(request, title='Новини', header='Новини')
+        context['news'] = sorted(NewsPost.objects.all(), key=lambda obj: obj.datetime)
+        context['news'].reverse()
         return render(request, "news.html", context)
 
 
-class AjaxPublishPost(View):
+class AjaxPublishPost(View, LoginRequiredMixin):
     def post(self, request):
         form = request.POST
 
+        news_post = NewsPost(
+            user=request.user,
+            datetime=datetime.datetime.now(),   
+            content=form['news_content'],     
+            img_paths="" 
+        )
+        news_post.save()
+
         result = {}
-        result["result"] = "failture"
+        result["result"] = "success"
         return HttpResponse(
             json.dumps(result),
             content_type="application/json"
@@ -100,7 +114,7 @@ class Login(View):
                 return HttpResponseRedirect("/")
 
         else:
-            context = base_context(request, title='Sign In', header='Sign In')
+            context = base_context(request, title='Вхід', header='Вхід')
             logout(request)
             context['error'] = 1
             # return Posts.get(self,request)
