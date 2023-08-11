@@ -8,7 +8,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User, AnonymousUser
 
+from django.core.files.storage import default_storage
+
 from .models import NewsPost
+
 # Create your views here.
 
 
@@ -79,6 +82,29 @@ class AjaxPublishPost(View, LoginRequiredMixin):
 
         result = {}
         result["result"] = "success"
+        return HttpResponse(
+            json.dumps(result),
+            content_type="application/json"
+        )
+
+
+class AjaxAddPhotoToPost(View, LoginRequiredMixin):
+    def post(self, request):
+        form = request.POST
+
+        # filename = 
+        uploaded_file = request.FILES['upload']
+
+        file_name = datetime.datetime.now().strftime("%d_%m_%Y_%H_%M_%S") + '_' + uploaded_file.name
+
+        file_path = default_storage.save(file_name, uploaded_file)
+
+
+        result = {}
+        result["result"] = "success"
+        result["filename"] = file_name
+        result["url"] = "/media/"+file_path
+        
         return HttpResponse(
             json.dumps(result),
             content_type="application/json"
