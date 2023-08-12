@@ -160,6 +160,10 @@ blockquote {
     padding-right: 30px;
 }
 
+.central-nav-panel {
+    display: ruby;
+}
+
 
 .big-red-fucking-button {
     background-color: #f4363b;
@@ -229,16 +233,29 @@ blockquote {
 }
 
 @media only screen and (max-device-width: 480px) {
-    p.right {
-        text-align: center !important;
+    p {
+        text-align: justify;
     }
-
-    p.left {
-        text-align: center !important;
+    p.right, p.left {
+        text-align: justify;
     }
-
 
     .row {
         display: block;
     }
+    .navbar_background_image {
+        display: none;
+    }
+    .nav-right-panel{
+        flex-direction: row;
+        flex-grow: 1;
+        float: right;
+        justify-content: space-evenly;
+    }
+    .user_credentials {
+        display: none;
+    }
+    .page-content {
+        background-position: inherit;
+        }
 }

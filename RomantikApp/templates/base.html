@@ -121,7 +121,7 @@
 
       <a class="navbar-brand" href="/"><img class="base_logo_mini" src="{% static 'icons/logo.svg' %}"></a>
 
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="display: ruby;">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 central-nav-panel">
 
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
@@ -135,9 +135,11 @@
             <a class="dropdown-item" href="/admin">Admin panel</a>
           </div>
         </li>
+        {% if header != 'Новини' %}
         <li class="nav-item">
           <a class="nav-link" href="/news">Новини</a>
         </li>
+        {% endif %}
       </ul>
 
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-right-panel">
