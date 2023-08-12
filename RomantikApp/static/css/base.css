@@ -40,7 +40,7 @@ body {
     background-color: #1c1f22 !important;
 }
 
-h1, h2, h3, h4, h5, p, small, a, td, li {
+h1, h2, h3, h4, h5, p, small, a, td, li, pre {
     color: white;
 }
 
@@ -113,7 +113,28 @@ hr {
     background-color: white;
 }
 
+code {
+    background-color: #181818;
+    padding-left: 7px;
+    padding-right: 7px;
+    border-radius: 4px;
+}
 
+pre {
+    background-color: #595959;
+    border: 1px solid aquamarine;
+    border-radius: 5px;
+}
+
+pre .language-plaintext {
+    background-color: transparent;
+    color: #fafafa
+}
+
+blockquote {
+    border-left: 5px solid white;
+    padding-left: 15px;
+}
 
 .navbar_background_image {
     max-height: 60px;
@@ -211,10 +232,11 @@ hr {
     p.right {
         text-align: center !important;
     }
+
     p.left {
         text-align: center !important;
     }
-       
+
 
     .row {
         display: block;
