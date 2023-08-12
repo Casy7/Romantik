@@ -24,8 +24,8 @@
     {% for post in news %}
     <div class="news-content">
         {{post.content | safe}}
-        <samll class="author">by {{post.user.username}} on {{post.datetime | time:"H:i:s" }}, {{post.datetime |
-            date:"d.m.Y" }}</samll>
+        <samll class="author">by {{post.user.username}} on
+             {{post.datetime | time:"H:i:s" }}, {{post.datetime | date:"d.m.Y" }}</samll>
     </div>
     <hr>
     {% endfor %}

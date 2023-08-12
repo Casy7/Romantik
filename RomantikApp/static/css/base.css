@@ -40,8 +40,16 @@ body {
     background-color: #1c1f22 !important;
 }
 
-h1, h2, h3, h4, h5, p, small, a, td {
+h1, h2, h3, h4, h5, p, small, a, td, li {
     color: white;
+}
+
+td {
+    border: 1px solid white;
+}
+
+pre {
+    color: rgb(207, 207, 207);
 }
 
 h1 {
