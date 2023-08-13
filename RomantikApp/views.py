@@ -235,7 +235,7 @@ class Contacts(View):
         context = base_context(
             request, title='Контакти', header='Контакти', error=0)
 
-        return render(request, "сontacts.html", context)
+        return render(request, "contacts.html", context)
 
 
 class Hymn(View):    

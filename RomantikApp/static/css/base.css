@@ -200,6 +200,14 @@ blockquote {
     border: 1.3px solid yellow;
 }
 
+.col-fixed-size {
+    flex-grow: 0;
+}
+
+.beauty-container {
+    margin: 30px;
+}
+
 /* 
 .form-control {
     max-width: 40em;

@@ -1,0 +1,19 @@
+.img-contact {
+	border-radius: 50%;
+	max-width: 150px;
+}
+
+.qr-credentials {
+	flex-grow: 0.3;
+}
+
+.col-fixed-size {
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	align-items: center;
+}
+
+.qr-credentials-image {
+	width: 200px;
+}

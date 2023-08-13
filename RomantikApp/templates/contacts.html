@@ -2,8 +2,76 @@
 {% block content %}
 {% load static %}
 {%csrf_token%}
-<div>
 
+<link href="{% static 'css/contacts.css'%}" rel="stylesheet">
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"></script>
+
+<div class="beauty-container">
+
+	<h1>Як із нами зв'язатись?</h1>
+	<p></p>
+
+
+	<div class="row">
+		<div class="col">
+			<p class="justify">Ми на зв'язку! Ти завжди можеш написати нашому зв'язківцю і головному з агітації — <a
+					href="https://t.me/fastakovskiy">@fastakovskiy</a>, в Телеграмі.
+			</p>
+			<div class="row">
+				<div class="col col-fixed-size">
+					<img class="img-contact" src="{% static 'images/contacts/miha.jpg' %}" alt="">
+					<p>Михайло Фастаковський</p>
+				</div>
+				<div class="col">
+					<p class="justify">Також ти можеш написати або подзвонити голові турклуба — Григорію Вірченко, +38
+						(097) 640 78 76, <a href="https://t.me/ort_ijk">@ort_ijk</a>.</p>
+
+					<p class="justify">Останні новини турклубу ти можеш знайти в нашому Телеграм-каналі та в Instagram.
+						Там зазвичай виставляються оголошення про актуальні події, походи та виїзди. Реєструйся на
+						найближчий виїзд або на те, що тебе цікавить — і ласкаво просимо у команду!</p>
+				</div>
+
+			</div>
+		</div>
+		<div class="col col-fixed-size">
+			<img class="img-contact" src="{% static 'images/contacts/grisha.jpg' %}" alt="">
+			<p>Григорій Вірченко</p>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col qr-credentials col-fixed-size">
+			<a href="https://www.instagram.com/tk.romantik/">
+				<img class="center qr-credentials-image" src="{% static 'images/home/instagram.svg' %}" alt="">
+			</a>
+		</div>
+		<div class="col qr-credentials col-fixed-size">
+			<a href="https://t.me/tk_romantik">
+				<img class="center qr-credentials-image" src="{% static 'images/home/telegram.svg' %}" alt="">
+			</a>
+		</div>
+		<div class="col inline_container">
+			<p class="justify">І, звісно, наші двері відкриті для усіх бажаючих — ти можеш одразу прийти в клуб. Бігові
+				/ загально-фізичні
+				тренування проводяться регулярно по вівторках та четвергах з 18:15 до 20:15.</p>
+			<p class="justify">Приміщення турклубу знаходиться у Спорткомплексі Одеського Політехнічного Інституту за
+				адресою Шампанський провулок, 1 — з правого входу ліворуч, сходами на 4-й поверх.</p>
+		</div>
+
+	</div>
+	<div class="row">
+		<div class="row" style="width: 900px; height: 500px;">
+			<div id="map"></div>
+			<script src="{% static 'js/contacts.js' %}"></script>
+		</div>
+
+		<div class="col">
+
+		</div>
+	</div>
+	<br>
+	<p class="justify">Чекаємо на тебе!</p>
 </div>
 
 
