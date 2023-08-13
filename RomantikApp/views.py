@@ -15,6 +15,8 @@ from .models import NewsPost
 # Create your views here.
 
 
+
+
 def full_name(user):
     if user.last_name != '' and user.first_name != '':
         return user.first_name+' '+user.last_name
@@ -189,3 +191,54 @@ class SignUp(View):
 
             context['error'] = 1
             return render(request, "signup.html", context)
+
+
+class AboutUs(View):
+    def get(self, request):
+
+        context = base_context(
+            request, title='Про нас', header='Про нас', error=0)
+
+        return render(request, "about_us.html", context)
+
+    def post(self, request):
+        context = {}
+        form = request.POST
+
+        return render(request, "about_us.html", context)
+    
+class Rules(View):
+    def get(self, request):
+
+        context = base_context(
+            request, title='Правила клубу', header='Правила клубу', error=0)
+
+        return render(request, "rules.html", context)
+
+    def post(self, request):
+        context = {}
+        form = request.POST
+
+        return render(request, "rules.html", context)
+
+class OldRules(View):
+    def get(self, request):
+
+        context = base_context(
+            request, title='Правила клубу (повні)', header='Правила клубу (повні)', error=0)
+
+        return render(request, "old_rules.html", context)
+
+    def post(self, request):
+        context = {}
+        form = request.POST
+
+        return render(request, "old_rules.html", context)   
+    
+
+def handler404(request, exception):
+
+        context = base_context(
+            request, title='404 - Не знайдено', header='404 - Не знайдено', error=0)
+
+        return render(request, "old_rules.html", context)

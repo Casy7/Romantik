@@ -40,7 +40,7 @@ body {
     background-color: #1c1f22 !important;
 }
 
-h1, h2, h3, h4, h5, p, small, a, td, li, pre {
+h1, h2, h3, h4, h5, p, small, a, td, li, pre, span {
     color: white;
 }
 
@@ -71,7 +71,7 @@ h3 {
     font-size: 30px;
     font-family: 'Roboto-Light', sans-serif;
     padding-left: 15px;
-    margin-bottom: 40px;
+    margin-bottom: 17px;
 }
 
 p {
@@ -132,8 +132,11 @@ pre .language-plaintext {
 }
 
 blockquote {
+    font-style: italic;
+    color: rgb(175, 175, 175);
     border-left: 5px solid white;
     padding-left: 15px;
+    margin-bottom: 0px;
 }
 
 .navbar_background_image {
@@ -252,6 +255,10 @@ nav .dropdown-toggle::after {
     p.right, p.left {
         text-align: justify;
     }
+    .navbar-header {
+        top: 23px;
+        position: absolute;
+        }
 
     .row {
         display: block;

@@ -1,7 +1,9 @@
+from django import urls
 from .views import *
-from django.urls import path, re_path
+from django.urls import include, path, re_path
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf.urls import handler404
 
 urlpatterns = [
     path("", HomePage.as_view(), name="home"),
@@ -9,9 +11,14 @@ urlpatterns = [
     path("signin/", Login.as_view(), name="login"),
     path("signout/", Logout.as_view(), name="logout"),
     path("signup/", SignUp.as_view(), name="registration"),
+    path("about/", AboutUs.as_view(), name="about_us"),
+    path("rules/", Rules.as_view(), name="rules"),
+    path("old_rules/", OldRules.as_view(), name="old_rules"),
     re_path('publish_post/', AjaxPublishPost.as_view(), name='publish_post'),
     re_path('add_photo_to_news_post/', AjaxAddPhotoToPost.as_view(), name='add_photo'),
+
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = 'RomantikApp.views.handler404'

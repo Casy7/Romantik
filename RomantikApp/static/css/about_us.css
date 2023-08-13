@@ -1,0 +1,38 @@
+.card-dark {
+	background-color: #1c1f22;
+	width: 240px;
+	border-image: linear-gradient(#ff3d0c, #ffd000) 30;
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 4px;
+	margin: 15px;
+	padding: 0px;
+	background-size: 100% 150px;
+	background-repeat: no-repeat;
+	background-attachment: initial;
+	display: flex;
+	flex-direction: column;
+}
+
+.gradient-card {
+	display: block;
+	position: relative;
+	background-image: linear-gradient(to top, transparent 0%, rgb(0, 0, 0) 100%);
+}
+
+.card-filler {
+	height: 40px;
+}
+
+
+
+.card-inline-scroll-container {
+	display: flex;
+	flex-wrap: nowrap;
+	flex-grow: 0;
+	justify-content: normal;
+	overflow-x: scroll;
+}
+.card-inline-scroll-container::-webkit-scrollbar {
+    display: none;
+}
