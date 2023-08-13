@@ -44,6 +44,10 @@ h1, h2, h3, h4, h5, p, small, a, td, li, pre, span {
     color: white;
 }
 
+ol li {
+    font-size: large;
+}
+
 td {
     border: 1px solid white;
 }
