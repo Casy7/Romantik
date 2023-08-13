@@ -237,6 +237,14 @@ blockquote {
     color: white;
 }
 
+nav .dropdown-toggle::after {
+    display: none;
+}
+
+.dropdown-menu.user-menu-dropdown {
+    left: -95px;
+}
+
 @media only screen and (max-device-width: 480px) {
     p {
         text-align: justify;
@@ -263,4 +271,8 @@ blockquote {
     .page-content {
         background-position: inherit;
         }
+
+    .desktop {
+        display: none !important;
+    }
 }

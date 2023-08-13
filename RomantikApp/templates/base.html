@@ -108,7 +108,7 @@
   </style>
   <link rel="stylesheet" href="{% static 'css/base.css'%}">
   <script src="{% static 'libs/modules/jquery/jquery.js' %}" type="text/javascript"></script>
-  <link rel="icon" type="image/png" href="{% static 'icons/logo.svg' %}"/>
+  <link rel="icon" type="image/png" href="{% static 'icons/logo.svg' %}" />
   <!-- GOOGLE SEARCH CONSOLE ID -->
   <meta name="google-site-verification" content="lJ8_J2eP5H3_CfvTKaaqfta697gWaK5cdSeyW1O5BR4" />
 </head>
@@ -117,80 +117,108 @@
   <!-- __________________________________________ NAVBAR __________________________________________ -->
 
   <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
+    <div class="nav-item dropdown mobile">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+        aria-expanded="false">
 
-      <a class="navbar-brand" href="/"><img class="base_logo_mini" src="{% static 'icons/logo.svg' %}"></a>
+        <img class="glyphicon white" src="{% static 'icons/menu.svg' %}">
 
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0 central-nav-panel">
-
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            Інше
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Опції</a>
-            <a class="dropdown-item" href="#">відсутні</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="/admin">Admin panel</a>
-          </div>
-        </li>
+      </a>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         {% if header != 'Новини' %}
-        <li class="nav-item">
-          <a class="nav-link" href="/news">Новини</a>
-        </li>
+        <a class="dropdown-item" href="/news">Новини</a>
         {% endif %}
-      </ul>
+        {% if header != 'Про нас' %}
+        <a class="dropdown-item" href="/news">Про нас</a>
+        {% endif %}
+        {% if user.is_superuser %}
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="/admin">Admin panel</a>
+        {% endif %}
 
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-right-panel">
-        
+      </div>
+    </div>
+
+    <a class="navbar-brand" href="/"><img class="base_logo_mini" src="{% static 'icons/logo.svg' %}"></a>
+
+
+
+
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0 central-nav-panel">
+      {% if header != 'Новини' %}
+      <li class="nav-item desktop">
+        <a class="nav-link" href="/news">Новини</a>
+      </li>
+      {% endif %}
+      {% if header != 'Про нас' %}
+      <li class="nav-item desktop">
+        <a class="nav-link" href="/news">Про нас</a>
+      </li>
+      {% endif %}
+      {% if user.is_superuser %}
+      <li class="nav-item desktop">
+        <a class="dropdown-item" href="/admin">Admin panel</a>
+      </li>
+      {% endif %}
+    </ul>
+
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-right-panel">
+
       {% if header != 'none' %}
       <h4 class="navbar-header">{{ title }}</h4>
       {% endif %}
+    </ul>
 
+
+
+
+    <div class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarUserDropdown" role="button" data-bs-toggle="dropdown"
+        aria-expanded="false">
+        <img class="glyphicon white" src="{% static 'icons/user.svg' %}">
+      </a>
+      <div class="dropdown-menu user-menu-dropdown" aria-labelledby="navbarUserDropdown">
 
         {% if user != 'none' %}
-        <li class="nav-item active">
-          <p class="user_credentials"> {{ user.username }}</p>
-        </li>
+
+        <a class="dropdown-item" href="/">
+          <img class="glyphicon white" src="{% static 'icons/user.svg' %}">
+          {{ user.username }}</a>
         {% endif %}
 
 
         {% if user != 'none' %}
-        <li class="nav-item active">
-          <a class="nav-link" href="/signout">
-            <img class="glyphicon white" src="{% static 'icons/sign_out.svg' %}">
-            <span class="sr-only"></span>
-          </a>
-        </li>
+        <a class="dropdown-item" href="/signout">
+          <img class="glyphicon white" src="{% static 'icons/sign_out.svg' %}">
+          Вихід
+        </a>
         {% endif %}
 
         {% if user == 'none' and header != 'Вхід' %}
-        <li class="nav-item active">
-          <a class="nav-link" href="/signin">
-            <img class="glyphicon white" src="{% static 'icons/sign_in.svg' %}">
-            <span class="sr-only"></span>
-          </a>
-        </li>
+
+        <a class="dropdown-item" href="/signin">
+          <img class="glyphicon white" src="{% static 'icons/sign_in.svg' %}">
+          Вхід
+        </a>
+
         {% endif %}
 
         {% if user == 'none' and header != 'Реєстрація' %}
-        <li class="nav-item active">
-          <a class="nav-link" href="/signup">
-            <img class="glyphicon white" src="{% static 'icons/sign_up.svg' %}">
-            <span class="sr-only"></span></a>
-        </li>
+        <a class="dropdown-item" href="/signup">
+          <img class="glyphicon white" src="{% static 'icons/sign_up.svg' %}">
+          Реєстрація
+        </a>
+
         {% endif %}
 
-        <!-- <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form> -->
-        <li class="nav-item">
-          <img class="navbar_background_image" src="{% static 'icons/navbar_panel.svg' %}" alt="">
-        </li>
-      </ul>
+      </div>
     </div>
+
+    <li class="nav-item" style="display: none;">
+      <img class="navbar_background_image" src="{% static 'icons/navbar_panel.svg' %}" alt="">
+    </li>
+    </ul>
+
   </nav>
 
 
@@ -227,6 +255,7 @@
 
 
 
+<script src="{% static 'js/base.js' %}" type="text/javascript"></script>
 
 
 </html>
