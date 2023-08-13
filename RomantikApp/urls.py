@@ -14,6 +14,11 @@ urlpatterns = [
     path("about/", AboutUs.as_view(), name="about_us"),
     path("rules/", Rules.as_view(), name="rules"),
     path("old_rules/", OldRules.as_view(), name="old_rules"),
+    path("history/", History.as_view(), name="history"),
+    path("contacts/", Contacts.as_view(), name="contacts"),
+    path("hymn/", Hymn.as_view(), name="hymn"),
+
+
     re_path('publish_post/', AjaxPublishPost.as_view(), name='publish_post'),
     re_path('add_photo_to_news_post/', AjaxAddPhotoToPost.as_view(), name='add_photo'),
 

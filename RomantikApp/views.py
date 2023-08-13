@@ -201,11 +201,6 @@ class AboutUs(View):
 
         return render(request, "about_us.html", context)
 
-    def post(self, request):
-        context = {}
-        form = request.POST
-
-        return render(request, "about_us.html", context)
     
 class Rules(View):
     def get(self, request):
@@ -215,11 +210,6 @@ class Rules(View):
 
         return render(request, "rules.html", context)
 
-    def post(self, request):
-        context = {}
-        form = request.POST
-
-        return render(request, "rules.html", context)
 
 class OldRules(View):
     def get(self, request):
@@ -228,17 +218,36 @@ class OldRules(View):
             request, title='Правила клубу (повні)', header='Правила клубу (повні)', error=0)
 
         return render(request, "old_rules.html", context)
+    
 
-    def post(self, request):
-        context = {}
-        form = request.POST
+class History(View):
+    def get(self, request):
 
-        return render(request, "old_rules.html", context)   
+        context = base_context(
+            request, title='Історія клубу', header='Історія клубу', error=0)
+
+        return render(request, "history.html", context)
+    
+
+class Contacts(View):
+    def get(self, request):
+
+        context = base_context(
+            request, title='Контакти', header='Контакти', error=0)
+
+        return render(request, "сontacts.html", context)
+
+
+class Hymn(View):    
+    def get(self, request):
+
+        context = base_context(
+            request, title='Гімн клубу', header='Гімн клубу', error=0)
+
+        return render(request, "hymn.html", context)
     
 
 def handler404(request, exception):
-
         context = base_context(
             request, title='404 - Не знайдено', header='404 - Не знайдено', error=0)
-
         return render(request, "old_rules.html", context)

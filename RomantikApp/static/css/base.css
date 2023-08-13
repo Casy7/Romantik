@@ -89,6 +89,10 @@ p.left {
     text-align: left;
 }
 
+p.justify {
+    text-align: justify;
+}
+
 a {
     color: white;
 }
