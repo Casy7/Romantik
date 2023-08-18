@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-(1k2#-4ki&(z04ur=jg+i^_1s7q-516a_li1+(e22*mv78!_!c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['romantik.pythonanywhere.com', '127.0.0.1']
+ALLOWED_HOSTS = ['romantik.pythonanywhere.com', 'www.romantik.pp.ua', '127.0.0.1']
 
 
 # Application definition
