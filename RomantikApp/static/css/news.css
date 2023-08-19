@@ -1,6 +1,7 @@
 p, h1, h2 {
 	text-align: initial;
 }
+
 h1, h2, h3, p {
 	margin: initial;
 	padding: initial;
@@ -12,4 +13,10 @@ small {
 
 .author {
 	color: wheat;
+}
+
+.news-content.ck-content {
+	box-sizing: content-box;
+	height: max-content;
+	display: flow-root;
 }
