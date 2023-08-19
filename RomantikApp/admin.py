@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import NewsPost
+from .models import *
 # Register your models here.
 
 
@@ -10,3 +10,13 @@ class NewsPostAdmin(admin.ModelAdmin):
 
 
 admin.site.register(NewsPost, NewsPostAdmin)
+
+class UpVoteAdmin(admin.ModelAdmin):
+    list_display = ('user', 'news')
+
+admin.site.register(UpVote, UpVoteAdmin)
+
+class DownVoteAdmin(admin.ModelAdmin):
+    list_display = ('user', 'news')
+
+admin.site.register(DownVote, DownVoteAdmin)

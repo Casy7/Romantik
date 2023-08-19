@@ -6,32 +6,90 @@
 <script src="{% static 'libs/modules/ckeditor/build/ckeditor.js' %}"></script>
 <link href="{% static 'css/news.css'%}" rel="stylesheet">
 <link href="{% static 'css/editor.css'%}" rel="stylesheet">
+<script src="{% static 'js/news.js' %}"></script>
 
-{% if user != 'none' %}
-<div class="editor-box">
-    <textarea name="content" id="editor">
-        </textarea>
-    <button class="btn btn-primary" type="button" onclick="default_news_sent()">Save</button>
-
-    <script src="{% static 'js/editor.js' %}"></script>
-    <script src="{% static 'js/news.js' %}"></script>
-
-</div>
-{% endif %}
-
-<div class="posts-list">
-
-    {% for post in news %}
-    <div class="news-content ck-content">
-        {{post.content | safe}}
+<div class="beauty-container">
+    {% if user != 'none' %}
+    <div class="inline-panel elements-right">
+        <button id="show-editor" class="btn btn-primary" type="button" onclick="show_editor()"><img
+                class="mini-icon negative" src="{% static 'icons/write.svg' %}" alt="plus"> Написати пост</button>
     </div>
-    <samll class="author">by {{post.user.username}} on
-        {{post.datetime | time:"H:i:s" }}, {{post.datetime | date:"d.m.Y" }}</samll>
+    <br><br>
+    <div class="collapse" id="editor-hidden-box">
+        <div class="editor-box">
+            <textarea name="content" id="editor">
+            </textarea>
+            <button class="btn btn-primary" type="button" onclick="default_news_sent()">Опублікувати!</button>
 
-    <hr>
-    {% endfor %}
+            <script src="{% static 'js/editor.js' %}"></script>
 
+
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="posts-list">
+
+        {% for news_post in news %}
+        <div class="news-post" id="post_{{news_post.post_id}}">
+            <div class="news-content ck-content">
+                {{news_post.post.content | safe}}
+            </div>
+            <div class="post-control-panel">
+                <samll class="author">by {{news_post.post.user.username}} on
+                    {{news_post.post.datetime | time:"H:i:s" }}, {{news_post.post.datetime | date:"d.m.Y" }}</samll>
+
+                <div class="vote-panel">
+                    {% if user != 'none' %}
+
+                    {% if news_post.user_downvoted == 'yes' %}
+                    <button class="btn btn-outline-secondary downvoted left-control" type="button"
+                        id="downvote_post_{{news_post.post_id}}"
+                        onclick="vote_post('{{news_post.post_id}}', 'downvote')"><img class="mini-icon negative"
+                            src="{% static 'icons/down.svg' %}" alt="down"></button>
+                    {% else %}
+                    <button class="btn btn-outline-secondary left-control" type="button"
+                        id="downvote_post_{{news_post.post_id}}"
+                        onclick="vote_post('{{news_post.post_id}}', 'downvote')"><img class="mini-icon negative"
+                            src="{% static 'icons/down.svg' %}" alt="down"></button>
+                    {% endif %}
+
+                    <div class="post-raiting-box">
+                        <p class="post-raiting" id="post_raiting_{{news_post.post_id}}">{{ news_post.total_raiting }}
+                        </p>
+                    </div>
+                    {% if news_post.user_upvoted == 'yes' %}
+                    <button class="btn btn-outline-secondary upvoted right-control" type="button"
+                        id="upvote_post_{{news_post.post_id}}"
+                        onclick="vote_post('{{news_post.post_id}}', 'upvote')"><img class="mini-icon negative"
+                            src="{% static 'icons/up.svg' %}" alt="up"></button>
+                    {% else %}
+                    <button class="btn btn-outline-secondary right-control" type="button"
+                        id="upvote_post_{{news_post.post_id}}"
+                        onclick="vote_post('{{news_post.post_id}}', 'upvote')"><img class="mini-icon negative"
+                            src="{% static 'icons/up.svg' %}" alt="up"></button>
+                    {% endif %}
+
+                    {% else %}
+                    <button class="btn btn-outline-secondary left-control" type="button" disabled="disabled"><img
+                            class="mini-icon negative" src="{% static 'icons/down.svg' %}" alt="down"></button>
+                    <div class="post-raiting-box">
+                        <p class="post-raiting" id="post_raiting_{{news_post.post_id}}">{{ news_post.total_raiting }}
+                        </p>
+                    </div>
+
+                    <button class="btn btn-outline-secondary right-control" type="button" disabled="disabled"><img
+                            class="mini-icon negative" src="{% static 'icons/up.svg' %}" alt="up"></button>
+                    {% endif %}
+
+
+                </div>
+            </div>
+            <hr>
+        </div>
+        {% endfor %}
+
+    </div>
 </div>
-
 
 {% endblock %}

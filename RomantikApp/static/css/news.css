@@ -13,10 +13,84 @@ small {
 
 .author {
 	color: wheat;
+	width: 100%;
+	vertical-align: bottom;
+	display: inline-grid;
+	text-align: left;
+	align-content: end;
 }
 
 .news-content.ck-content {
 	box-sizing: content-box;
 	height: max-content;
 	display: flow-root;
+}
+
+.vote-panel {
+	display: inline-flex;
+	align-content: flex-end;
+	display: flex;
+	align-content: end;
+	width: 100%;
+	flex-direction: row;
+	flex-grow: 1;
+	justify-content: flex-end;
+}
+
+#show-editor {
+	width: 250px;
+	float: right;
+	align-self: end;
+
+}
+
+.news-content.ck-content {
+	width: 100%;
+}
+
+.post-raiting {
+	font-size: 15px;
+
+	text-align: center;
+	vertical-align: middle;
+}
+
+.post-raiting-box {
+	border: 1px solid gray;
+	min-width: 60px;
+	height: 40px;
+	border-radius: 0px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+
+
+
+.downvoted {
+	border: 1px solid red;
+}
+
+.upvoted {
+	border: 1px solid greenyellow;
+}
+
+.left-control {
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+	height: 40px;
+	border-right: none;
+}
+
+.right-control {
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px;
+	height: 40px;
+	border-left: none;
+}
+
+.post-control-panel {
+	display: flex;
+	flex-direction: row;
+	margin-top: 15px;
 }

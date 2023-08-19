@@ -53,3 +53,59 @@ function send_rent_time(requestType, additionaldata = {}) {
 		}
 	});
 }
+
+function show_editor() {
+	if ($('#editor-hidden-box').is(":visible")) {
+		$('#editor-hidden-box').collapse('hide');
+	}
+	else {
+		$('#editor-hidden-box').collapse('show');
+	}
+
+}
+
+function vote_post(post_id, vote_type, additionaldata = {}) {
+
+	$.ajax({
+		url: "/vote_post/",
+		type: 'POST',
+		data: {
+			'post_id': post_id,
+			vote_type: vote_type,
+			'secondary_data': additionaldata
+		},
+		//DO NOT EDIT!
+		beforeSend: function (xhr, settings) {
+			collectCookies(xhr);
+		},
+
+		//EDITABLE CODE
+		success: function a(json) {
+			// alert(json);
+			// alert(json.exist);
+			if (json.result === "success") {
+
+				$("#post_raiting_" + post_id).text(json.total_raiting);
+
+				if (json.vote_cancelled == "true") {
+					$("#downvote_post_" + post_id).removeClass('downvoted');
+					$("#upvote_post_" + post_id).removeClass('upvoted');
+				}
+
+				else {
+
+					if (vote_type === "upvote") {
+						$("#downvote_post_" + post_id).removeClass('downvoted');
+						$("#upvote_post_" + post_id).addClass('upvoted');
+					} else if (vote_type === "downvote") {
+						$("#upvote_post_" + post_id).removeClass('upvoted');
+						$("#downvote_post_" + post_id).addClass('downvoted');
+					}
+				}
+
+			} else {
+				alert("Не вийшло проголосувати. Перевірте Інтернет-з'єднання");
+			}
+		}
+	});
+}

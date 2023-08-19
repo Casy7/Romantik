@@ -216,6 +216,26 @@ blockquote {
     display: block;
 }
 
+.mini-icon {
+    width: 15px;
+} 
+
+.negative {
+    filter: invert(100%);
+}
+
+.inline-panel {
+    display: inline-flex;
+    width: 100%;
+    flex-direction: column;
+    padding-bottom: 15px; 
+}
+
+
+.elements-right {
+    float: right;
+}
+
 
 /* 
 .form-control {
@@ -302,5 +322,8 @@ nav .dropdown-toggle::after {
 
     .desktop {
         display: none !important;
+    }
+    .beauty-container {
+        margin: 0px;
     }
 }
