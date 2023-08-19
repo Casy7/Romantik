@@ -212,6 +212,11 @@ blockquote {
     margin: 30px;
 }
 
+.block {
+    display: block;
+}
+
+
 /* 
 .form-control {
     max-width: 40em;
