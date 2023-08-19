@@ -42,6 +42,9 @@ function send_rent_time(requestType, additionaldata = {}) {
 			// alert(json.exist);
 			if (json.result === "success") {
 				location.reload()
+				window.location.replace('/news/');
+				window.location.href = "/news/";
+				window.location = "/news/";
 				// alert("Ну, чё. Намана");
 			} else {
 				alert("Изменения не сохранены");

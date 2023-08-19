@@ -1,5 +1,7 @@
 import datetime
 import json
+import os
+
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import View
@@ -11,6 +13,9 @@ from django.contrib.auth.models import User, AnonymousUser
 from django.core.files.storage import default_storage
 
 from .models import NewsPost
+from romantik.settings import MEDIA_ROOT
+
+from .modules.compressor import ImageCompressor
 
 # Create your views here.
 
@@ -100,6 +105,14 @@ class AjaxAddPhotoToPost(View, LoginRequiredMixin):
         file_name = datetime.datetime.now().strftime("%d_%m_%Y_%H_%M_%S") + '_' + uploaded_file.name
 
         file_path = default_storage.save(file_name, uploaded_file)
+
+        abs_file_path = os.path.join(MEDIA_ROOT, file_name)
+
+        
+        if os.stat(abs_file_path).st_size > 1024*1024:
+            comressor = ImageCompressor(abs_file_path)
+            comressor.compress()
+
 
 
         result = {}
