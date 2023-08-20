@@ -60,7 +60,7 @@ def base_context(request, **args):
 
 class HomePage(View):
     def get(self, request):
-        context = base_context(request, title='Home')
+        context = base_context(request)
         return render(request, "home.html", context)
 
 
