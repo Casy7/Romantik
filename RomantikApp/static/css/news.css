@@ -94,3 +94,16 @@ small {
 	flex-direction: row;
 	margin-top: 15px;
 }
+
+.link-icon {
+	text-decoration: none;
+	vertical-align: baseline;
+	}
+
+.comments-number {
+	text-decoration: none;
+	text-align: center;
+	vertical-align: bottom;
+	margin-left: 5px;
+	font-size: 15px;
+	}

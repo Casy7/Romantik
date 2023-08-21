@@ -22,7 +22,23 @@
             <button class="btn btn-primary" type="button" onclick="default_news_sent()">Опублікувати!</button>
 
             <script src="{% static 'js/editor.js' %}"></script>
+            <script>
+                ClassicEditor
+                    .create(document.querySelector('#editor'), {
+                        extraPlugins: [MyCustomUploadAdapterPlugin],
 
+                        // More configuration options.
+                        // ...
+                    })
+                    .then(newEditor => {
+                        editor = newEditor;
+                    })
+
+                    .catch(error => {
+                        console.log(error);
+                    });
+
+            </script>
 
         </div>
     </div>
@@ -40,6 +56,9 @@
                     {{news_post.post.datetime | time:"H:i:s" }}, {{news_post.post.datetime | date:"d.m.Y" }}</samll>
 
                 <div class="vote-panel">
+                    <a href='/post/{{news_post.post_id}}' class="link-icon"><img class="icon negative"
+                            src="{% static 'icons/comment.svg' %}" alt="down"><p class="comments-number">{{ news_post.comments_number }}</p></a>
+
                     {% if user != 'none' %}
 
                     {% if news_post.user_downvoted == 'yes' %}

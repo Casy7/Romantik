@@ -15,3 +15,9 @@ class UpVote(models.Model):
 class DownVote(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     news = models.ForeignKey(NewsPost, on_delete=models.CASCADE)
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    news_post = models.ForeignKey(NewsPost, on_delete=models.CASCADE)
+    content = models.TextField(max_length=30000, blank=True)
+    datetime = models.DateTimeField(auto_now_add=True, auto_created=True)

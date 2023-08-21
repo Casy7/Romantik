@@ -83,6 +83,8 @@ class NewsPage(View):
             else:
                 total_raiting = str(int_total_raiting)
 
+            comments_number = Comment.objects.filter(news_post=news_post).count()
+
             if request.user.is_authenticated:
                 user_upvoted = 'yes' if len(UpVote.objects.filter(
                     news=news_post).filter(user=request.user)) != 0 else 'no'
@@ -99,7 +101,8 @@ class NewsPage(View):
                 'upvotes': upvotes,
                 'downvotes': downvotes,
                 'user_upvoted': user_upvoted,
-                'user_downvoted': user_downvoted})
+                'user_downvoted': user_downvoted,
+                'comments_number': comments_number})
 
         context['news'] = news_dict
         context['news'].reverse()
@@ -205,6 +208,27 @@ class AjaxAddPhotoToPost(View, LoginRequiredMixin):
         result["result"] = "success"
         result["filename"] = file_name
         result["url"] = "/media/"+file_path
+
+        return HttpResponse(
+            json.dumps(result),
+            content_type="application/json"
+        )
+
+
+class AjaxPublishComment(View, LoginRequiredMixin):
+    def post(self, request):
+        form = request.POST
+        result = {}
+        
+
+        comment = Comment(
+            user=request.user,
+            news_post=NewsPost.objects.get(id=form["post_id"]),
+            content=form["content"]
+        )
+        comment.save()
+
+        result["result"] = "success"
 
         return HttpResponse(
             json.dumps(result),
@@ -348,7 +372,53 @@ class Hymn(View):
         return render(request, "hymn.html", context)
 
 
-def handler404(request, exception):
+class FullPost(View):
+    def get(self, request, post_id):
+        context = base_context(
+            request, title='Коментарі', header='Коментарі', error=0)
+        
+        if not NewsPost.objects.filter(id=post_id):
+            return handler404(request)
+
+        news_post = NewsPost.objects.get(id=post_id)
+        context['post'] = news_post
+
+
+        upvotes = UpVote.objects.filter(news=news_post)
+        downvotes = DownVote.objects.filter(news=news_post)
+
+        int_total_raiting = upvotes.count() - downvotes.count()
+        total_raiting = str(int_total_raiting)
+        if int_total_raiting > 0:
+            total_raiting = "+"+str(int_total_raiting)
+        else:
+            total_raiting = str(int_total_raiting)
+
+        if request.user.is_authenticated:
+            user_upvoted = 'yes' if len(UpVote.objects.filter(
+                news=news_post).filter(user=request.user)) != 0 else 'no'
+            user_downvoted = 'yes' if len(DownVote.objects.filter(
+                news=news_post).filter(user=request.user)) != 0 else 'no'
+        else:
+            user_upvoted = 'no'
+            user_downvoted = 'no'
+
+        context.update({
+            'post_id': news_post.id,
+            'post': news_post,
+            'total_raiting': total_raiting,
+            'upvotes': upvotes,
+            'downvotes': downvotes,
+            'user_upvoted': user_upvoted,
+            'user_downvoted': user_downvoted})
+        
+        comments = sorted(Comment.objects.filter(news_post=news_post), key=lambda obj: obj.datetime)
+        comments.reverse()
+        context['comments'] = comments
+
+        return render(request, "full_post.html", context)
+
+def handler404(request, exception=""):
     context = base_context(
         request, title='404 - Не знайдено', header='404 - Не знайдено', error=0)
-    return render(request, "old_rules.html", context)
+    return render(request, "not_found.html", context)

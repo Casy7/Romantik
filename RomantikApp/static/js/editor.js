@@ -107,23 +107,6 @@ function MyCustomUploadAdapterPlugin(editor) {
 	};
 }
 
-ClassicEditor
-	.create(document.querySelector('#editor'), {
-		extraPlugins: [MyCustomUploadAdapterPlugin],
-
-		// More configuration options.
-		// ...
-	})
-	.then(newEditor => {
-		editor = newEditor;
-	})
-
-	.catch(error => {
-		console.log(error);
-	});
-
-
-
 
 function send_image(image, additionaldata = {}) {
 
