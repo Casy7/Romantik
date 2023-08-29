@@ -200,9 +200,7 @@ class AjaxAddPhotoToPost(View, LoginRequiredMixin):
 
         abs_file_path = os.path.join(MEDIA_ROOT, file_name)
 
-        if os.stat(abs_file_path).st_size > 1024*1024:
-            comressor = ImageCompressor(abs_file_path)
-            comressor.compress()
+        ImageCompressor().process(abs_file_path)
 
         result = {}
         result["result"] = "success"

@@ -1,37 +1,29 @@
 from PIL import Image
 import os
 
-
 class ImageCompressor:
-	def __init__(self, image_path):
-		self.image_path = image_path
-		self.optimize_max_compression_cycles = 2
-		self.max_allowed_size = [3000, 3000]
+	def __init__(self):
+		self.max_compression_cycles = 2
+		self.max_resolution = [3000, 3000]
+		self.max_file_size = 1024 ** 2 # 2 MiB
 
-	def compress(self):
-		# print("DEF_SIZE", os.stat(self.image_path).st_size)
-		self.downsize()
-		self.optimize()
-		# print("RES_SIZE", os.stat(self.image_path).st_size)
+	def __check_file_size(self, path):
+		return os.stat(path).st_size > self.max_file_size
+
+	def process(self, image_path):
+		if (self.__check_file_size(image_path)):
+			self.downscale(image_path)
+			self.compress(image_path)
 	
+	def downscale(self, image_path):
+		img = Image.open(image_path)
+		img.thumbnail(self.max_resolution)
+		img.save(image_path)
 
-	def downsize(self):
-		foo = Image.open(self.image_path)
-		if foo.size[0] > self.max_allowed_size[0]:
-			k_scale = foo.size[0]/self.max_allowed_size[0]
-			foo = foo.resize((int(self.max_allowed_size[0]), int(
-				foo.size[1]/k_scale)), Image.LANCZOS)
-			foo.save(self.image_path, quality=95)
-			
-		if foo.size[1] > self.max_allowed_size[1]:
-			k_scale = foo.size[1]/self.max_allowed_size[1]
-			foo = foo.resize((int(foo.size[0]/k_scale), int(self.max_allowed_size[1]), ), Image.LANCZOS)
-			foo.save(self.image_path, quality=95)
-
-	def optimize(self):
+	def compress(self, image_path):
 		current_cycle = 0
 
-		while os.stat(self.image_path).st_size > 1024*1024 and current_cycle < self.optimize_max_compression_cycles:
-			foo = Image.open(self.image_path)
-			foo.save(self.image_path, optimize=True, quality=50)            
+		while self.__check_file_size(image_path) and current_cycle < self.max_compression_cycles:
+			foo = Image.open(image_path)
+			foo.save(image_path, optimize=True, quality=50)
 			current_cycle += 1
