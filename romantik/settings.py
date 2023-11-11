@@ -26,7 +26,11 @@ SECRET_KEY = 'django-insecure-(1k2#-4ki&(z04ur=jg+i^_1s7q-516a_li1+(e22*mv78!_!c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['romantik.pythonanywhere.com', 'www.romantik.pp.ua', '127.0.0.1']
+ALLOWED_HOSTS = [
+    'www.romantik.space'
+    'romantik.pythonanywhere.com',
+    'www.romantik.pp.ua',
+    '127.0.0.1']
 
 
 # Application definition
@@ -132,5 +136,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # see https://help.pythonanywhere.com/pages/DjangoStaticFiles for more info
 MEDIA_ROOT = os.path.join(BASE_DIR, 'RomantikApp', 'media')
 MEDIA_URL = '/media/'
-
-

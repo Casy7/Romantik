@@ -8,7 +8,7 @@
 <script src="{% static 'js/news.js' %}"></script>
 
 <div class="beauty-container">
-    {% if user.is_superuser %}
+    {% if is_superuser %}
     <div class="inline-panel elements-right">
         <button id="show-editor" class="btn btn-primary" type="button" onclick="show_editor()"><img
                 class="mini-icon negative" src="{% static 'icons/write.svg' %}" alt="plus"> Написати пост</button>
