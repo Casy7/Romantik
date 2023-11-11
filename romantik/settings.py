@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-(1k2#-4ki&(z04ur=jg+i^_1s7q-516a_li1+(e22*mv78!_!c
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'www.romantik.space'
+    'www.romantik.space',
     'romantik.pythonanywhere.com',
     'www.romantik.pp.ua',
     '127.0.0.1']
