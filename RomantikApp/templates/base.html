@@ -132,6 +132,9 @@
         {% if header != 'Про нас' %}
         <a class="dropdown-item" href="/about">Про нас</a>
         {% endif %}
+        {% if header != 'Походи' %}
+        <a class="dropdown-item" href="/hikes">Походи</a>
+        {% endif %}
         {% if user.is_superuser %}
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="/admin">Admin panel</a>
@@ -154,6 +157,11 @@
       {% if header != 'Про нас' %}
       <li class="nav-item desktop">
         <a class="nav-link" href="/about">Про нас</a>
+      </li>
+      {% endif %}
+      {% if header != 'Походи' %}
+      <li class="nav-item desktop">
+        <a class="nav-link" href="/hikes">Походи</a>
       </li>
       {% endif %}
       {% if user.is_superuser %}

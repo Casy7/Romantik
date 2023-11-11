@@ -40,7 +40,7 @@ body {
     background-color: #1c1f22 !important;
 }
 
-h1, h2, h3, h4, h5, p, small, a, td, li, pre, span {
+h1, h2, h3, h4, h5, p, small, a, td, li, pre, span, th, tr {
     color: white;
 }
 

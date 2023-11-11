@@ -1,0 +1,11 @@
+.hk_table {
+	width: 100%;
+}
+
+.vertical-text {
+	writing-mode: sideways-lr;
+}
+
+.hk_table td {
+	border: 1px solid gray;
+}

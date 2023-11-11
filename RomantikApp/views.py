@@ -415,6 +415,13 @@ class FullPost(View):
         context['comments'] = comments
 
         return render(request, "full_post.html", context)
+    
+
+class Hikes(View):
+    def get(self, request):
+        context = base_context(request, title='Походи', header='Походи', error=0)
+        return render(request, "hikes.html", context)
+
 
 def handler404(request, exception=""):
     context = base_context(

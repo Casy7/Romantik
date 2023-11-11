@@ -8,6 +8,7 @@ from django.conf.urls import handler404
 urlpatterns = [
     path("", HomePage.as_view(), name="home"),
     path("news/", NewsPage.as_view(), name="news"),
+    path('hikes/', Hikes.as_view(), name="hikes"),
     path("signin/", Login.as_view(), name="login"),
     path("signout/", Logout.as_view(), name="logout"),
     path("signup/", SignUp.as_view(), name="registration"),
