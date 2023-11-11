@@ -236,6 +236,10 @@ blockquote {
     float: right;
 }
 
+.horisontal-scrollable-container {
+    overflow-x: scroll;
+}
+
 
 /* 
 .form-control {
