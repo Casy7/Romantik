@@ -58,6 +58,16 @@ def base_context(request, **args):
     return context
 
 
+def is_user_authenticated(request):
+    user = request.user
+    user_validation_properties = [
+        type(request.user) != AnonymousUser,
+        len(User.objects.filter(username=user.username)) != 0,
+        user.is_active
+    ]
+    return not False in user_validation_properties
+
+
 class HomePage(View):
     def get(self, request):
         context = base_context(request)
@@ -421,6 +431,23 @@ class Hikes(View):
     def get(self, request):
         context = base_context(request, title='Походи', header='Походи', error=0)
         return render(request, "hikes.html", context)
+    
+
+class AccountEditor(View, LoginRequiredMixin):
+    def get(self, request):
+        if not is_user_authenticated(request):
+            return HttpResponseRedirect("/signin")
+
+        user = request.user
+        context = base_context(request, title='Мій акаунт', header='Мій акаунт', error=0)
+
+        context['user'] = user
+        context['username'] = user.username
+        context['first_name'] = user.first_name
+        context['last_name'] = user.last_name
+        context['email'] = user.email
+
+        return render(request, "account_editor.html", context)
 
 
 def handler404(request, exception=""):

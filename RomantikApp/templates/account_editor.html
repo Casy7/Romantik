@@ -1,0 +1,261 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'libs/modules/cropper/croppie.css'%}" />
+<script src="{% static 'libs/modules/cropper/croppie.js'%}"></script>
+
+<link href="{% static 'css/account_editor.css'%}" rel="stylesheet">
+
+<script src="{% static 'js/account_editor.js'%}"></script>
+
+<script>
+    function byId(id) {
+        // Сокращение для удобства написания кода
+        return document.getElementById(id);
+    }
+    function del_without_replacing() {
+        button = document.createElement("button");
+        button.type = "button";
+        button.className = "upload-btn";
+        button.value = "Удалить";
+        button.innerText = "Удалить";
+        //button.style.height = "30px";
+        //button.style.width = "50px";
+        button.onclick = function a() {
+            hidden_field = document.createElement("input");
+            hidden_field.type = "hidden";
+            hidden_field.name = "delete_photo";
+            hidden_field.value = "0";
+            document.getElementById("myimg").src = "{% static 'icons/user.svg' %}";
+            byId('hidden_fields').appendChild(hidden_field);
+            del_avatar_button();
+        }
+        document.getElementById("del_button").appendChild(button);
+    }
+
+    function delete_avatar() {
+        document.getElementById("myimg").src = "{% static 'icons/user.svg' %}";
+        clearInputFile(document.getElementById("uploaded_avatar"));
+        del_avatar_button();
+    }
+
+
+</script>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div id="custom-file-input">
+        <input type="file" class="file-upload" name="image" id="uploaded_avatar" accept=".jpg, .jpeg, .png">
+    </div>
+    <!-- <h2 style="border-top: 1px solid rgb(199, 199, 199);">Профиль</h2> -->
+
+    <div class="row" style="margin-left: 0px;">
+        <!-- style="width: 250px;"> -->
+        <div class="img-container" style="padding: 0px;width: 250px;">
+
+            <div class="col avatar_col">
+                {% if avatar == '' %}
+                <img src="{% static 'icons/user.svg' %}" width="250" id="myimg" class="avatar"
+                    default="Фото не выбрано"></img>
+                {% else %}
+                <img src="{{profile.avatar.url}}" width="250" id="myimg" class="avatar" default="Фото не выбрано"></img>
+                {% endif %}
+            </div>
+            <div class="col">
+                <div class="row avatar_edit" style="padding: 0px;width: 250px;">
+                    <div class="col-sm" id="custom-file-input" style="padding: 0px;width: 250px;">
+                        <label type="button" for="uploaded_avatar" class="btn btn-dark upload-btn">Загрузить
+                        </label>
+                    </div>
+                    <div class="col-sm" id="del_button" style="padding: 0px;">
+                        <!-- Сюда добавляется кнопка удаления -->
+
+                        {% if avatar != '' %}
+
+                        <script>
+                            del_without_replacing();
+                        </script>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+            <script src="{% static 'js/upload_photo.js' %}"></script>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col" style="float: left;min-width: 70%;width: 600px;">
+
+            <tr class="row">
+                <label for="user_first_name" class="dark">Ім'я</label>
+                <input type="text" id="user_first_name" class="form-control bg-dark dark one-word-input-control"
+                    name="first_name" placeholder="Ім'я" value="{{user.first_name}}">
+            </tr>
+
+            <br>
+
+            <tr class="row">
+                <label for="user_last_name" class="dark">Прізвище</label>
+                <input type="text" id="user_last_name" class="form-control bg-dark dark one-word-input-control" name="last_name"
+                    placeholder="Прізвище" value="{{user.last_name}}">
+            </tr>
+
+            <br>
+
+            <tr class="row">
+                <label for="exampleFormControlInput1" class="dark">Про себе</label>
+                <textarea class="form-control bg-dark dark" name="about" placeholder="Декілька слів про себе" style="height: 100px;">{{profile.about}}</textarea>
+            </tr>
+
+            <div class="row" id="hidden_fields">
+                <!-- <input type="text" class="form-control"> -->
+            </div>
+
+
+
+            <!-- Полное имя и описание -->
+        </div>
+    </div>
+
+    <hr>
+
+    <label for="contacts">Контакты</label>
+    <div id="contacts" style="width: 65%;">
+
+
+        <!--Тут должно быть начало блока цикла темплейта-->
+
+
+        {% for contact in contacts %}
+
+        <div class="row" name="day" id="contact_{{contact.id}}" style="padding-top:20px;">
+            <div class="col-sm" id="contact_name_{{contact.id}}">
+                {% if contact.name in list_of_alowed_positions %}
+                <select class="form-control" name="contact_name_{{contact.id}}" id="contact_select_name_{{contact.id}}"
+                    style="height: 40px;font-size: 14px;">
+                    <option value="email">Email</option>
+                    <option value="phone">Телефон</option>
+                    <option value="telegram">Telegram</option>
+                    <option value="other" onclick="other_contact_type(this.parentNode.parentNode.parentNode.id)">Другое
+                    </option>
+                </select>
+                <script>
+                    byId('contact_select_name_{{contact.id}}').value = "{{contact.name}}";
+                </script>
+                {% else %}
+                <input type="text" id="contact_name_{{contact.id}}" class="form-control"
+                    name="contact_name_{{contact.id}}" style="height: 40px;font-size: 14px;" value="{{contact.name}}">
+                {% endif %}
+
+            </div>
+
+            <div class="col-sm">
+                <input type="text" id="contact_value_1" class="form-control" name="contact_value_{{contact.id}}"
+                    style="height: 40px;font-size: 14px;" value="{{contact.value}}">
+            </div>
+            <div class="col-sm">
+                <select name="contact_visibility_{{contact.id}}" class="form-control"
+                    style="height: 40px;font-size: 14px;" id="visible_cond_{{contact.id}}">
+                    <option value="noone">Виден только мне</option>
+                    <option value="all">Виден всем</option>
+                    <option value="friends">Виден друзьям</option>
+                </select>
+            </div>
+            <script>
+                byId('visible_cond_{{contact.id}}').value = "{{contact.visible_for}}";
+            </script>
+            <div class="col-sm-1">
+                <button type="button" class="form-control" style="height: 40px;font-size: 14px;"
+                    onclick="del_contact_field(this.parentNode.parentNode.id)">-</button>
+            </div>
+        </div>
+
+        {% endfor %}
+
+
+
+
+        <!-- Тут должен быть конец этого блока -->
+
+    </div> <br>
+    <input type="button" class="form-control" value="+" onclick="add_contact_field()" value=""
+        style="height: 40px;font-size: 14px; width: 65%;">
+    <br>
+
+    <div style="display: none;">
+
+        <h2 style="border-top: 1px solid rgb(199, 199, 199);">Приватность</h2>
+        <label for="exampleFormControlInput1">Кто может отправлять Вам запросы на участие</label>
+        <select class="form-control select" name="request" style="height: 40px;font-size: 14px;" id="request">
+            <option value="noone">Никто</option>
+            <option value="friends">Друзья</option>
+            <option value="all">Все</option>
+        </select>
+        <label for="exampleFormControlInput1">Кто может добавлять Вас в походы</label>
+        <select class="form-control select" name="add_to_ptc" style="height: 40px;font-size: 14px;" id="add_to_ptc">
+            <option value="noone">Никто</option>
+            <option value="friends">Друзья</option>
+            <option value="all">Все</option>
+        </select>
+        <label for="exampleFormControlInput1">Кто видит Ваши походы</label>
+        <select class="form-control select" name="can_see_hikes" style="height: 40px;font-size: 14px;"
+            id="can_see_hikes">
+            <option value="noone">Никто</option>
+            <option value="friends">Друзья</option>
+            <option value="all">Все</option>
+        </select>
+        <script>
+            byId('request').value = "{{profile.request_for_participation}}";
+            byId('add_to_ptc').value = "{{profile.add_to_participation}}";
+            byId('can_see_hikes').value = "{{profile.see_hikes}}";
+        </script>
+        <!-- <input type="text" class="form-control" name="first_name" placeholder=" "
+    style="width: 45%;font-size: 18px;"> -->
+        <div class="col-sm-2">
+        </div>
+
+    </div>
+    <br>
+    <div class='row'>
+        <div class='col'>
+            <a href="/account_editor/" class="btn btn-outline-secondary btn-block btn-lg indigo outline">Отменить
+                изменения</a>
+        </div>
+        <div class='col'><input type="submit" class="btn btn-secondary btn-block btn-lg indigo"
+                value="Сохранить изменения">
+        </div>
+    </div>
+</form>
+
+<script>
+    function del_without_replacing() {
+        button = document.createElement("button");
+        button.type = "button";
+        button.className = "upload-btn";
+        button.value = "Удалить";
+        button.innerText = "Удалить";
+        //button.style.height = "30px";
+        //button.style.width = "50px";
+        button.onclick = function a() {
+            hidden_field = document.createElement("input");
+            hidden_field.type = "hidden";
+            hidden_field.name = "delete_photo";
+            hidden_field.value = "0";
+            document.getElementById("myimg").src = "{% static 'icons/user.svg' %}";
+            byId('hidden_fields').appendChild(hidden_field);
+            del_avatar_button();
+        }
+        document.getElementById("del_button").appendChild(button);
+    }
+
+    function delete_avatar() {
+        document.getElementById("myimg").src = "{% static 'icons/user.svg' %}";
+        clearInputFile(document.getElementById("uploaded_avatar"));
+        del_avatar_button();
+    }
+</script>
+{% endblock %}

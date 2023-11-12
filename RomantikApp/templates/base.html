@@ -100,10 +100,16 @@
       font-family: "Roboto", "Roboto-medium", Tahoma;
     }
 
-    .page-content {
 
+    body {
       background-image: url("{% static 'images/background.png' %}");
-
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-attachment: fixed;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
 
     }
   </style>
@@ -189,12 +195,10 @@
       <div class="dropdown-menu user-menu-dropdown" aria-labelledby="navbarUserDropdown">
 
         {% if user != 'none' %}
-
-        <a class="dropdown-item" href="/">
+        <a class="dropdown-item" href="/my_account">
           <img class="glyphicon white" src="{% static 'icons/user.svg' %}">
           {{ user.username }}</a>
         {% endif %}
-
 
         {% if user != 'none' %}
         <a class="dropdown-item" href="/signout">
@@ -204,12 +208,10 @@
         {% endif %}
 
         {% if user == 'none' and header != 'Вхід' %}
-
         <a class="dropdown-item" href="/signin">
           <img class="glyphicon white" src="{% static 'icons/sign_in.svg' %}">
           Вхід
         </a>
-
         {% endif %}
 
         {% if user == 'none' and header != 'Реєстрація' %}
@@ -217,17 +219,10 @@
           <img class="glyphicon white" src="{% static 'icons/sign_up.svg' %}">
           Реєстрація
         </a>
-
         {% endif %}
 
       </div>
     </div>
-
-    <li class="nav-item" style="display: none;">
-      <img class="navbar_background_image" src="{% static 'icons/navbar_panel.svg' %}" alt="">
-    </li>
-    </ul>
-
   </nav>
 
 
@@ -235,8 +230,10 @@
 
   <!-- __________________________________________ CONTENT __________________________________________ -->
 
-  <div class="page-content">
-    <div id="content" class="container h-100 content">
+  <div class="page-content background">
+    <div class=""></div>
+
+    <div id="content" class="container content">
 
       {%block content%}
 

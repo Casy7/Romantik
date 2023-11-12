@@ -11,16 +11,6 @@
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
 integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-<!-- <style>
-	#content {
-  /* height: 200px; */
-  background-color: #cccccc;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-image: url("{% static 'icons/default.jpg' %}");
-  position: relative;
-}
-</style> -->
 
 
 <form method="POST">
@@ -47,39 +37,32 @@ integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fW
 					<div class="input-group form-group">
 						<!--SURNAME-->
 						<div class="input-group-prepend" style="display: inline-block;">
-							<span class="input-group-text bg-dark"><i class="fas fa-address-card"> *</i></span>
+							<span class="input-group-text bg-dark"><i class="fas fa-address-card"></i></span>
 						</div>
-						<input type="text" name="last_name" id = "last_name" required="" class="form-control dark-control dark"
-							placeholder="Фамілія">
+						<input type="text" name="last_name" id = "last_name" class="form-control dark-control dark"
+							placeholder="Прізвище">
 					</div>
 					<div class="input-group form-group">
 						<!--USERNAME-->
 						<div class="input-group-prepend">
 							<span class="input-group-text bg-dark"><i class="far fa-copyright"> *</i></span>
 						</div>
-						<input type="text" name="username" id = "username" required="" class="form-control dark-control dark"
+						<input type="text" name="username" id = "username" required pattern="[A-Za-z0-9_]+" minlength="3" class="form-control dark-control dark"
 							placeholder="Нікнейм">
 					</div>
 					<div class="input-group form-group">
 						<!--EMAIL-->
 						<div class="input-group-prepend">
-							<span class="input-group-text bg-dark"><i class="fas fa-envelope"> *</i></span>
+							<span class="input-group-text bg-dark"><i class="fas fa-envelope"> </i></span>
 						</div>
 						<input type="email" name="email" id = "email" class="form-control dark-control dark" placeholder="Email">
-					</div>
-					<div class="input-group form-group">
-						<!--EMAIL-->
-						<div class="input-group-prepend">
-							<span class="input-group-text bg-dark"><i class="fas fa-phone">  </i></span>
-						</div>
-						<input type="text" name="phone_number" id = "phone_number" class="form-control dark-control dark" placeholder="Номер телефону">
-					</div>					
+					</div>				
 					<div class="input-group form-group">
 						<!--PASSWORD-->
 						<div class="input-group-prepend">
-							<span class="input-group-text bg-dark"><i class="fa fa-key" aria-hidden="true"></i> *</span>
+							<span class="input-group-text bg-dark"><i class="fas fa-key" aria-hidden="true"> *</i></span>
 						</div>
-						<input id="password_field" type="password" required="" name="password"
+						<input id="password_field" type="password" required="" name="password" minlength="6"
 							class="form-control dark-control dark" placeholder="Пароль">
 						<div class="input-group-append">
 							<button type="button" class="form-control dark bg-dark show_pwd_button" onclick="show_password()"><i class="fa fa-eye"></i></button>
