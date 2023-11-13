@@ -12,11 +12,13 @@
 
 .full-name {
 	margin-bottom: 0px;
+	word-wrap: break-word;
 }
 
 .about {
 	margin: 40px;
 	margin-top: 0px;
+	word-wrap: break-word;
 }
 
 .contact-info {

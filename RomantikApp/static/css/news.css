@@ -18,6 +18,9 @@ small {
 	display: inline-grid;
 	text-align: left;
 	align-content: end;
+	align-self: center;
+	font-size: 14px;
+	display: inline;
 }
 
 .news-content.ck-content {
