@@ -18,8 +18,8 @@
     </div>
 
     <div class="post-control-panel">
-        <samll class="author">by {{post.user.username}} on
-            {{post.datetime | time:"H:i:s" }}, {{post.datetime | date:"d.m.Y" }}</samll>
+        <small class="author">by <a href='/user/{{post.user.username}}'>{{ post.user.username }}</a> on
+            {{post.datetime | time:"H:i:s" }}, {{post.datetime | date:"d.m.Y" }}</small>
 
         <div class="vote-panel">
 
@@ -75,7 +75,8 @@
 
             <div class="inline-panel elements-right">
                 <button id="show-editor" class="btn btn-primary" type="button" onclick="show_editor()"><img
-                        class="mini-icon negative" src="{% static 'icons/write.svg' %}" alt="plus"> Прокоментувати</button>
+                        class="mini-icon negative" src="{% static 'icons/write.svg' %}" alt="plus">
+                    Прокоментувати</button>
             </div>
             <br><br>
             <div class="collapse" id="editor-hidden-box">
@@ -114,11 +115,26 @@
 
         <div class="comments">
             {% for comment in comments %}
-            <div class="comment">
-                <p>{{ comment.content | safe }}</p>
-                <small>by {{ comment.user.username }} on
-                    {{post.datetime | time:"H:i:s" }},
-                    {{ comment.datetime | date:"d.m.Y" }}</small>
+            <div class="inline-panel comment-author">
+                <div class="comment-avatar-container">
+                    {% if comment.comment_author_has_avatar %}
+                    <img class="glyphicon big comment-avatar" src="{{ comment.comment_author_avatar }}">
+                    {% else %}
+                    <img class="glyphicon big comment-avatar" src="{% static 'icons/default_avatar.png' %}">
+                    {% endif %}
+                </div>
+                <div class="user-name-container">
+                    <div>
+                        <p>{{ comment.comment_author_full_name }}</p>
+                    </div>
+                    <small><a href='/user/{{ comment.comment_author.username }}'>
+                            @{{ comment.comment_author.username }}</a>, on
+                        {{ comment.content.datetime | time:"H:i:s" }},
+                        {{ comment.content.datetime | date:"d.m.Y" }}</small>
+                </div>
+            </div>
+            <div class="comment ck-content">
+                <p>{{ comment.content.content | safe }}</p>
             </div>
             <hr>
             {% endfor %}

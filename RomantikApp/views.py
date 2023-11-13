@@ -89,27 +89,39 @@ def decode_base64_file(data):
 
         return extension
 
-    # Check if this is a base64 string
     if isinstance(data, six.string_types):
-        # Check if the base64 string is in the "data:" format
         if 'data:' in data and ';base64,' in data:
-            # Break out the header from the base64 content
             header, data = data.split(';base64,')
 
-        # Try to decode the file. Return validation error if it fails.
         try:
             decoded_file = base64.b64decode(data)
         except TypeError:
             TypeError('invalid_image')
 
-        # Generate file name:
-        file_name = str(uuid.uuid4())[:12] # 12 characters are more than enough.
-        # Get the file name extension:
+        file_name = str(uuid.uuid4())[:12]
         file_extension = get_file_extension(file_name, decoded_file)
 
         complete_file_name = "%s.%s" % (file_name, file_extension, )
 
         return ContentFile(decoded_file, name=complete_file_name)
+
+
+def get_avatar(user):
+
+    if len(UserInfo.objects.filter(user=user)):
+        user_profile = UserInfo.objects.get(user=user)
+    else:
+        user_profile = UserInfo.objects.create(user=user)
+        user_profile.save()
+
+    avatar_url = ''
+    
+    try:
+        avatar_url = user_profile.avatar.url
+    except:
+        avatar_url = ''
+
+    return avatar_url
 
 
 class HomePage(View):
@@ -475,7 +487,23 @@ class FullPost(View):
         comments = sorted(Comment.objects.filter(
             news_post=news_post), key=lambda obj: obj.datetime)
         comments.reverse()
-        context['comments'] = comments
+
+        comment_info = []
+
+        for comment in comments:
+            comment_author = comment.user
+            comment_author_full_name = full_name(comment_author)
+            comment_author_avatar = get_avatar(comment_author)
+            comment_author_has_avatar = bool(len(comment_author_avatar))
+
+            comment_info.append({
+                'content': comment,
+                'comment_author': comment_author,
+                'comment_author_full_name': comment_author_full_name,
+                'comment_author_has_avatar': comment_author_has_avatar,
+                'comment_author_avatar': comment_author_avatar
+            })
+        context['comments'] = comment_info
 
         return render(request, "full_post.html", context)
 
@@ -578,13 +606,9 @@ class UserProfile(View):
         context = base_context(request, title=current_user.username,
                                header=current_user.username, error=0)
         
-        try:
-            context['avatar'] = user_profile.avatar.url
-        except:
-            context['avatar'] = ''
 
+        context['avatar'] = get_avatar(current_user)
         context['has_avatar'] = bool(len(context['avatar']))
-
         context['full_name'] = full_name(current_user)
         context['current_user'] = current_user
         context['current_user_profile'] = user_profile

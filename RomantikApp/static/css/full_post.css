@@ -1,0 +1,14 @@
+.comment-author {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.comment.ck-content img {
+	max-width: 70%;
+	max-height: 700px;
+}
+
+.comment-avatar {
+	margin-right: 10px;
+}
