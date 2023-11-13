@@ -24,6 +24,7 @@ small {
 	box-sizing: content-box;
 	height: max-content;
 	display: flow-root;
+	word-wrap: break-word;
 }
 
 .vote-panel {
