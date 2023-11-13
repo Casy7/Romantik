@@ -25,3 +25,9 @@ class CommentAdmin(admin.ModelAdmin):
     search_fields = ('user', 'news_post', 'datetime') 
 
 admin.site.register(Comment, CommentAdmin)
+
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ('user', 'email', 'phone', 'telegram')
+    search_fields = ('user', 'email', 'phone', 'telegram')
+
+admin.site.register(UserInfo, UserProfileAdmin)

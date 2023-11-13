@@ -578,7 +578,13 @@ class UserProfile(View):
         context = base_context(request, title=current_user.username,
                                header=current_user.username, error=0)
         
-        context['has_avatar'] = user_profile.avatar.name != ''
+        try:
+            context['avatar'] = user_profile.avatar.url
+        except:
+            context['avatar'] = ''
+
+        context['has_avatar'] = bool(len(context['avatar']))
+
         context['full_name'] = full_name(current_user)
         context['current_user'] = current_user
         context['current_user_profile'] = user_profile

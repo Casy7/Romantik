@@ -7,7 +7,7 @@
 <div class="center-container">
 	<div class="avatar-container">
 		{% if has_avatar %}
-		<img class="avatar" src="{{ current_user_profile.avatar.url }}">
+		<img class="avatar" src="{{ avatar }}">
 		{% else %}
 		<img class="avatar" src="{% static 'icons/default_avatar.png' %}">
 		{% endif %}
