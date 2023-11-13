@@ -276,14 +276,27 @@ blockquote {
     filter: invert(100%);
 }
 
+.glyphicon {
+    max-width: 30px;
+}
+
 .glyphicon.white {
     -webkit-filter: invert(100%);
     filter: invert(100%);
     max-width: 30px;
 }
 
+.glyphicon.big {
+    max-width: 40px;
+}
+
 .base_logo_mini {
     width: 40px;
+}
+
+#navbarUserDropdown {
+    padding-top: 0px;
+    padding-bottom: 0px;
 }
 
 

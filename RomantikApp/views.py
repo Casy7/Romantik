@@ -37,23 +37,30 @@ def full_name(user):
 
 def base_context(request, **args):
     context = {}
-    django_user = request.user
+    user = request.user
 
     context['title'] = 'none'
     context['user'] = 'none'
     context['header'] = 'none'
     context['error'] = 0
+    context['message'] = ''
     context['is_superuser'] = False
+    context['has_avatar'] = False
 
-    if len(User.objects.filter(username=django_user.username)) != 0 and type(request.user) != AnonymousUser:
+    if is_user_authenticated(request):
 
-        user = User.objects.get(username=django_user.username)
-        context['username'] = django_user.username
+        context['username'] = user.username
         context['full_name'] = full_name(user)
         context['user'] = user
 
         if request.user.is_superuser:
             context['is_superuser'] = True
+
+        if UserInfo.objects.filter(user=user).exists():
+            user_profile = UserInfo.objects.get(user=user)
+            if user_profile.avatar:
+                context['has_avatar'] = True
+                context['avatar'] = user_profile.avatar
 
     if args != None:
         for arg in args:
