@@ -25,4 +25,13 @@ class Comment(models.Model):
 class UserInfo(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     about = models.TextField(max_length=30000, blank=True)
-    avatar = models.ImageField(upload_to='images/', null=True, blank=True)
+    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
+
+    email = models.EmailField(blank=True)
+    phone = models.CharField(max_length=25, blank=True)
+    telegram = models.CharField(max_length=35, blank=True)
+
+    is_email_public = models.BooleanField(default=False)
+    is_phone_public = models.BooleanField(default=False)
+    is_telegram_public = models.BooleanField(default=False)   
+

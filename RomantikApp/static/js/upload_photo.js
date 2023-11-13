@@ -12,40 +12,12 @@ function readURL() {
         }
         create_del_button();
         // document.getElementById("del_photo").style.display = "visible";
-        reader.readAsDataURL(input.files[0]);            
-        
-        
-        $uploadCrop = $('#myimg').croppie({
-                enableExif: true,
-                viewport: {
-                    width: 200,
-                    height: 200,
-                    type: 'circle'
-                },
-                boundary: {
-                    width: 300,
-                    height: 300
-                }
-        });
+        reader.readAsDataURL(input.files[0]);
     }
 }
 
 
-function create_del_button() {
 
-    button = document.createElement("button");
-    button.type = "button";
-    button.className = "btn btn-dark";
-    button.value = "Удалить";
-    button.innerText = "Удалить";
-    //button.style.height = "30px";
-    //button.style.width = "50px";
-    button.onclick = function a() {
-        delete_avatar();
-
-    }
-    document.getElementById("del_button").appendChild(button);
-}
 
 
 function del_avatar_button() {
@@ -72,9 +44,35 @@ function clearInputFile(f) {
     }
 }
 
+let new_avatar_flag = false;
 
 document.querySelector('#uploaded_avatar').addEventListener('change', function () {
     readURL();
+    new_avatar_flag = true;
     del_avatar_button();
     create_del_button();
+    
+});
+
+
+let uploadCrop;
+var myImage = $('#myimg');
+
+myImage.on('load', function() {
+    if (new_avatar_flag) {   
+        uploadCrop = $('#myimg').croppie({
+            enableExif: true,
+            viewport: {
+                width: 300,
+                height: 300,
+                type: 'circle'
+            },
+            boundary: {
+                width: 400,
+                height: 400
+            }
+        });
+        new_avatar_flag = false;
+    }
+
 });

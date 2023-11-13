@@ -1,6 +1,10 @@
 import datetime
 import json
 import os
+import six
+import base64
+import uuid
+from django.core.files.base import ContentFile
 
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
@@ -12,8 +16,8 @@ from django.contrib.auth.models import User, AnonymousUser
 
 from django.core.files.storage import default_storage
 
-from .models import *
 from romantik.settings import MEDIA_ROOT
+from .models import *
 
 from .modules.compressor import ImageCompressor
 
@@ -68,6 +72,39 @@ def is_user_authenticated(request):
     return not False in user_validation_properties
 
 
+def decode_base64_file(data):
+
+    def get_file_extension(file_name, decoded_file):
+        import imghdr
+
+        extension = imghdr.what(file_name, decoded_file)
+        extension = "jpg" if extension == "jpeg" else extension
+
+        return extension
+
+    # Check if this is a base64 string
+    if isinstance(data, six.string_types):
+        # Check if the base64 string is in the "data:" format
+        if 'data:' in data and ';base64,' in data:
+            # Break out the header from the base64 content
+            header, data = data.split(';base64,')
+
+        # Try to decode the file. Return validation error if it fails.
+        try:
+            decoded_file = base64.b64decode(data)
+        except TypeError:
+            TypeError('invalid_image')
+
+        # Generate file name:
+        file_name = str(uuid.uuid4())[:12] # 12 characters are more than enough.
+        # Get the file name extension:
+        file_extension = get_file_extension(file_name, decoded_file)
+
+        complete_file_name = "%s.%s" % (file_name, file_extension, )
+
+        return ContentFile(decoded_file, name=complete_file_name)
+
+
 class HomePage(View):
     def get(self, request):
         context = base_context(request)
@@ -93,7 +130,8 @@ class NewsPage(View):
             else:
                 total_raiting = str(int_total_raiting)
 
-            comments_number = Comment.objects.filter(news_post=news_post).count()
+            comments_number = Comment.objects.filter(
+                news_post=news_post).count()
 
             if request.user.is_authenticated:
                 user_upvoted = 'yes' if len(UpVote.objects.filter(
@@ -124,7 +162,8 @@ class AjaxVotePost(View, LoginRequiredMixin):
         form = request.POST
         result = {}
         result['vote_cancelled'] = 'false'
-        news_post_exists = True if NewsPost.objects.filter(id=form["post_id"]) else False
+        news_post_exists = True if NewsPost.objects.filter(
+            id=form["post_id"]) else False
 
         if news_post_exists:
             news_post = NewsPost.objects.get(id=form["post_id"])
@@ -132,9 +171,10 @@ class AjaxVotePost(View, LoginRequiredMixin):
             if form["vote_type"] == "upvote":
 
                 if len(DownVote.objects.filter(news=news_post, user=request.user)) != 0:
-                    downvote = DownVote.objects.filter(news=news_post, user=request.user)[0]
+                    downvote = DownVote.objects.filter(
+                        news=news_post, user=request.user)[0]
                     downvote.delete()
-                    result['vote_cancelled'] = 'true'                    
+                    result['vote_cancelled'] = 'true'
 
                 elif UpVote.objects.filter(news=news_post, user=request.user):
                     pass
@@ -145,7 +185,8 @@ class AjaxVotePost(View, LoginRequiredMixin):
             elif form["vote_type"] == "downvote":
 
                 if len(UpVote.objects.filter(news=news_post, user=request.user)) != 0:
-                    upvote = UpVote.objects.filter(news=news_post, user=request.user)[0]
+                    upvote = UpVote.objects.filter(
+                        news=news_post, user=request.user)[0]
                     upvote.delete()
                     result['vote_cancelled'] = 'true'
 
@@ -154,8 +195,6 @@ class AjaxVotePost(View, LoginRequiredMixin):
                 else:
                     downvote = DownVote(news=news_post, user=request.user)
                     downvote.save()
-        
-
 
         upvotes = UpVote.objects.filter(news=news_post)
         downvotes = DownVote.objects.filter(news=news_post)
@@ -167,7 +206,6 @@ class AjaxVotePost(View, LoginRequiredMixin):
         else:
             total_raiting = str(int_total_raiting)
 
-         
         result['total_raiting'] = total_raiting
         result["result"] = "success"
         return HttpResponse(
@@ -227,7 +265,6 @@ class AjaxPublishComment(View, LoginRequiredMixin):
     def post(self, request):
         form = request.POST
         result = {}
-        
 
         comment = Comment(
             user=request.user,
@@ -303,14 +340,23 @@ class SignUp(View):
 
         # new_post.author = Author.objects.get(id = request.POST.author)
         # new_post.save()
-        user = User.objects.filter(username=username)
-        if list(user) == []:
+        user_with_this_username_already_exists = bool(User.objects.filter(username=username))
+        if not user_with_this_username_already_exists:
             for prop in form:
                 if prop not in ('csrfmiddlewaretoken', 'username', 'gender', 'phone_number') and form[prop] != '':
                     user_props[prop] = form[prop]
 
-            auth_user = User.objects.create_user(
-                username=form['username'], **user_props)
+            user = User.objects.create_user(
+                username=form['username'],
+                first_name=form['first_name'],
+                last_name=form['last_name'],
+                password=form['password'])
+
+            user_profile = UserInfo.objects.create(user=user)
+            user_profile.email = form['email']
+
+            user_profile.save()
+
             user = authenticate(username=username, password=password)
             login(request, user)
             return HttpResponseRedirect("/")
@@ -384,13 +430,12 @@ class FullPost(View):
     def get(self, request, post_id):
         context = base_context(
             request, title='Коментарі', header='Коментарі', error=0)
-        
+
         if not NewsPost.objects.filter(id=post_id):
             return handler404(request)
 
         news_post = NewsPost.objects.get(id=post_id)
         context['post'] = news_post
-
 
         upvotes = UpVote.objects.filter(news=news_post)
         downvotes = DownVote.objects.filter(news=news_post)
@@ -419,19 +464,21 @@ class FullPost(View):
             'downvotes': downvotes,
             'user_upvoted': user_upvoted,
             'user_downvoted': user_downvoted})
-        
-        comments = sorted(Comment.objects.filter(news_post=news_post), key=lambda obj: obj.datetime)
+
+        comments = sorted(Comment.objects.filter(
+            news_post=news_post), key=lambda obj: obj.datetime)
         comments.reverse()
         context['comments'] = comments
 
         return render(request, "full_post.html", context)
-    
+
 
 class Hikes(View):
     def get(self, request):
-        context = base_context(request, title='Походи', header='Походи', error=0)
+        context = base_context(request, title='Походи',
+                               header='Походи', error=0)
         return render(request, "hikes.html", context)
-    
+
 
 class AccountEditor(View, LoginRequiredMixin):
     def get(self, request):
@@ -439,15 +486,87 @@ class AccountEditor(View, LoginRequiredMixin):
             return HttpResponseRedirect("/signin")
 
         user = request.user
-        context = base_context(request, title='Мій акаунт', header='Мій акаунт', error=0)
+        context = base_context(request, title='Мій акаунт',
+                               header='Мій акаунт', error=0)
 
         context['user'] = user
         context['username'] = user.username
         context['first_name'] = user.first_name
         context['last_name'] = user.last_name
-        context['email'] = user.email
+
+        if not UserInfo.objects.filter(user=user).exists():
+            user_profile = UserInfo.objects.create(user=user)
+            user_profile.save()
+
+        user_profile = UserInfo.objects.get(user=user)
+
+        context['email'] = user_profile.email
+        context['phone'] = user_profile.phone
+        context['telegram'] = user_profile.telegram
+
+        context['about'] = user_profile.about
+        context['avatar'] = user_profile.avatar
+
+        context['is_email_public'] = user_profile.is_email_public
+        context['is_phone_public'] = user_profile.is_phone_public
+        context['is_telegram_public'] = user_profile.is_telegram_public
 
         return render(request, "account_editor.html", context)
+
+    def post(self, request):
+
+        if not is_user_authenticated(request):
+            return HttpResponseRedirect("/signin")
+        
+        form = request.POST
+
+        user = request.user
+        user.first_name = form['first_name']
+        user.last_name = form['last_name']
+        user.save()
+
+        user_profile = UserInfo.objects.get(user=user)
+        user_profile.email = form['email']
+        user_profile.phone = form['phone']
+        user_profile.about = form['about']
+        user_profile.telegram = form['telegram']
+
+        if 'is_email_public' in form.keys():
+            user_profile.is_email_public = True
+        else:
+            user_profile.is_email_public = False
+        
+        if 'is_phone_public' in form.keys():
+            user_profile.is_phone_public = True
+        else:
+            user_profile.is_phone_public = False
+        
+        if 'is_telegram_public' in form.keys():
+            user_profile.is_telegram_public = True
+        else:
+            user_profile.is_telegram_public = False
+
+        user_profile.save()
+
+        return HttpResponseRedirect("/my_account")
+
+
+class AjaxUploadUserAvatar(View, LoginRequiredMixin):
+    def post(self, request):
+        result = {}
+        data = request.POST
+        user = request.user
+        user_profile = UserInfo.objects.get(user=user)
+        if data['action'] == 'update':
+            
+            user_profile.avatar = decode_base64_file(data['secondary_data'])
+            user_profile.save()
+        else:
+            user_profile.avatar.delete()
+            user_profile.save()
+
+        result["result"] = "success"
+        return HttpResponse(json.dumps(result), content_type="application/json")
 
 
 def handler404(request, exception=""):

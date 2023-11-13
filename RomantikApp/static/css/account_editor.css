@@ -18,7 +18,41 @@ label.upload-btn {
     padding-bottom: 20px;
 }
 
-.content{
-    margin-left: 10vw;
-    margin-right: 10vw;
+.inline-buttons {
+    float:left;
+    display: inline-flex;
+}
+
+.avatar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.inline-control {
+    flex-grow: 0;
+    width: 50px;
+    display: inline-table;
+}
+
+.avatar_edit {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.control-btn-container {
+    display: inline-flex;
+    align-items: center;
+}
+/* 
+.inline-label-besides-buttons {
+    margin-right: 20px;
+} */
+
+.img-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }

@@ -25,6 +25,7 @@ urlpatterns = [
     re_path('publish_post/', AjaxPublishPost.as_view(), name='publish_post'),
     re_path('add_photo_to_news_post/', AjaxAddPhotoToPost.as_view(), name='add_photo'),
     re_path('publish_comment/', AjaxPublishComment.as_view(), name='publish_comment'),
+	re_path('upload_user_avatar/', AjaxUploadUserAvatar.as_view(), name='upload_user_avatar'),
 
 ]
 
