@@ -44,6 +44,10 @@ h1, h2, h3, h4, h5, p, small, a, td, li, pre, span, th, tr {
     color: white;
 }
 
+.news-content.ck-content p, .news-content.ck-content h1, .news-content.ck-content h2, .news-content.ck-content h3, .news-content.ck-content h4, .news-content.ck-content h5, .news-content.ck-content small, .news-content.ck-content a {
+    word-wrap: break-word;
+}
+
 ol li {
     font-size: large;
 }
