@@ -45,7 +45,7 @@ def base_context(request, **args):
     context['error'] = 0
     context['message'] = ''
     context['is_superuser'] = False
-    context['has_avatar'] = False
+    context['self_user_has_avatar'] = False
 
     if is_user_authenticated(request):
 
@@ -59,8 +59,8 @@ def base_context(request, **args):
         if UserInfo.objects.filter(user=user).exists():
             user_profile = UserInfo.objects.get(user=user)
             if user_profile.avatar:
-                context['has_avatar'] = True
-                context['avatar'] = user_profile.avatar
+                context['self_user_has_avatar'] = True
+                context['self_user_avatar'] = user_profile.avatar
 
     if args != None:
         for arg in args:

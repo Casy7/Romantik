@@ -190,10 +190,10 @@
     <div class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbarUserDropdown" role="button" data-bs-toggle="dropdown"
         aria-expanded="false">
-        {% if has_avatar == False %}
+        {% if self_user_has_avatar == False %}
         <img class="glyphicon white" src="{% static 'icons/user.svg' %}">
         {% else %}
-        <img class="glyphicon big" src="{{ avatar.url }}">
+        <img class="glyphicon big" src="{{ self_user_avatar.url }}">
         {% endif %}
       </a>
       <div class="dropdown-menu user-menu-dropdown" aria-labelledby="navbarUserDropdown">
