@@ -20,6 +20,7 @@ urlpatterns = [
     path("contacts/", Contacts.as_view(), name="contacts"),
     path("hymn/", Hymn.as_view(), name="hymn"),
     path("post/<int:post_id>", FullPost.as_view(), name="full_post"),
+	path("user/<str:username>", UserProfile.as_view(), name="user_page"),
 	
     re_path('vote_post/', AjaxVotePost.as_view(), name='vote_post'),
     re_path('publish_post/', AjaxPublishPost.as_view(), name='publish_post'),

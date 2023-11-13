@@ -556,6 +556,36 @@ class AccountEditor(View, LoginRequiredMixin):
         user_profile.save()
 
         return HttpResponseRedirect("/my_account")
+    
+
+class UserProfile(View):
+    def get(self, request, username):
+
+        current_user = User.objects.filter(username=username)
+        if len(current_user) == 0:
+            return handler404(request)
+        
+        current_user = current_user[0]
+
+        user_profile = None
+
+        if len(UserInfo.objects.filter(user=current_user)):
+            user_profile = UserInfo.objects.get(user=current_user)
+        else:
+            user_profile = UserInfo.objects.create(user=current_user)
+            user_profile.save()
+        
+        context = base_context(request, title=current_user.username,
+                               header=current_user.username, error=0)
+        
+        context['has_avatar'] = user_profile.avatar.name != ''
+        context['full_name'] = full_name(current_user)
+        context['current_user'] = current_user
+        context['current_user_profile'] = user_profile
+
+        return render(request, "profile.html", context)
+
+        
 
 
 class AjaxUploadUserAvatar(View, LoginRequiredMixin):

@@ -1,0 +1,32 @@
+.center-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.avatar-container {
+	margin-top: 30px;
+	margin-bottom: 8px;
+}
+
+.full-name {
+	margin-bottom: 0px;
+}
+
+.about {
+	margin: 40px;
+	margin-top: 0px;
+}
+
+.contact-info {
+	margin-bottom: 0px;
+}
+
+@media only screen and (max-device-width: 480px) {
+
+	.about {
+		margin-left: 0px;
+		margin-right: 0px;
+	}
+}

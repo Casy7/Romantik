@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<link href="{% static 'css/profile.css'%}" rel="stylesheet">
+
+<div class="center-container">
+	<div class="avatar-container">
+		{% if has_avatar %}
+		<img class="avatar" src="{{ current_user_profile.avatar.url }}">
+		{% else %}
+		<img class="avatar" src="{% static 'icons/default_avatar.png' %}">
+		{% endif %}
+	</div>
+	<h3 class="full-name">{{ full_name }}</h3>
+	<h4>@{{ current_user.username }}</h4>
+
+	<div class="contact-buttons-container">
+		{% if current_user_profile.is_email_public and current_user_profile.email %}
+		<a type="button" class="btn btn-dark" href="mailto:{{ current_user_profile.email }}"><img class="glyphicon white" src="{% static 'icons/email.svg' %}"></a>
+		{% endif %}
+
+		{% if current_user_profile.is_phone_public and current_user_profile.phone %}
+		<a type="button" class="btn btn-dark" href="tel:{{ current_user_profile.phone }}"><img class="glyphicon white" src="{% static 'icons/phone.svg' %}"></a>
+		{% endif %}
+
+		{% if current_user_profile.is_telegram_public and current_user_profile.telegram %}
+		<a type="button" class="btn btn-dark" href="https://t.me/{{ current_user_profile.telegram }}"><img class="glyphicon white" src="{% static 'icons/telegram.svg' %}"></a>
+		{% endif %}
+	</div>
+
+	<p class="about">{{ current_user_profile.about }}</p>
+
+	{% if current_user_profile.is_email_public and current_user_profile.email %}
+	<p class="contact-info email">Email: <a href="mailto:{{ current_user_profile.email }}">{{ current_user_profile.email }}</a></p>
+	{% endif %}
+
+	{% if current_user_profile.is_phone_public and current_user_profile.phone %}
+	<p class="contact-info phone">{{ current_user_profile.phone }}</p>
+	{% endif %}
+
+	{% if current_user_profile.is_telegram_public and current_user_profile.telegram %}
+	<p class="contact-info telegram">Telegram: <a href="https://t.me/{{ current_user_profile.telegram }}">{{ current_user_profile.telegram }}</a> </p>
+	{% endif %}
+
+</div>
+
+
+{% endblock %}
