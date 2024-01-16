@@ -27,7 +27,8 @@ urlpatterns = [
     re_path('add_photo_to_news_post/', AjaxAddPhotoToPost.as_view(), name='add_photo'),
     re_path('publish_comment/', AjaxPublishComment.as_view(), name='publish_comment'),
 	re_path('upload_user_avatar/', AjaxUploadUserAvatar.as_view(), name='upload_user_avatar'),
-
+	
+    path('robots.txt', ReturnRobotsTxt.as_view(), name  ='robots_txt')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

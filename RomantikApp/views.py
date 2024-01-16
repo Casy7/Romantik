@@ -636,6 +636,10 @@ class AjaxUploadUserAvatar(View, LoginRequiredMixin):
         return HttpResponse(json.dumps(result), content_type="application/json")
 
 
+class ReturnRobotsTxt(View):
+    def get(self, request):
+        return render(request, "robots.txt", content_type="text/plain")
+
 def handler404(request, exception=""):
     context = base_context(
         request, title='404 - Не знайдено', header='404 - Не знайдено', error=0)
