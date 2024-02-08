@@ -126,12 +126,12 @@
   <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
     <div class="nav-item dropdown mobile">
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-        aria-expanded="false">
+        aria-expanded="false" onclick="toggleDropdown('dropdownNavMainMenu')">
 
         <img class="glyphicon white" src="{% static 'icons/menu.svg' %}">
 
       </a>
-      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+      <div class="dropdown-menu nav-menu-dropdown" id="dropdownNavMainMenu" aria-labelledby="navbarDropdown">
         {% if page_name != 'home' %}
         <a class="dropdown-item" href="/">Головна</a>
         {% endif %}        
@@ -192,15 +192,16 @@
 
 
     <div class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" id="navbarUserDropdown" role="button" data-bs-toggle="dropdown"
-        aria-expanded="false">
+
+      <a class="nav-link dropdown-toggle" href="#" id="navbarUserDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="toggleDropdown('dropdownNavUserMenu')">
         {% if self_user_has_avatar == False %}
         <img class="glyphicon white" src="{% static 'icons/user.svg' %}">
         {% else %}
         <img class="glyphicon big" src="{{ self_user_avatar.url }}">
         {% endif %}
       </a>
-      <div class="dropdown-menu user-menu-dropdown" aria-labelledby="navbarUserDropdown">
+
+      <div id="dropdownNavUserMenu" class="dropdown-menu user-menu-dropdown" aria-labelledby="navbarUserDropdown">
 
         {% if user != 'none' %}
         <a class="dropdown-item" href="/my_account">

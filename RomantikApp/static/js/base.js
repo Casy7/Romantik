@@ -27,3 +27,15 @@ if (!window.mobileCheck()) {
         divsToHide[i].style.display = "none"; // depending on what you're doing
     }
 }
+
+function toggleDropdown(dropdownId) {
+	if (!document.getElementById(dropdownId).classList.contains("dropdown-animate")) 
+	{
+		document.getElementById(dropdownId).classList.add("dropdown-animate"); 
+		document.getElementById(dropdownId).classList.remove("dropdown-animate-close");		
+	}
+	else {
+		document.getElementById(dropdownId).classList.remove("dropdown-animate");
+		document.getElementById(dropdownId).classList.add("dropdown-animate-close");
+	}
+}
