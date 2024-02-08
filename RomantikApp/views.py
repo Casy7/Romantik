@@ -46,6 +46,7 @@ def base_context(request, **args):
     context['message'] = ''
     context['is_superuser'] = False
     context['self_user_has_avatar'] = False
+    context['page_name'] = 'default'
 
     if is_user_authenticated(request):
 
@@ -127,6 +128,7 @@ def get_avatar(user):
 class HomePage(View):
     def get(self, request):
         context = base_context(request)
+        context['page_name'] = 'home'
         return render(request, "home.html", context)
 
 

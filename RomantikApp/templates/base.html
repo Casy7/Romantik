@@ -132,6 +132,9 @@
 
       </a>
       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        {% if page_name != 'home' %}
+        <a class="dropdown-item" href="/">Головна</a>
+        {% endif %}        
         {% if header != 'Новини' %}
         <a class="dropdown-item" href="/news">Новини</a>
         {% endif %}
@@ -145,16 +148,17 @@
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="/admin">Admin panel</a>
         {% endif %}
-
       </div>
     </div>
 
-    <a class="navbar-brand" href="/"><img class="base_logo_mini" src="{% static 'icons/logo.svg' %}"></a>
-
-
-
+    
+    <a class="navbar-brand desktop-only {% if page_name != 'home' %}mobile-hidden{% endif %}" href="/">
+      <img class="base_logo_mini" src="{% static 'icons/logo.svg' %}">    
+    </a>
+    
 
     <ul class="navbar-nav me-auto mb-2 mb-lg-0 central-nav-panel">
+
       {% if header != 'Новини' %}
       <li class="nav-item desktop">
         <a class="nav-link" href="/news">Новини</a>

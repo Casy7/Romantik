@@ -335,6 +335,15 @@ nav .dropdown-toggle::after {
 }
 
 @media only screen and (max-device-width: 480px) {
+
+    .desktop-only {
+        display: none;
+    }
+
+    .mobile-hidden {
+        display: none;
+    }
+
     p {
         text-align: justify;
     }
