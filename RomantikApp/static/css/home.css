@@ -1,12 +1,10 @@
-
-
-
-
 #map {
-	height: 400px; /* The height is 400 pixels */
-	width: 100%; /* The width is the width of the web page */
-  }
-  
+	height: 400px;
+	/* The height is 400 pixels */
+	width: 100%;
+	/* The width is the width of the web page */
+}
+
 .row {
 	margin-bottom: 40px;
 }
@@ -14,7 +12,7 @@
 .size_70 {
 	height: 270px;
 }
-	
+
 .center {
 	text-align: center;
 	align-self: center;
@@ -28,4 +26,89 @@
 
 .ruby {
 	display: ruby;
+}
+
+.card-body {
+	padding: 0px;
+}
+
+#content {
+	padding: 0px;
+}
+
+.main-container {
+	padding-top: 0px;
+}
+
+figcaption {
+	left: 50%;
+	position: absolute;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: 100%;
+}
+
+.default-card {
+	padding: 20px;
+	padding-bottom: 0px;
+}
+
+.home-header .dark-background-card {
+	background-color: rgba(0, 0, 0, 0.5);
+	clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+}
+
+.dark-background-card-second {
+	background-color: rgba(0, 0, 0, 0.5);
+	clip-path: polygon(0 0, 100% 10%, 100% 90%, 0 100%);
+}
+
+
+.dark-background-card {
+	min-height: 413px;
+	width: 100%;
+}
+
+.dark-background-card-second {
+	min-height: 517px;
+	width: 100%;
+}
+
+.second-angle-card {
+	padding-top: 85px;
+}
+
+figcaption {
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: 100%;
+}
+
+.home-header {
+	position: relative;
+	text-align: center;
+}
+
+.home-map {
+	position: relative;
+}
+
+@media screen and (max-width: 481px) {
+	.dark-background-card {
+		min-height: 670px;
+		width: 100%;
+	}
+	
+	.dark-background-card-second {
+		display: none;
+	}
+
+	.home-map figcaption {
+		position: relative;
+		transform: none;
+		left: initial;
+		right: initial;
+	}
+
 }

@@ -7,62 +7,94 @@
 
 <div class="main-container">
     <div class="card-body">
-        <h1>Веб-портал туристичного клубу "Романтик"</h1>
-        <h3>Хто ми є і що ми робимо?</h3>
-        <p>"Романтик" — це некомерційний туристичний клуб, спільнота людей, об'єднаних жагою досліджувати світ і забиратись
-            на найвищі вершини.</p>
-        <div class="row">
-            <div class="col">
-                <p class="justify">Загорітись ідеєю, зібрати навколо себе однодумців і пройти запланований (або навіть
-                    незапланований!) маршрут — це наша доля та наша найвища цінність.
-                </p>
-                <p class="justify">
-                    І є безліч мрій і безліч способів їх здійснити. Задертись із льодорубами на найвищу вершину
-                    гірського масиву? Ми, вірогідніше за все, це вже зробили, але залюбки повторимо за твоєї участі.
-                    Сплавитись карпатською річкою на катамаранах? Ми з тобою, катамаранами забезпечимо. Проїхати
-                    пів країни на велосипедах? Ідею ви зрозуміли:)
+        <div class="angle-card home-header">
+            <div class="dark-background-card"></div>
+            <figure>
+                <figcaption>
+                    <div class="default-card">
+                        <br>
+                        <h1>Веб-портал туристичного клубу "Романтик"</h1>
+                        <h3>Хто ми є і що ми робимо?</h3>
+                        <p>"Романтик" — це некомерційний туристичний клуб, спільнота людей, об'єднаних жагою
+                            досліджувати світ і
+                            забиратись на найвищі вершини.</p>
+                    </div>
+                </figcaption>
 
-                </p>
-            </div>
-            <div class="col">
-                <img src="{% static 'images/home/mountains.jpg' %}" alt="">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <div id="map"></div>
-                <script src="{% static 'js/home.js' %}"></script>
-            </div>
-            <div class="col">
-                <p class="justify">Ми завжді відкриті для тих, чиї очі та серця також палають від авантюризму. Приміщення
-                    турклубу знаходиться у Спорткомплексі Одеського Політехнічного Інституту за адресою Шампанський
-                    провулок, 1 — ліворуч від входу, сходами на 4-й поверх. Тренування для підготовки до походів
-                    проходять по Вт та Чт з 18:15.
-                </p>
-                <p class="justify">
-                    Підписуйся на наші соціальні мережі, щоб бути в курсі останніх новин турклубу, контактні дані
-                    наведені нижче.
-                </p>
-
-            </div>
+            </figure>
 
         </div>
-        <div class="row inline_container center">
-            <div class="col block">
-                <a href="https://www.instagram.com/tk.romantik/">
-                    <img class="size_70 center" src="{% static 'images/home/instagram.svg' %}" alt="">
-                </a>
-            </div>
-            <div class="col block">
-                <a href="https://t.me/tk_romantik">
-                    <img class="size_70 center" src="{% static 'images/home/telegram.svg' %}" alt="">
-                </a>
+        <div class="default-card">
+            <div class="row" style="margin-bottom: 0px;">
+                <div class="col">
+                    <p class="justify">Загорітись ідеєю, зібрати навколо себе однодумців і пройти запланований (або
+                        навіть
+                        незапланований!) маршрут — це наша доля та наша найвища цінність.
+                    </p>
+                    <p class="justify">
+                        І є безліч мрій і безліч способів їх здійснити. Задертись із льодорубами на найвищу вершину
+                        гірського масиву? Ми, вірогідніше за все, це вже зробили, але залюбки повторимо за твоєї участі.
+                        Сплавитись карпатською річкою на катамаранах? Ми з тобою, катамаранами забезпечимо. Проїхати
+                        пів країни на велосипедах? Ідею ви зрозуміли:)
+
+                    </p>
+                </div>
+                <div class="col">
+                    <img src="{% static 'images/home/mountains.jpg' %}" alt="">
+                </div>
             </div>
         </div>
-        <p>Або ти завжди можеш написати нам в Телеграмі. З питань, як долучитися до клубу, а також взагалі стосовно походів та заходів — <a href="https://t.me/fastakovskiy">@fastakovskiy</a>, Михайло.</p>
-        <p>З питань спонсорства або співпраці — <a href="https://t.me/Vallazaren">@Vallazaren</a>, Валентина.</p>
-        <p>Приєднуйся до нас, буде цікаво!</p>
+        <div class="angle-card home-map">
+            <div class="dark-background-card-second"></div>
+            <figure>
+                <figcaption>
+                    <div class="default-card second-angle-card">
+                        <div class="row">
+                            <div class="col">
+                                <div id="map"></div>
+                                <script src="{% static 'js/home.js' %}"></script>
+                            </div>
+                            <div class="col">
+                                <p class="justify">Ми завжді відкриті для тих, чиї очі та серця також палають від
+                                    авантюризму.
+                                    Приміщення
+                                    турклубу знаходиться у Спорткомплексі Одеського Політехнічного Інституту за адресою
+                                    Шампанський
+                                    провулок, 1 — ліворуч від входу, сходами на 4-й поверх. Тренування для підготовки до
+                                    походів
+                                    проходять по Вт та Чт з 18:15.
+                                </p>
+                                <p class="justify">
+                                    Підписуйся на наші соціальні мережі, щоб бути в курсі останніх новин турклубу,
+                                    контактні
+                                    дані
+                                    наведені нижче.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </figcaption>
+            </figure>
+        </div>
+
     </div>
+    <div class="row inline_container center">
+        <div class="col block">
+            <a href="https://www.instagram.com/tk.romantik/">
+                <img class="size_70 center" src="{% static 'images/home/instagram.svg' %}" alt="">
+            </a>
+        </div>
+        <div class="col block">
+            <a href="https://t.me/tk_romantik">
+                <img class="size_70 center" src="{% static 'images/home/telegram.svg' %}" alt="">
+            </a>
+        </div>
+    </div>
+    <p>Або ти завжди можеш написати нам в Телеграмі. З питань, як долучитися до клубу, а також взагалі стосовно
+        походів та заходів — <a href="https://t.me/fastakovskiy">@fastakovskiy</a>, Михайло.</p>
+    <p>З питань спонсорства або співпраці — <a href="https://t.me/Vallazaren">@Vallazaren</a>, Валентина.</p>
+    <p>Долучайся до нас, буде цікаво!</p>
+</div>
 </div>
 
 
