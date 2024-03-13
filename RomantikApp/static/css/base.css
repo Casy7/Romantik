@@ -234,6 +234,9 @@ blockquote {
     display: ruby;
 }
 
+.central-nav-panel {
+    display: flex;
+}
 
 .big-red-fucking-button {
     background-color: #f4363b;
