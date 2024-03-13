@@ -70,7 +70,7 @@ figcaption {
 }
 
 .dark-background-card-second {
-	min-height: 517px;
+	min-height: 544px;
 	width: 100%;
 }
 
@@ -94,12 +94,16 @@ figcaption {
 	position: relative;
 }
 
+.home-map figcaption {
+	top: 47%;
+}
+
 @media screen and (max-width: 481px) {
 	.dark-background-card {
 		min-height: 670px;
 		width: 100%;
 	}
-	
+
 	.dark-background-card-second {
 		display: none;
 	}
