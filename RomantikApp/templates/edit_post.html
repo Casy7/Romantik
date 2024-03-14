@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<script src="{% static 'libs/modules/ckeditor/build/ckeditor.js' %}"></script>
+<link href="{% static 'css/edit_post.css'%}" rel="stylesheet">
+<link href="{% static 'css/editor.css'%}" rel="stylesheet">
+
+<script src="{% static 'js/edit_post.js' %}"></script>
+
+<div class="beauty-container">
+
+    <input type="hidden" id="post_id" value="{{ post.id }}">
+
+    <div class="editor-box">
+        <textarea name="content" id="editor">
+            {{ post.content }}
+        </textarea>
+        <button class="btn btn-primary" type="button" onclick="update_post()">Зберегти</button>
+
+        <script src="{% static 'js/editor.js' %}"></script>
+        <script>
+            ClassicEditor
+                .create(document.querySelector('#editor'), {
+                    extraPlugins: [MyCustomUploadAdapterPlugin],
+
+                    // More configuration options.
+                    // ...
+                })
+                .then(newEditor => {
+                    editor = newEditor;
+                })
+
+                .catch(error => {
+                    console.log(error);
+                });
+
+        </script>
+
+    </div>
+
+    <div class="post-control-panel">
+        <small class="author">by <a href='/user/{{post.user.username}}'>{{ post.user.username }}</a> on
+            {{post.datetime | time:"H:i:s" }}, {{post.datetime | date:"d.m.Y" }}</small>
+
+    </div>
+</div>
+
+{% endblock %}

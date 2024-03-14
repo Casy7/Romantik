@@ -178,6 +178,18 @@ class NewsPage(View):
         return render(request, "news.html", context)
 
 
+class PostEditor(View, LoginRequiredMixin):
+    def get(self, request, post_id):
+        context = base_context(request, title='Редагування', header='Редагування')
+
+        if not len(list(NewsPost.objects.filter(id=post_id))):
+            return handler404(request)
+        
+        context['post'] = NewsPost.objects.get(id=post_id)
+
+        return render(request, "edit_post.html", context)
+
+
 class AjaxVotePost(View, LoginRequiredMixin):
     def post(self, request):
         form = request.POST
@@ -253,7 +265,7 @@ class AjaxPublishPost(View, LoginRequiredMixin):
             json.dumps(result),
             content_type="application/json"
         )
-
+    
 
 class AjaxAddPhotoToPost(View, LoginRequiredMixin):
     def post(self, request):
@@ -634,6 +646,32 @@ class AjaxUploadUserAvatar(View, LoginRequiredMixin):
             user_profile.avatar.delete()
             user_profile.save()
 
+        result["result"] = "success"
+        return HttpResponse(json.dumps(result), content_type="application/json")
+    
+
+class AjaxUpdatePost(View, LoginRequiredMixin):
+    def post(self, request):
+        form = request.POST
+        result = {}
+
+        post_id = form['post_id']
+
+        if not len(list(NewsPost.objects.filter(id=post_id))):
+            result["result"] = "error"
+            return HttpResponse(json.dumps(result), content_type="application/json")
+        
+        news_post = NewsPost.objects.get(id=post_id)
+
+        if not news_post.user == request.user:
+            result["result"] = "error"
+            return HttpResponse(json.dumps(result), content_type="application/json")
+
+
+        news_post.content = form['post_content']
+        news_post.was_updated = True
+        news_post.last_update = datetime.datetime.now()
+        news_post.save()
         result["result"] = "success"
         return HttpResponse(json.dumps(result), content_type="application/json")
 

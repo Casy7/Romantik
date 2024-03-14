@@ -55,6 +55,12 @@
                     {{news_post.post.datetime | time:"H:i:s" }}, {{news_post.post.datetime | date:"d.m.Y" }}</small>
 
                 <div class="vote-panel">
+
+                    {% if news_post.post.user == user %}
+                    <a href='/post/{{news_post.post_id}}/edit' class="link-icon"><img class="icon negative" src="{% static 'icons/edit.svg' %}" alt="edit"></a>
+                    {% endif %}
+
+
                     <a href='/post/{{news_post.post_id}}' class="link-icon"><img class="icon negative"
                             src="{% static 'icons/comment.svg' %}" alt="down"><p class="comments-number">{{ news_post.comments_number }}</p></a>
 

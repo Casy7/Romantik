@@ -20,10 +20,12 @@ urlpatterns = [
     path("contacts/", Contacts.as_view(), name="contacts"),
     path("hymn/", Hymn.as_view(), name="hymn"),
     path("post/<int:post_id>", FullPost.as_view(), name="full_post"),
+    path("post/<int:post_id>/edit", PostEditor.as_view(), name="edit_post"),
 	path("user/<str:username>", UserProfile.as_view(), name="user_page"),
 	
     re_path('vote_post/', AjaxVotePost.as_view(), name='vote_post'),
     re_path('publish_post/', AjaxPublishPost.as_view(), name='publish_post'),
+    re_path('update_post/', AjaxUpdatePost.as_view(), name='update_post'),
     re_path('add_photo_to_news_post/', AjaxAddPhotoToPost.as_view(), name='add_photo'),
     re_path('publish_comment/', AjaxPublishComment.as_view(), name='publish_comment'),
 	re_path('upload_user_avatar/', AjaxUploadUserAvatar.as_view(), name='upload_user_avatar'),
