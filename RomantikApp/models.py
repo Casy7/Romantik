@@ -1,3 +1,4 @@
+from re import T
 from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
@@ -7,6 +8,10 @@ class NewsPost(models.Model):
     datetime = models.DateTimeField(auto_now_add=True, auto_created=True)
     content = models.TextField(max_length=30000, blank=True)
     img_paths = models.JSONField(blank=True)
+
+    was_updated = models.BooleanField(default=False)
+    last_update = models.DateTimeField(blank=True, null=True)
+
     
 class UpVote(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -34,4 +39,12 @@ class UserInfo(models.Model):
     is_email_public = models.BooleanField(default=False)
     is_phone_public = models.BooleanField(default=False)
     is_telegram_public = models.BooleanField(default=False)   
+
+class Tag(models.Model):
+    name = models.CharField(max_length=35)
+
+class PostTag(models.Model):
+    post = models.ForeignKey(NewsPost, on_delete=models.CASCADE)
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+
 
