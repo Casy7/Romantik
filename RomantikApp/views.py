@@ -1,4 +1,5 @@
 import datetime
+import pytz
 import json
 import os
 import six
@@ -125,6 +126,59 @@ def get_avatar(user):
     return avatar_url
 
 
+def beautify_datetime(raw_datetime):
+    raw_datetime = raw_datetime
+    now_datetime = raw_datetime.now(pytz.UTC)
+    datetime_delta = now_datetime - raw_datetime
+
+    def insert_u_or_y(number):
+        if number == 0:
+            return ''
+        if 4 <number < 21:
+            return ''
+        elif number % 10 == 1:
+            return 'у'
+        elif number % 10 < 5:
+            return 'и'
+        else:
+            return ''
+
+
+    def return_ukr_day(days):
+        if days < 4:
+            return 'дні'
+        elif 4 < days < 21:
+            return 'днів'
+        elif days % 10 == 1:
+            return 'день'
+        elif days % 10 < 5:
+            return 'дні'
+        else:
+            return 'днів'
+        
+    def return_ukr_month(months):
+        if months < 5:
+            return 'місяці'
+        else:
+            return 'місяців'
+    
+        
+    if datetime_delta.days < 2:
+        if datetime_delta.seconds < 60:
+            return str(datetime_delta.seconds) + " секунд"+insert_u_or_y(datetime_delta.seconds)+" тому"
+        elif datetime_delta.seconds < 60 * 60:
+            return str(datetime_delta.seconds // 60) + " хвилин"+insert_u_or_y(datetime_delta.seconds//60)+" тому"
+        elif datetime_delta.seconds < 24 *  60 * 60:
+            return str(datetime_delta.seconds // 60 // 60) + " годин"+insert_u_or_y(datetime_delta.seconds//60//60)+" тому"
+    elif datetime_delta.days < 60:
+        return str(datetime_delta.days) + " " + return_ukr_day(datetime_delta.days) + " тому"
+    elif datetime_delta.days < 600:
+        return str(datetime_delta.days // 30) + " "+return_ukr_month(datetime_delta.days//30)+" тому"
+    else:
+        return raw_datetime.strftime('%d, %b %Y')
+
+
+
 class HomePage(View):
     def get(self, request):
         context = base_context(request)
@@ -171,7 +225,11 @@ class NewsPage(View):
                 'downvotes': downvotes,
                 'user_upvoted': user_upvoted,
                 'user_downvoted': user_downvoted,
-                'comments_number': comments_number})
+                'comments_number': comments_number,
+                'author_full_name': full_name(news_post.user),
+                'author_avatar': get_avatar(news_post.user),
+                'beauty_datetime': beautify_datetime(news_post.datetime)
+                })
 
         context['news'] = news_dict
         context['news'].reverse()
@@ -312,6 +370,50 @@ class AjaxPublishComment(View, LoginRequiredMixin):
             json.dumps(result),
             content_type="application/json"
         )
+
+
+class AjaxUploadUserAvatar(View, LoginRequiredMixin):
+    def post(self, request):
+        result = {}
+        data = request.POST
+        user = request.user
+        user_profile = UserInfo.objects.get(user=user)
+        if data['action'] == 'update':
+            
+            user_profile.avatar = decode_base64_file(data['secondary_data'])
+            user_profile.save()
+        else:
+            user_profile.avatar.delete()
+            user_profile.save()
+
+        result["result"] = "success"
+        return HttpResponse(json.dumps(result), content_type="application/json")
+    
+
+class AjaxUpdatePost(View, LoginRequiredMixin):
+    def post(self, request):
+        form = request.POST
+        result = {}
+
+        post_id = form['post_id']
+
+        if not len(list(NewsPost.objects.filter(id=post_id))):
+            result["result"] = "error"
+            return HttpResponse(json.dumps(result), content_type="application/json")
+        
+        news_post = NewsPost.objects.get(id=post_id)
+
+        if not news_post.user == request.user:
+            result["result"] = "error"
+            return HttpResponse(json.dumps(result), content_type="application/json")
+
+
+        news_post.content = form['post_content']
+        news_post.was_updated = True
+        news_post.last_update = datetime.datetime.now()
+        news_post.save()
+        result["result"] = "success"
+        return HttpResponse(json.dumps(result), content_type="application/json")
 
 
 class Login(View):
@@ -628,52 +730,6 @@ class UserProfile(View):
         context['current_user_profile'] = user_profile
 
         return render(request, "profile.html", context)
-
-        
-
-
-class AjaxUploadUserAvatar(View, LoginRequiredMixin):
-    def post(self, request):
-        result = {}
-        data = request.POST
-        user = request.user
-        user_profile = UserInfo.objects.get(user=user)
-        if data['action'] == 'update':
-            
-            user_profile.avatar = decode_base64_file(data['secondary_data'])
-            user_profile.save()
-        else:
-            user_profile.avatar.delete()
-            user_profile.save()
-
-        result["result"] = "success"
-        return HttpResponse(json.dumps(result), content_type="application/json")
-    
-
-class AjaxUpdatePost(View, LoginRequiredMixin):
-    def post(self, request):
-        form = request.POST
-        result = {}
-
-        post_id = form['post_id']
-
-        if not len(list(NewsPost.objects.filter(id=post_id))):
-            result["result"] = "error"
-            return HttpResponse(json.dumps(result), content_type="application/json")
-        
-        news_post = NewsPost.objects.get(id=post_id)
-
-        if not news_post.user == request.user:
-            result["result"] = "error"
-            return HttpResponse(json.dumps(result), content_type="application/json")
-
-
-        news_post.content = form['post_content']
-        news_post.was_updated = True
-        news_post.last_update = datetime.datetime.now()
-        news_post.save()
-        result["result"] = "success"
-        return HttpResponse(json.dumps(result), content_type="application/json")
 
 
 class ReturnRobotsTxt(View):

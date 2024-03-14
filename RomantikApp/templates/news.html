@@ -47,12 +47,33 @@
 
         {% for news_post in news %}
         <div class="news-post" id="post_{{news_post.post_id}}">
+
+
+            <div class="inline-panel post-author">
+                <div class="post-avatar-container">
+                    {% if news_post.author_avatar != '' %}
+                    <img class="glyphicon big post-avatar" src="{{ news_post.author_avatar }}">
+                    {% else %}
+                    <img class="glyphicon big post-avatar" src="{% static 'icons/default_avatar.png' %}">
+                    {% endif %}
+                </div>
+                <div class="user-name-container">
+                    <div>
+                        <p>{{ news_post.author_full_name }}</p>
+                    </div>
+                    <small><a href='/user/{{ comment.comment_author.username }}'>
+                            @{{ news_post.post.user.username }}</a>,
+                        {{ news_post.post.datetime | time:"H:i:s" }},
+                        {{ news_post.post.datetime | date:"d.m.Y" }} ({{ news_post.beauty_datetime }})</small>
+                </div>
+            </div>
+
+
+
             <div class="news-content ck-content">
                 {{news_post.post.content | safe}}
             </div>
             <div class="post-control-panel">
-                <small class="author">by <a href='/user/{{news_post.post.user.username}}'>{{news_post.post.user.username}}</a> on
-                    {{news_post.post.datetime | time:"H:i:s" }}, {{news_post.post.datetime | date:"d.m.Y" }}</small>
 
                 <div class="vote-panel">
 

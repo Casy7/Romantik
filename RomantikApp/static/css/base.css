@@ -284,10 +284,9 @@ blockquote {
 .inline-panel {
     display: inline-flex;
     width: 100%;
-    flex-direction: column;
+    flex-direction: row;
     padding-bottom: 15px;
 }
-
 
 .elements-right {
     float: right;

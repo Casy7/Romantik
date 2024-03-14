@@ -111,3 +111,14 @@ small {
 	margin-left: 5px;
 	font-size: 15px;
 	}
+
+	.post-author {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	}
+	
+	
+	.post-avatar {
+		margin-right: 10px;
+	}

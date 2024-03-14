@@ -23,6 +23,10 @@
 
         <div class="vote-panel">
 
+            {% if post.user == user %}
+            <a href='/post/{{post.id}}/edit' class="link-icon"><img class="icon negative" src="{% static 'icons/edit.svg' %}" alt="edit"></a>
+            {% endif %}
+
             {% if user != 'none' %}
 
             {% if user_downvoted == 'yes' %}
