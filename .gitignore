@@ -2,8 +2,15 @@
 **/__pycache__
 **/*.py[cod]
 
-# Ignore other stuff
+# Ignore db
 **/db.sqlite3
+
+# Ignore non-static media
 **/media
+
+# Ignore logs
 *.log
 *.pot
+
+#ignore secret settings file
+secret.json

@@ -1,6 +1,7 @@
 from re import T
 from django.db import models
 from django.contrib.auth.models import User
+from traitlets import default
 # Create your models here.
 
 class NewsPost(models.Model):
@@ -48,3 +49,7 @@ class PostTag(models.Model):
     tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
 
 
+class TelegramChannelParserData(models.Model):
+    channel = models.CharField(max_length=45, default="my_awesome_channel")
+    last_post_id = models.IntegerField()
+    last_update = models.DateTimeField(auto_now_add=True, auto_created=True)
