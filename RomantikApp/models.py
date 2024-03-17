@@ -48,13 +48,7 @@ class PostTag(models.Model):
     post = models.ForeignKey(NewsPost, on_delete=models.CASCADE)
     tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
 
-
-class TelegramChannelParserData(models.Model):
-    channel = models.CharField(max_length=45, default="my_awesome_channel")
-    last_post_id = models.IntegerField()
-    last_update = models.DateTimeField(default="2023-06-06 00:00:00", auto_created=True)
-
 class TelegramPostId(models.Model):
     channel = models.CharField(max_length=45, default="my_awesome_channel")
-    post_id = models.IntegerField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(NewsPost, on_delete=models.CASCADE)
+    post_tg_id = models.IntegerField()    

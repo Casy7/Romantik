@@ -7,6 +7,7 @@
 <link href="{% static 'css/editor.css'%}" rel="stylesheet">
 <script src="{% static 'js/news.js' %}"></script>
 
+{% csrf_token %}
 <div class="beauty-container">
     {% if is_superuser %}
     <div class="inline-panel elements-right">
