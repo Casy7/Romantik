@@ -91,3 +91,130 @@ function vote_post(post_id, vote_type, additionaldata = {}) {
 		}
 	});
 }
+
+let postsOffset = 5;
+
+let after_last_update_timer_finished = true;
+
+async function after_last_update_delay(ms) {
+	after_last_update_timer_finished = false;
+	await new Promise(resolve => setTimeout(resolve, ms));
+	after_last_update_timer_finished = true;
+  }
+
+
+$(document).ready(function () {
+	// Функция для проверки, долистал ли пользователь страницу до конца
+	function isScrolledToBottom() {
+		return $(window).scrollTop() + $(window).height() >= $(document).height() - 400;
+	}
+
+	// Функция для выполнения AJAX запроса при достижении конца страницы
+	function loadMorePosts() {
+		// Проверяем, долистал ли пользователь страницу до конца
+		if (isScrolledToBottom() && after_last_update_timer_finished) {
+			after_last_update_delay(5000);
+			console.log("Loading more posts...");
+
+
+			$.ajax({
+				url: "/load_more_posts/",
+				type: 'POST',
+				data: {
+					'posts_offset': postsOffset
+				},
+				beforeSend: function (xhr, settings) {
+					collectCookies(xhr);
+				},
+				success: function a(json) {
+					if (json.result === "success") {
+						console.log(json);
+						postsOffset += 10;
+						json.posts.forEach(post => {
+							addPostToPage(post);
+						});
+					} else {
+					}
+				}
+			});
+
+		}
+	}
+
+	// Обработчик события прокрутки страницы
+	$(window).scroll(function () {
+		// Выполняем AJAX запрос при достижении конца страницы
+		loadMorePosts();
+	});
+});
+
+function addPostToPage(post) {
+	
+	user_upvoted_class = "";
+	if (post.user_upvoted == "yes") {
+		user_upvoted_class = "upvoted";
+	}
+
+	user_downvoted_class = "";
+	if (post.user_downvoted == "yes") {
+		user_downvoted_class = "downvoted";
+	}
+
+
+	raw_post = `
+	<div class="news-post" id="post_` + post.id + `">
+
+
+            <div class="inline-panel post-author">
+                <div class="post-avatar-container">
+                    
+                    <img class="glyphicon big post-avatar" src="`+post.author_avatar+`">
+                    
+                </div>
+                <div class="user-name-container">
+                    <div>
+                        <p>`+post.author_full_name+`</p>
+                    </div>
+                    <small><a href="/user/`+ post.author_username +`">
+                            @`+ post.author_username +`</a>,
+                        15:57:13,
+                        12.03.2024 (`+ post.beauty_datetime +`)</small>
+                </div>
+            </div>
+
+            <div class="news-content ck-content">
+			`+ post.content +`
+            </div>
+            <div class="post-control-panel">
+                <div class="vote-panel">
+
+                    <a href="/post/` + post.id + `/edit" class="link-icon"><img class="icon negative" src="/static/icons/edit.svg" alt="edit"></a>
+                    
+
+
+                    <a href="/post/` + post.id + `" class="link-icon"><img class="icon negative" src="/static/icons/comment.svg" alt="down"><p class="comments-number">0</p></a>
+
+                    
+
+                    
+                    <button class="btn btn-outline-secondary left-control ` + user_downvoted_class + `" type="button" id="downvote_post_` + post.id + `" onclick="vote_post('` + post.id + `', 'downvote')"><img class="mini-icon negative" src="/static/icons/down.svg" alt="down"></button>
+                    
+
+                    <div class="post-raiting-box">
+                        <p class="post-raiting" id="post_raiting_` + post.id + `">` + post.total_raiting + `
+                        </p>
+                    </div>
+                    
+                    <button class="btn btn-outline-secondary right-control ` + user_upvoted_class + `" type="button" id="upvote_post_` + post.id + `" onclick="vote_post('` + post.id + `', 'upvote')"><img class="mini-icon negative" src="/static/icons/up.svg" alt="up"></button>
+                    
+
+                    
+
+
+                </div>
+            </div>
+            <hr>
+        </div>
+	`
+	$(".posts-list").append(raw_post);
+}

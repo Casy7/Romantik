@@ -14,4 +14,42 @@ if (window.mobileCheck()) {
 }
 
 const marker1 = new mapboxgl.Marker().setLngLat([30.74983, 46.44903]).addTo(map);
- 
+
+
+
+function refresh_news(additionaldata = {}) {
+	$.ajax({
+		url: "/refresh_news_from_tg/",
+		type: 'GET',
+		data: {
+			'secondary_data': additionaldata
+		},
+		//DO NOT EDIT!
+		beforeSend: function (xhr, settings) {
+			function getCookie(name) {
+				var cookieValue = null;
+				if (document.cookie && document.cookie != '') {
+					var cookies = document.cookie.split(';');
+					for (var i = 0; i < cookies.length; i++) {
+						var cookie = jQuery.trim(cookies[i]);
+						// Does this cookie string begin with the name we want?
+						if (cookie.substring(0, name.length + 1) == (name + '=')) {
+							cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+							break;
+						}
+					}
+				}
+				return cookieValue;
+			}
+			if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+				// Only send the token to relative URLs i.e. locally.
+				xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+			}
+		},
+		//EDITABLE CODE
+		success: function a(json) {
+			// alert("Updated");
+
+		}
+	});
+}

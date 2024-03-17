@@ -23,6 +23,8 @@ urlpatterns = [
     path("post/<int:post_id>/edit", PostEditor.as_view(), name="edit_post"),
 	path("user/<str:username>", UserProfile.as_view(), name="user_page"),
 	
+    re_path('refresh_news_from_tg/', AjaxNewsFromTelegramUpdater.as_view(), name='refresh_news_from_tg'),
+	re_path('load_more_posts/', AjaxLoadMorePosts.as_view(), name='load_more_posts'),
     re_path('vote_post/', AjaxVotePost.as_view(), name='vote_post'),
     re_path('publish_post/', AjaxPublishPost.as_view(), name='publish_post'),
     re_path('update_post/', AjaxUpdatePost.as_view(), name='update_post'),

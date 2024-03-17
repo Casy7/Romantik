@@ -26,28 +26,22 @@ from asgiref.sync import sync_to_async, async_to_sync
 
 class TelergamParser:
 	def __init__(self):
-		self.channel = 'gGIj6w7K51avX'
+		self.channel = 'tk_romantik'
 		self.api_id = secret_settings["tg_api_id"]
 		self.api_hash = secret_settings["tg_api_hash"]
 		self.client = TelegramClient('RomantikClient', self.api_id, self.api_hash)
 
-	def check_for_updates(self):
-		return asyncio.run(self.a_check_for_updates())
 
-	async def a_check_for_updates(self):
-		async with self.client:
-			last_messages = await self.client.get_messages(self.channel, limit=1)
+	def get_last_forced_post_info(self):
+		channel_parsers = TelegramChannelParserData.objects.filter(channel=self.channel)
+		if len(channel_parsers):
+			return channel_parsers[0]
+		else:
+			parser = TelegramChannelParserData(channel=self.channel, last_post_id=-1, last_update=datetime.datetime(2023, 6, 1))
+			parser.save()
+			return parser
 		
-		if not len(last_messages):
-			return None
-		
-		last_message = last_messages[0]
-		prev_parsed_data = await self.get_parser_data()
 
-		if last_message.id != prev_parsed_data.last_post_id:
-			return True
-		
-		return False
 
 	async def handle_message(event):
 		message = event.message
@@ -58,18 +52,37 @@ class TelergamParser:
 		print(f"Photo saved at: {saved_path}")
 		# print(post_media)
 	
-	def load_updates(self):
-		messages = asyncio.run(self.a_load_updates())
+	def load_updates(self, max_posts_amount=30, min_date=datetime.datetime(2023, 6, 1)):
+
+		# self.client = TelegramClient('RomantikClient', self.api_id, self.api_hash)
+		self.client.loop.close()
+
+		loop = asyncio.new_event_loop()
+		asyncio.set_event_loop(loop)
+		messages = loop.run_until_complete(self.a_load_updates(max_posts_amount=max_posts_amount, min_date=min_date))
+		loop.close()
 		return messages
 
-	async def a_load_updates(self):
+	async def a_load_updates(self, offset_id=0, rec_result_messages=[], start_counter_from=0, max_posts_amount=30, min_date=datetime.datetime(2023, 6, 1)):
+
+		PARSE_THIS_AMOUNT_AT_ONCE = 3
 		last_messages = []
 		async with self.client:
-			last_messages = await self.client.get_messages(self.channel, limit=10)
+			last_messages = await self.client.get_messages(self.channel, limit=PARSE_THIS_AMOUNT_AT_ONCE, offset_id=offset_id)
 		
-		result_messages = []
+		result_messages = rec_result_messages
 
+		last_checked_id = -1
 		for message in last_messages:
+
+			last_post_info = await self.a_get_last_forced_post_info()
+
+			if message.id <= last_post_info.last_post_id or message.date.timestamp() <= last_post_info.last_update.timestamp():
+				return result_messages
+			
+			if start_counter_from >= max_posts_amount:
+				return result_messages
+
 			message_props = {
 				"id": message.id,
 				"date": message.date,
@@ -77,15 +90,57 @@ class TelergamParser:
 				"media": []
 			}
 
+			offset_id = message.id
+			print(message.id)
+			start_counter_from += 1
+
 			async with self.client:
-				saved_path = await message.download_media(file='../../media/telegram_forced/')
+				saved_path = await message.download_media(file="./RomantikApp/media/telegram_forced/")
 			message_props["media"].append(saved_path)
 
 			result_messages.append(message_props)
-		
-		print(result_messages)
-					
+		await self.a_load_updates(offset_id=offset_id, rec_result_messages=result_messages, start_counter_from=start_counter_from, max_posts_amount=max_posts_amount)		
 
+		
+		# print(result_messages)
+		return result_messages
+	
+
+	def force_posts_to_db(self, max_posts_amount=30, min_date=datetime.datetime(2023, 6, 1)):
+		messages = self.load_updates(max_posts_amount=max_posts_amount, min_date=min_date)
+
+		posts_author = User.objects.get(username="romantik")
+		for message in messages:
+			res_message = "<p>" + message["message"] + "</p>"
+			res_message = res_message.replace("\n", "<br>")
+			if message["media"][0] is not None:
+				media_path = message["media"][0].replace("./RomantikApp", "")
+				if media_path.split(".")[-1].lower() in ("mp4", "mov", "webm"):
+					res_message += """<video class="image_resized" style="width:80%;" src=" """+ media_path +""""></video>"""
+				else:
+					res_message += """<img class="image_resized" style="width:80%;" src=" """+ media_path +"""">"""
+			
+			if not TelegramPostId.objects.filter(channel=self.channel, post_id=message["id"]).exists():
+				post = NewsPost(user=posts_author, datetime=message["date"], content=res_message, img_paths={})
+				post.save()
+
+				post_tg_id = TelegramPostId(channel=self.channel, post_id=message["id"], user=posts_author)
+				post_tg_id.save()
+		
+
+
+
+
+
+	@database_sync_to_async				
+	def a_get_last_forced_post_info(self):
+		channel_parsers = TelegramChannelParserData.objects.filter(channel=self.channel)
+		if len(channel_parsers):
+			return channel_parsers[0]
+		else:
+			parser = TelegramChannelParserData(channel=self.channel, last_post_id=-1, last_update=datetime.datetime(2023, 6, 1))
+			parser.save()
+			return parser
 
 	@database_sync_to_async
 	def get_parser_data(self):
@@ -139,6 +194,18 @@ class TelergamParser:
 #     client._download_photo(message.media, './image.png', message.media.photo.date, message.id, "")
 #     print(message.id, message.text)
 #     print("\n________________________________________\n")
+
+
+def get_post_raiting(post):
+	upvotes = UpVote.objects.filter(news=post)
+	downvotes = DownVote.objects.filter(news=post)
+	int_total_raiting = upvotes.count() - downvotes.count()
+	total_raiting = str(int_total_raiting)
+	if int_total_raiting > 0:
+		total_raiting = "+"+str(int_total_raiting)
+	else:
+		total_raiting = str(int_total_raiting)
+	return total_raiting
 
 
 def full_name(user):

@@ -6,7 +6,7 @@ from traitlets import default
 
 class NewsPost(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    datetime = models.DateTimeField(auto_now_add=True, auto_created=True)
+    datetime = models.DateTimeField(auto_now = False, default="2023-06-06 00:00:00", auto_created=True)
     content = models.TextField(max_length=30000, blank=True)
     img_paths = models.JSONField(blank=True)
 
@@ -52,4 +52,9 @@ class PostTag(models.Model):
 class TelegramChannelParserData(models.Model):
     channel = models.CharField(max_length=45, default="my_awesome_channel")
     last_post_id = models.IntegerField()
-    last_update = models.DateTimeField(auto_now_add=True, auto_created=True)
+    last_update = models.DateTimeField(default="2023-06-06 00:00:00", auto_created=True)
+
+class TelegramPostId(models.Model):
+    channel = models.CharField(max_length=45, default="my_awesome_channel")
+    post_id = models.IntegerField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)

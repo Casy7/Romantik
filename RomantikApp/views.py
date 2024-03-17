@@ -22,13 +22,20 @@ telegram_parser = TelergamParser()
 
 class HomePage(View):
     def get(self, request):
-
-        print(telegram_parser.load_updates())
         
         context = base_context(request)
         context['page_name'] = 'home'
         return render(request, "home.html", context)
 
+
+class AjaxNewsFromTelegramUpdater(View):
+    def get(self, request):
+        try:
+            print(telegram_parser.force_posts_to_db(max_posts_amount=10, min_date=datetime.datetime(2024, 6, 2)))
+        except RuntimeError as e:
+            pass
+    
+        return HttpResponse("OK")
 
 class NewsPage(View):
     def get(self, request):
@@ -45,12 +52,7 @@ class NewsPage(View):
             upvotes = UpVote.objects.filter(news=news_post)
             downvotes = DownVote.objects.filter(news=news_post)
 
-            int_total_raiting = upvotes.count() - downvotes.count()
-            total_raiting = str(int_total_raiting)
-            if int_total_raiting > 0:
-                total_raiting = "+"+str(int_total_raiting)
-            else:
-                total_raiting = str(int_total_raiting)
+            total_raiting = get_post_raiting(news_post)
 
             comments_number = Comment.objects.filter(
                 news_post=news_post).count()
@@ -170,6 +172,64 @@ class AjaxPublishPost(View, LoginRequiredMixin):
             content_type="application/json"
         )
     
+
+
+class AjaxLoadMorePosts(View, LoginRequiredMixin):
+    def post(self, request):
+        form = request.POST
+        post_offset = int(form['posts_offset'])
+
+        result = {}
+
+        posts_to_load = NewsPost.objects.all().order_by('-datetime')[post_offset:post_offset+10].values()
+        posts_to_load = list(posts_to_load)
+
+        for post in posts_to_load:
+
+            user = User.objects.get(id=post["user_id"])
+            post_obj = NewsPost.objects.get(id=post["id"])
+
+            if request.user.is_authenticated:
+                user_upvoted = 'yes' if len(UpVote.objects.filter(news=post_obj).filter(user=request.user)) != 0 else 'no'
+                user_downvoted = 'yes' if len(DownVote.objects.filter(news=post_obj).filter(user=request.user)) != 0 else 'no'
+            else:
+                user_upvoted = 'no'
+                user_downvoted = 'no'
+
+            post["id"] = post["id"]
+            post["content"] = post["content"]
+            post["beauty_datetime"] = beautify_datetime(post["datetime"])
+            post['datetime'] = post['datetime'].strftime("%Y-%m-%d %H:%M:%S")
+            post["author_username"] = user.username
+            post["author_full_name"] = full_name(user)
+            post["author_avatar"] = get_avatar(user)
+            post["last_update"] = str(post["last_update"])
+            post["total_raiting"] = get_post_raiting(post_obj)
+            post["user_upvoted"] = user_upvoted
+            post["user_downvoted"] = user_downvoted
+
+
+
+
+                # 'total_raiting': total_raiting,
+                # 'upvotes': upvotes,
+                # 'downvotes': downvotes,
+                # 'user_upvoted': user_upvoted,
+                # 'user_downvoted': user_downvoted,
+                # 'comments_number': comments_number,
+
+                # 'author_avatar': get_avatar(news_post.user),
+                # 'beauty_datetime': beautify_datetime(news_post.datetime)
+
+
+
+        result["posts"] = posts_to_load
+        result["result"] = "success"
+        return HttpResponse(
+            json.dumps(result),
+            content_type="application/json"
+        )
+   
 
 class AjaxAddPhotoToPost(View, LoginRequiredMixin):
     def post(self, request):
