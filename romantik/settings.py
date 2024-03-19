@@ -37,7 +37,7 @@ except:
 SECRET_KEY = secret_settings['secret_key']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = secret_settings['debug']
 
 ALLOWED_HOSTS = [
 	'www.casy7.pythonanywhere.com',
