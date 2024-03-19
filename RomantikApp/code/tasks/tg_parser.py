@@ -3,7 +3,6 @@ from telethon import TelegramClient
 from telethon import events
 import requests
 import json
-from PIL import Image
 import os
 
 secret_settings = {
