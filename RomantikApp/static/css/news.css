@@ -102,7 +102,7 @@ small {
 .link-icon {
 	text-decoration: none;
 	vertical-align: baseline;
-	}
+}
 
 .comments-number {
 	text-decoration: none;
@@ -110,15 +110,35 @@ small {
 	vertical-align: bottom;
 	margin-left: 5px;
 	font-size: 15px;
-	}
+}
 
-	.post-author {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-	}
-	
-	
-	.post-avatar {
-		margin-right: 10px;
-	}
+.post-author {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+
+.post-avatar {
+	margin-right: 10px;
+}
+
+.image-from-tg-container {
+	display: flex;
+	flex-wrap: wrap;
+	flex-shrink: 5;
+	align-content: stretch;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 100%;
+	min-width: 400px;
+	flex-grow: 1;
+}
+
+.image-from-tg {
+	flex-shrink: 7000;
+	flex-grow: 1;
+	width: inherit;
+	display: flex;
+	flex-basis: 31%;
+}

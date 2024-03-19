@@ -16,9 +16,6 @@ from romantik.settings import MEDIA_ROOT, secret_settings
 from .models import *
 from .code.views_functions import *
 
-from asgiref.sync import sync_to_async, async_to_sync
-
-telegram_parser = TelergamParser()
 
 class HomePage(View):
 	def get(self, request):
@@ -28,14 +25,39 @@ class HomePage(View):
 		return render(request, "home.html", context)
 
 
-class AjaxNewsFromTelegramUpdater(View):
+class AjaxGetNewsFromTelegramUpdater(View):
+
 	def get(self, request):
-		try:
-			telegram_parser.force_posts_to_db(max_posts_amount=20, min_date=datetime.datetime(2024, 6, 2))
-		except RuntimeError as e:
-			pass
+		return render(request, "news.html", {})
 	
-		return HttpResponse("OK")
+	def post(self, request):
+
+		raw_data = request.body.decode("utf-8")
+
+		data = json.loads(raw_data)
+		if data["secret_key"] != secret_settings["secret_key"]:
+			return HttpResponse("error")
+		messages = data["messages"]
+
+		posts_author = AnonymousUser()
+
+		if User.objects.filter(username="romantik").exists():
+			posts_author = User.objects.get(username="romantik")
+		elif User.objects.filter(username="admin").exists():
+			posts_author = User.objects.get(username="admin")
+
+
+		for message in messages:
+			if "|" in message["id"]:
+				message["id"] = message["id"].split("|")[0]
+			if not TelegramPostId.objects.filter(channel="tk_romantik", post_tg_id=message["id"]).exists():
+				post = NewsPost(user=posts_author, datetime=message["date"], content=message["message"], img_paths={})
+				post.save()
+
+				post_tg_id = TelegramPostId(channel="tk_romantik", post_tg_id=message["id"], post=post)
+				post_tg_id.save()
+		
+		return HttpResponse("success")
 
 class NewsPage(View):
 	def get(self, request):

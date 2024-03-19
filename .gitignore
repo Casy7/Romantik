@@ -16,4 +16,5 @@
 secret.json
 
 #Ignore telethon logs
-RomantikClient.session
+*.session
+*.session-journal
