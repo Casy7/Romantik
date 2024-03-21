@@ -132,9 +132,10 @@ if __name__ == '__main__':
 		pass
 
 	parser = TelergamParser(secret_settings["channel"], secret_settings["tg_api_id"], secret_settings["tg_api_hash"])
+	
 
 	@parser.client.on(events.NewMessage(chats='gGIj6w7K51avX'))
-	async def update_posts(event):
+	async def update_posts(event=None):
 
 		try:
 			async with open('./parser_data.json') as f:
@@ -143,38 +144,41 @@ if __name__ == '__main__':
 		except:
 			pass
 		
+		try:
+			messages = await parser.get_latest_posts(20)
 
-		messages = await parser.get_latest_posts(20)
+			url = "https://romantik.space/get_posts_from_tg/" if secret_settings["production"] else "http://127.0.0.1:8000/get_posts_from_tg/"
 
-		url = "https://romantik.space/get_posts_from_tg/" if secret_settings["production"] else "http://127.0.0.1:8000/get_posts_from_tg/"
+			client = requests.session()
+			client.get(url)
 
-		client = requests.session()
+			if 'csrftoken' in client.cookies:
+				csrftoken = client.cookies['csrftoken']
+			else:
+				csrftoken = client.cookies['csrf']
+			
+			headers = {
+				"X-CSRFToken": csrftoken,
+				"Content-Type": "application/json",
+				"X-Requested-With": "XMLHttpRequest",
+				"csrftoken": csrftoken
+			}
+			post_data = {"messages": messages, "secret_key": secret_settings["secret_key"]}
+			post_response = requests.post(url, data = json.dumps(post_data), json=post_data, headers = headers, cookies = client.cookies)
+			print(post_response.text)
 
-		client.get(url) 
-		if 'csrftoken' in client.cookies:
-			csrftoken = client.cookies['csrftoken']
-		else:
-			csrftoken = client.cookies['csrf']
-		
-		headers = {
-			"X-CSRFToken": csrftoken,
-			"Content-Type": "application/json",
-			"X-Requested-With": "XMLHttpRequest",
-			"csrftoken": csrftoken
-		}
-		post_data = {"messages": messages, "secret_key": secret_settings["secret_key"]}
-		post_response = requests.post(url, data = json.dumps(post_data), json=post_data, headers = headers, cookies = client.cookies)
-		print(post_response.text)
+			if post_response.text == "success":
+				message_ids = [message["id"] for message in messages]
+				previous_parsing_results["already_parsed_posts"].extend(message_ids)
+				deduplicated_list = list()
 
-		if post_response.text == "success":
-			message_ids = [message["id"] for message in messages]
-			previous_parsing_results["already_parsed_posts"].extend(message_ids)
-			deduplicated_list = list()
+				[deduplicated_list.append(item) for item in previous_parsing_results["already_parsed_posts"] if item not in deduplicated_list]
+				previous_parsing_results["already_parsed_posts"] = deduplicated_list
 
-			[deduplicated_list.append(item) for item in previous_parsing_results["already_parsed_posts"] if item not in deduplicated_list]
-			previous_parsing_results["already_parsed_posts"] = deduplicated_list
-
-			json.dump(previous_parsing_results, open('./parser_data.json', 'w'), indent=4, ensure_ascii=False)
+				json.dump(previous_parsing_results, open('./parser_data.json', 'w'), indent=4, ensure_ascii=False)
+		except Exception as e:
+			print(e)
 	
 	with parser.client:
+		parser.client.loop.run_until_complete(update_posts())
 		parser.client.run_until_disconnected()
