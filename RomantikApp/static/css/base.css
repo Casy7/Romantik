@@ -402,7 +402,15 @@ nav .dropdown-toggle::after {
     width: 20px;
 }
 
+.mobile {
+    display: none;
+}
+
 @media only screen and (max-device-width: 480px) {
+
+    .mobile {
+        display: initial;
+    }
 
     .desktop-only {
         display: none;
