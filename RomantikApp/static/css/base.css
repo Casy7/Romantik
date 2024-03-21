@@ -211,6 +211,39 @@ blockquote {
     }
 }
 
+.dropdown-item-animate {
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in-out;
+    animation-name: show-dropdown-item;
+    animation-fill-mode: forwards;
+}
+
+.dropdown-item-animate-close {
+    overflow: hidden;
+    animation-duration: 0.5s;
+    animation-timing-function:linear;
+    animation-name: close-dropdown-item;
+    animation-fill-mode: forwards;
+}
+
+@keyframes show-dropdown-item {
+    from {
+        height: 0px;
+    }
+    to {
+        height: 40px;
+    }
+}
+
+@keyframes close-dropdown-item {
+    from {
+        height: 40px;
+    }
+    to {
+        height: 0px;
+    }
+}
+
 
 .dropdown-item {
     color: white;

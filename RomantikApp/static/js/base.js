@@ -31,11 +31,17 @@ if (!window.mobileCheck()) {
 function toggleDropdown(dropdownId) {
 	if (!document.getElementById(dropdownId).classList.contains("dropdown-animate")) 
 	{
-		document.getElementById(dropdownId).classList.add("dropdown-animate"); 
+		document.getElementById(dropdownId).classList.add("dropdown-animate");
 		document.getElementById(dropdownId).classList.remove("dropdown-animate-close");		
+
+		$("#"+ dropdownId +" .dropdown-item").addClass("dropdown-item-animate");
+		$("#"+ dropdownId +" .dropdown-item").removeClass("dropdown-item-animate-close");
 	}
 	else {
 		document.getElementById(dropdownId).classList.remove("dropdown-animate");
 		document.getElementById(dropdownId).classList.add("dropdown-animate-close");
+
+		$("#"+ dropdownId +" .dropdown-item").addClass("dropdown-item-animate-close");
+		$("#"+ dropdownId +" .dropdown-item").removeClass("dropdown-item-animate");
 	}
 }
