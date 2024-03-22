@@ -47,7 +47,7 @@ class TelergamParser:
 			old_media_path = path+old_media_path
 			if old_media_path != media_path and media_size ==  os.stat(old_media_path).st_size:
 				
-				if old_media_path.split(" ")[0] == old_media_path.split(" ")[0]:
+				if old_media_path.split(" ")[0] == media_path.split(" ")[0]:
 					os.remove(media_path)
 					return old_media_path
 		
@@ -77,22 +77,18 @@ class TelergamParser:
 
 			last_grouped_id = message.grouped_id if message.grouped_id is not None else -1
 
-
-
-
 			message_props = {
 				"id": str(message.id),
 				"date": message.date,
 				"message": message.message,
 				"media": []
-			}
-
-			print("Message parsed from TG: ", message.id)
+			}			
 
 			saved_path = await message.download_media(file="../../media/telegram_forced/")
 			message_props["media"].append(saved_path)
 
 			result_messages.append(message_props)
+			print("Message parsed from TG: ", message.id)
 
 		return result_messages
 
