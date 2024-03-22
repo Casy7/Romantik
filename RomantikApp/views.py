@@ -35,8 +35,12 @@ class AjaxGetNewsFromTelegramUpdater(View):
 		raw_data = request.body.decode("utf-8")
 
 		data = json.loads(raw_data)
+		result = {"result": "error"}
 		if data["secret_key"] != secret_settings["secret_key"]:
-			return HttpResponse("error")
+			return HttpResponse(
+			json.dumps(result),
+			content_type="application/json"
+		)
 		messages = data["messages"]
 
 		posts_author = AnonymousUser()
@@ -57,7 +61,12 @@ class AjaxGetNewsFromTelegramUpdater(View):
 				post_tg_id = TelegramPostId(channel="tk_romantik", post_tg_id=message["id"], post=post)
 				post_tg_id.save()
 		
-		return HttpResponse("success")
+		result["result"] = "success"
+		
+		return HttpResponse(
+			json.dumps(result),
+			content_type="application/json"
+		)
 
 class NewsPage(View):
 	def get(self, request):

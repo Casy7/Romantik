@@ -165,9 +165,10 @@ if __name__ == '__main__':
 			}
 			post_data = {"messages": messages, "secret_key": secret_settings["secret_key"]}
 			post_response = requests.post(url, data = json.dumps(post_data), json=post_data, headers = headers, cookies = client.cookies)
-			print(post_response.text)
+			result = json.loads(post_response.text)
+			print("Result: ", result)
 
-			if post_response.text == "success":
+			if result["result"] == "success":
 				message_ids = [message["id"] for message in messages]
 				previous_parsing_results["already_parsed_posts"].extend(message_ids)
 				deduplicated_list = list()

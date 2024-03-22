@@ -40,3 +40,9 @@ class TagAdmin(admin.ModelAdmin):
     list_display = ('name',)
 
 admin.site.register(Tag, TagAdmin)
+
+class TelegramPostIdAdmin(admin.ModelAdmin):
+    list_display = ('channel', 'post', 'post_id')
+    search_fields = ('channel', 'post', 'post_id')
+
+admin.site.register(TelegramPostId, TelegramPostIdAdmin)
