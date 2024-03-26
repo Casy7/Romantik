@@ -32,9 +32,7 @@ class AjaxGetNewsFromTelegramUpdater(View):
 	
 	def post(self, request):
 
-		raw_data = request.body.decode("utf-8")
-
-		data = json.loads(raw_data)
+		data = json.loads(request.body)
 		result = {"result": "error"}
 		if data["secret_key"] != secret_settings["secret_key"]:
 			return HttpResponse(

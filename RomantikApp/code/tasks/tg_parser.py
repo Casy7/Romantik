@@ -32,7 +32,7 @@ class TelergamParser:
 			if str(message_id) in ids_in_one_post:
 				return True
 		return False
-	
+
 	async def download_media_from_message(self, message, path="../../media/telegram_forced/"):
 		media_path = await message.download_media(file=path)
 		media_path = media_path.replace("\\", "/")
@@ -45,12 +45,12 @@ class TelergamParser:
 		media_size = os.stat(media_path).st_size
 		for old_media_path in os.listdir(path):
 			old_media_path = path+old_media_path
-			if old_media_path != media_path and media_size ==  os.stat(old_media_path).st_size:
-				
+			if old_media_path != media_path and media_size == os.stat(old_media_path).st_size:
+
 				if old_media_path.split(" ")[0] == media_path.split(" ")[0]:
 					os.remove(media_path)
 					return old_media_path
-		
+
 		return media_path
 
 	async def a_load_last_posts(self,  max_posts_amount=30):
@@ -69,7 +69,7 @@ class TelergamParser:
 
 			if message.grouped_id is not None and last_grouped_id == message.grouped_id:
 				last_message = result_messages[-1]
-				last_message["id"]+="|"+str(message.id)
+				last_message["id"] += "|"+str(message.id)
 				last_message["message"] += " " + message.message
 				saved_path = await self.download_media_from_message(message)
 				last_message["media"].append(saved_path)
@@ -82,7 +82,7 @@ class TelergamParser:
 				"date": message.date,
 				"message": message.message,
 				"media": []
-			}			
+			}
 
 			saved_path = await message.download_media(file="../../media/telegram_forced/")
 			message_props["media"].append(saved_path)
@@ -103,7 +103,7 @@ class TelergamParser:
 			if len(message["media"]):
 				res_message += "<div class='image-from-tg-container'>"
 				for media in message["media"]:
-					
+
 					if media is None:
 						continue
 					media_path = media.replace("./RomantikApp", "")
@@ -112,7 +112,7 @@ class TelergamParser:
 					else:
 						res_message += """<img class="image-from-tg" src=" """ + media_path + """">"""
 				res_message += "</div>"
-					
+
 			message["message"] = res_message
 			message["date"] = str(message["date"])
 
@@ -128,7 +128,6 @@ if __name__ == '__main__':
 		pass
 
 	parser = TelergamParser(secret_settings["channel"], secret_settings["tg_api_id"], secret_settings["tg_api_hash"])
-	
 
 	@parser.client.on(events.NewMessage(chats='gGIj6w7K51avX'))
 	async def update_posts(event=None):
@@ -139,43 +138,42 @@ if __name__ == '__main__':
 				await previous_parsing_results.update(d)
 		except:
 			pass
+
+		messages = await parser.get_latest_posts(20)
+
+		url = "https://www.romantik.space/get_posts_from_tg/" if secret_settings["production"] else "http://127.0.0.1:8000/get_posts_from_tg/"
+
+		session = requests.Session()
+		get_response = session.get(url)
+
+		csrftoken = session.cookies.get('csrftoken', None)
+
+		headers = {
+			"X-CSRFToken": csrftoken,
+			"Content-Type": "application/json",
+			"X-Requested-With": "XMLHttpRequest",
+			"csrftoken": csrftoken,
+			"Referer": url
+		}
 		
-		try:
-			messages = await parser.get_latest_posts(20)
+		session.headers.update(headers)
+		
 
-			url = "https://romantik.space/get_posts_from_tg/" if secret_settings["production"] else "http://127.0.0.1:8000/get_posts_from_tg/"
+		post_data = {"messages": messages, "secret_key": secret_settings["secret_key"], "csrfmiddlewaretoken": csrftoken, "next": "/"}
+		post_response = session.post(url, data=json.dumps(post_data), json=post_data, headers=headers)
+		result = json.loads(post_response.text)
+		print("Result: ", result)
 
-			client = requests.session()
-			client.get(url)
+		if result["result"] == "success":
+			message_ids = [message["id"] for message in messages]
+			previous_parsing_results["already_parsed_posts"].extend(message_ids)
+			deduplicated_list = list()
 
-			if 'csrftoken' in client.cookies:
-				csrftoken = client.cookies['csrftoken']
-			else:
-				csrftoken = client.cookies['csrf']
-			
-			headers = {
-				"X-CSRFToken": csrftoken,
-				"Content-Type": "application/json",
-				"X-Requested-With": "XMLHttpRequest",
-				"csrftoken": csrftoken
-			}
-			post_data = {"messages": messages, "secret_key": secret_settings["secret_key"]}
-			post_response = requests.post(url, data = json.dumps(post_data), json=post_data, headers = headers, cookies = client.cookies)
-			result = json.loads(post_response.text)
-			print("Result: ", result)
+			[deduplicated_list.append(item) for item in previous_parsing_results["already_parsed_posts"] if item not in deduplicated_list]
+			previous_parsing_results["already_parsed_posts"] = deduplicated_list
 
-			if result["result"] == "success":
-				message_ids = [message["id"] for message in messages]
-				previous_parsing_results["already_parsed_posts"].extend(message_ids)
-				deduplicated_list = list()
+			json.dump(previous_parsing_results, open('./parser_data.json', 'w'), indent=4, ensure_ascii=False)
 
-				[deduplicated_list.append(item) for item in previous_parsing_results["already_parsed_posts"] if item not in deduplicated_list]
-				previous_parsing_results["already_parsed_posts"] = deduplicated_list
-
-				json.dump(previous_parsing_results, open('./parser_data.json', 'w'), indent=4, ensure_ascii=False)
-		except Exception as e:
-			print(e)
-	
 	with parser.client:
 		parser.client.loop.run_until_complete(update_posts())
 		parser.client.run_until_disconnected()
