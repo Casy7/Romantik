@@ -28,7 +28,7 @@ secret_settings = {
 }
 
 try:
-    with open('secret.json') as f:
+    with open(os.path.join(BASE_DIR, 'secret.json')) as f:
         d = json.load(f)
         secret_settings.update(d)        
 except:
