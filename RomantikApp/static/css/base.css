@@ -376,6 +376,9 @@ blockquote {
     font-size: 13px;
 }
 
+.notice-card > p:nth-child(1) {
+    margin-top: 10px;
+    }
 
 
 .notice-card.grey-notice-card {
@@ -385,7 +388,7 @@ blockquote {
 
 .notice-card-hr {
     margin-top: 0px;
-    margin-bottom: 0px;
+    margin-bottom: 10px;
 }
 
 

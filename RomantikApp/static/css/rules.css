@@ -6,3 +6,7 @@ h1, h2, h3, p {
 	margin: initial;
 	padding: initial;
 }
+
+p {
+	padding-bottom: 11px;
+}
