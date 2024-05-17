@@ -120,6 +120,9 @@ class PostEditor(View, LoginRequiredMixin):
 		
 		context['post'] = NewsPost.objects.get(id=post_id)
 
+		if not context['post'].user == request.user:
+			return handler404(request)
+
 		return render(request, "edit_post.html", context)
 
 
@@ -199,7 +202,6 @@ class AjaxPublishPost(View, LoginRequiredMixin):
 			content_type="application/json"
 		)
 	
-
 
 class AjaxLoadMorePosts(View, LoginRequiredMixin):
 	def post(self, request):

@@ -44,7 +44,7 @@ h1, h2, h3, h4, h5, p, small, a, td, li, pre, span, th, tr {
     color: white;
 }
 
-.ck-content p, .ck-content h1, .ck-content h2, .ck-content h3, .ck-content h4, .ck-content h5, .ck-content small, .ck-content a, .ck-content small, .ck-content span, .ck-content pre,.ck-content th, .ck-content tr {
+.ck-content p, .ck-content h1, .ck-content h2, .ck-content h3, .ck-content h4, .ck-content h5, .ck-content small, .ck-content a, .ck-content small, .ck-content span, .ck-content pre, .ck-content th, .ck-content tr {
     word-wrap: break-word;
 }
 
@@ -188,6 +188,7 @@ blockquote {
         padding-bottom: 0rem;
         background-color: rgb(17, 17, 17);
     }
+
     to {
         height: fit-content;
         padding-top: 0.5rem;
@@ -203,6 +204,7 @@ blockquote {
         padding-bottom: 0.5rem;
         background-color: rgb(94, 94, 94);
     }
+
     to {
         height: 0px;
         padding-top: 0rem;
@@ -221,7 +223,7 @@ blockquote {
 .dropdown-item-animate-close {
     overflow: hidden;
     animation-duration: 0.5s;
-    animation-timing-function:linear;
+    animation-timing-function: linear;
     animation-name: close-dropdown-item;
     animation-fill-mode: forwards;
 }
@@ -230,6 +232,7 @@ blockquote {
     from {
         height: 0px;
     }
+
     to {
         height: 40px;
     }
@@ -239,6 +242,7 @@ blockquote {
     from {
         height: 40px;
     }
+
     to {
         height: 0px;
     }
@@ -343,6 +347,50 @@ blockquote {
     width: fit-content;
     font-size: 18px;
     min-width: 50px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-center>* {
+    text-align: center;
+}
+
+
+
+.text-italic {
+    font-style: italic;
+}
+
+.notice-card {
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    border-radius: 0px;
+    
+}
+
+
+.notice-card > * {
+    font-size: 13px;
+}
+
+
+
+.notice-card.grey-notice-card {
+    background-color: #363636;
+    border: 1px solid orange;
+}
+
+.notice-card-hr {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+
+.notice-card-hr.orange {
+    border: 1px solid orange;
 }
 
 
@@ -497,5 +545,5 @@ nav .dropdown-toggle::after {
         margin: 0px;
     }
 
-    
+
 }

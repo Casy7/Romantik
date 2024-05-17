@@ -104,12 +104,11 @@ async function after_last_update_delay(ms) {
 
 
 $(document).ready(function () {
-	// Функция для проверки, долистал ли пользователь страницу до конца
+
 	function isScrolledToBottom() {
 		return $(window).scrollTop() + $(window).height() >= $(document).height() - 400;
 	}
 
-	// Функция для выполнения AJAX запроса при достижении конца страницы
 	function loadMorePosts() {
 		// Проверяем, долистал ли пользователь страницу до конца
 		if (isScrolledToBottom() && after_last_update_timer_finished) {
@@ -161,9 +160,7 @@ $(document).ready(function () {
 		}
 	}
 
-	// Обработчик события прокрутки страницы
 	$(window).scroll(function () {
-		// Выполняем AJAX запрос при достижении конца страницы
 		loadMorePosts();
 	});
 });
