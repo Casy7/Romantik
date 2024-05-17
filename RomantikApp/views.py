@@ -460,11 +460,19 @@ class Rules(View):
 		return render(request, "rules.html", context)
 
 
-class OldRules(View):
+class OldRulesUkr(View):
 	def get(self, request):
 
 		context = base_context(
 			request, title='Правила (повні)', header='Правила клубу (повні)', error=0)
+
+		return render(request, "old_rules_ukr.html", context)
+
+class OldRules(View):
+	def get(self, request):
+
+		context = base_context(
+			request, title='Правила (повні)', header='Правила клубу (повні, рос.)', error=0)
 
 		return render(request, "old_rules.html", context)
 

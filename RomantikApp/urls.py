@@ -16,6 +16,7 @@ urlpatterns = [
     path("about/", AboutUs.as_view(), name="about_us"),
     path("rules/", Rules.as_view(), name="rules"),
     path("old_rules/", OldRules.as_view(), name="old_rules"),
+    path("old_rules_ukr/", OldRulesUkr.as_view(), name="old_rules_ukr"),	
     path("history/", History.as_view(), name="history"),
     path("contacts/", Contacts.as_view(), name="contacts"),
     path("hymn/", Hymn.as_view(), name="hymn"),
