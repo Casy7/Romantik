@@ -1,3 +1,11 @@
+#content {
+    background-color: #2125294f;
+    min-height: 75vh;
+}
+
+.page-content {
+    justify-content: center;
+}
 
 .container {
     height: 100%;
@@ -18,7 +26,7 @@
 
 
 
-.input-group-prepend span{
+.input-group-prepend span {
     width: 48px;
     /* background-color: rgb(46, 119, 179); */
     color: white;
@@ -26,9 +34,9 @@
 }
 
 
-.input_text{
+.input_text {
     width: 100%;
-    
+
     height: 33px;
     /* border: 1px solid gray; */
 }
@@ -38,10 +46,11 @@ input:focus {
     box-shadow: 0 0 0 0 !important;
 }
 
-.input-group-text{
+.input-group-text {
     height: 33px;
 
 }
+
 .login_btn {
     color: black;
     /* background-color: rgb(46, 119, 179); */
@@ -50,8 +59,8 @@ input:focus {
 }
 
 .remember {
-    padding-left: 5%; 
-    
+    padding-left: 5%;
+
     /* margin-right: 20px;
    
     color: rgb(219, 219, 219); */
@@ -63,12 +72,10 @@ input:focus {
     background-color: white;
 }
 
-.card-body{
+.card-body {
     box-sizing: content-box;
 }
 
-.error-message{
+.error-message {
     color: rgb(235, 155, 64);
 }
-
-

@@ -10,11 +10,6 @@ body {
     flex-direction: column;
     justify-content: space-between;
     padding-top: 78px;
-    background-size: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-
 }
 
 #content {
