@@ -1,10 +1,15 @@
 {% extends 'base.html' %}
-{% block content %}
+
+
 {% load static %}
+
+{% block page_styles %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}" type="text/css" />
 <link href="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css" rel="stylesheet">
-<script src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"></script>
+{% endblock %}
 
+{% block content %}
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"></script>
 <div class="main-container">
     <div class="card-body">
         <div class="angle-card first-angle-card home-header">
@@ -30,7 +35,7 @@
                     </p>
                 </div>
                 <div class="col">
-                    <img src="{% static 'images/home/mountains.jpg' %}" alt="">
+                    <img src="{% static 'images/home/all_2021.jpeg' %}" alt="">
                 </div>
             </div>
         </div>
@@ -80,8 +85,5 @@
         <p>Долучайся до нас, буде цікаво!</p>
     </div>
 </div>
-</div>
-
-
-
 {% endblock %}
+

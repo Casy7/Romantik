@@ -1,18 +1,14 @@
 body {
-    background-color: #1b1f22;
-    margin-top: 54px;
-
-    /* background: linear-gradient(90deg, rgb(128, 75, 59) 0%, rgb(33, 37, 41) 15%, rgb(33, 37, 41) 85%, rgb(125, 64, 41) 100%); */
-    background-color: #19191c;
-
-
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
 }
 
 .page-content {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 95vh;
     padding-top: 78px;
     background-size: 100%;
     background-position: center;
@@ -29,6 +25,7 @@ body {
     padding-bottom: 89px;
     border-radius: 4px;
     padding-top: 10px;
+    margin-top: 11vh;
 
 }
 

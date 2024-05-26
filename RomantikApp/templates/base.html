@@ -4,8 +4,7 @@
 <html>
 
 <head>
-  <link crossorigin="anonymous" href="{% static 'libs/modules/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet"
-    type="text/css">
+  <link crossorigin="anonymous" href="{% static 'libs/modules/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
   <script crossorigin="anonymous" src="{% static 'libs/modules/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
   <script crossorigin="anonymous" src="{% static 'js/common.js' %}"></script>
 
@@ -21,6 +20,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  {% block page_meta %} {% endblock %}
+
   <!-- STYLES -->
   <link href="{% static 'libs/modules/bootstrap-select/css/bootstrap-select.min.css'%}" rel="stylesheet">
   <style>
@@ -116,6 +117,11 @@
   <link rel="icon" type="image/x-icon" href="{% static 'icons/favicon.ico' %}">
   <!-- GOOGLE SEARCH CONSOLE ID -->
   <meta name="google-site-verification" content="2tQG1LgZd2PIUajDBy29LEbx0bDL5mJs6XXr0PhQIwE" />
+
+  {% block page_styles %} {% endblock %}
+  {% block page_style_slot_1 %} {% endblock %}
+  {% block page_style_slot_2 %} {% endblock %}
+  {% block page_style_slot_3 %} {% endblock %}
 </head>
 
 <body>
@@ -123,16 +129,14 @@
 
   <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
     <div class="nav-item dropdown mobile">
-      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-        aria-expanded="false" onclick="toggleDropdown('dropdownNavMainMenu')">
-
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="toggleDropdown('dropdownNavMainMenu')">
         <img class="glyphicon white" src="{% static 'icons/menu.svg' %}">
-
       </a>
+
       <div class="dropdown-menu nav-menu-dropdown" id="dropdownNavMainMenu" aria-labelledby="navbarDropdown">
         {% if page_name != 'home' %}
         <a class="dropdown-item" href="/">Головна</a>
-        {% endif %}        
+        {% endif %}
         {% if header != 'Новини' %}
         <a class="dropdown-item" href="/news">Новини</a>
         {% endif %}
@@ -149,11 +153,9 @@
       </div>
     </div>
 
-    
     <a class="navbar-brand desktop-only {% if page_name != 'home' %}mobile-hidden{% endif %}" href="/">
-      <img class="base_logo_mini" src="{% static 'icons/logo.svg' %}">    
+      <img class="base_logo_mini" src="{% static 'icons/logo.svg' %}">
     </a>
-    
 
     <ul class="navbar-nav me-auto mb-2 mb-lg-0 central-nav-panel">
 
@@ -185,9 +187,6 @@
       <h4 class="navbar-header">{{ title }}</h4>
       {% endif %}
     </ul>
-
-
-
 
     <div class="nav-item dropdown">
 
@@ -237,28 +236,18 @@
 
   <!-- __________________________________________ CONTENT __________________________________________ -->
 
-  <div class="page-content background">
-    <div class=""></div>
+  <div id="content" class="container content page-content background">
 
-    <div id="content" class="container content">
+      {%block content%} {%endblock%}
 
-      {%block content%}
-
-      {%endblock%}
-
-
-    </div>
-
-    <footer class="text-center text-white">
-
-      <!-- Copyright -->
-      <div class="text-center p-3">
-        Got any questions?
-        <a class="text-white" href="https://t.me/casy7/">Me too.</a>
-      </div>
-      <!-- Copyright -->
-    </footer>
   </div>
+
+  <footer class="text-center text-white">
+    <div class="text-center p-3">
+      Є питання?
+      <a class="text-white" href="https://t.me/casy7/">Напишіть нам!</a>
+    </div>
+  </footer>
 </body>
 
 
@@ -269,6 +258,8 @@
 
 
 <script src="{% static 'js/base.js' %}" type="text/javascript"></script>
+
+{% block page_scripts %} {% endblock %}
 
 
 </html>

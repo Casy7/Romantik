@@ -1,18 +1,40 @@
 {% extends 'base.html' %}
-{% block content %}
 {% load static %}
 
-<!--<i class="fas fa-cog"></i>    fa-d-and-d-->
 
-
+{% block page_styles %}
 <link href="{% static 'css/registration.css' %}" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'css/form.css' %}" />
+<link rel="stylesheet" href="{% static 'css/icons.css' %}" />
+<style>
+	@font-face {
+		font-family: "Icon Pack";
+		font-style: normal;
+		font-weight: 400;
+		src: url("{% static 'libs/fonts/icons/fa-regular-400.eot' %}");
+		src: url("{% static 'libs/fonts/icons/fa-regular-400.eot' %}") format("embedded-opentype"),
+		url("{% static 'libs/fonts/icons/fa-regular-400.woff2' %}") format("woff2"),
+		url("{% static 'libs/fonts/icons/fa-regular-400.woff2' %}") format("woff"),
+		url("{% static 'libs/fonts/icons/fa-regular-400.ttf' %}") format("truetype"),
+		url("{% static 'libs/fonts/icons/fa-regular-400.svg' %}") format("svg")
+	}
+
+	@font-face {
+		font-family: "Icon Pack";
+		font-style: normal;
+		font-weight: 900;
+		src: url(../webfonts/fa-solid-900.eot);
+		src: url(../webfonts/fa-solid-900.eot?#iefix) format("embedded-opentype"),
+		url("{% static 'libs/fonts/icons/fa-solid-900.woff2' %}") format("woff2"),
+		url("{% static 'libs/fonts/icons/fa-solid-900.woff2' %}") format("woff"),
+		url("{% static 'libs/fonts/icons/fa-solid-900.ttf' %}") format("truetype"),
+		url("{% static 'libs/fonts/icons/fa-solid-900.svg' %}") format("svg")
+	}
+</style>
+{% endblock %}
 
 
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
-integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-
-
+{% block content %}
 <form method="POST">
 	{%csrf_token%}
 	<div class="container">
@@ -25,45 +47,41 @@ integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fW
 						<a class="text-white" href="/signin/">Увійти</a>
 					</div>
 					<br>
-					
+
 					<div class="input-group form-group">
 						<!--NAME-->
 						<div class="input-group-prepend">
 							<span class="input-group-text bg-dark"><i class="far fa-address-card"> *</i></span>
 						</div>
-						<input type="text" name="first_name" id = "first_name" required="" class="form-control form-control dark-control dark"
-							placeholder="Ім’я">
+						<input type="text" name="first_name" id="first_name" required="" class="form-control form-control dark-control dark" placeholder="Ім’я">
 					</div>
 					<div class="input-group form-group">
 						<!--SURNAME-->
 						<div class="input-group-prepend" style="display: inline-block;">
 							<span class="input-group-text bg-dark"><i class="fas fa-address-card"></i></span>
 						</div>
-						<input type="text" name="last_name" id = "last_name" class="form-control dark-control dark"
-							placeholder="Прізвище">
+						<input type="text" name="last_name" id="last_name" class="form-control dark-control dark" placeholder="Прізвище">
 					</div>
 					<div class="input-group form-group">
 						<!--USERNAME-->
 						<div class="input-group-prepend">
-							<span class="input-group-text bg-dark"><i class="far fa-copyright"> *</i></span>
+							<span class="input-group-text bg-dark"><i class="fas fa-at"> *</i></span>
 						</div>
-						<input type="text" name="username" id = "username" required pattern="[A-Za-z0-9_]+" minlength="3" class="form-control dark-control dark"
-							placeholder="Нікнейм">
+						<input type="text" name="username" id="username" required pattern="[A-Za-z0-9_]+" minlength="3" class="form-control dark-control dark" placeholder="Нікнейм">
 					</div>
 					<div class="input-group form-group">
 						<!--EMAIL-->
 						<div class="input-group-prepend">
 							<span class="input-group-text bg-dark"><i class="fas fa-envelope"> </i></span>
 						</div>
-						<input type="email" name="email" id = "email" class="form-control dark-control dark" placeholder="Email">
-					</div>				
+						<input type="email" name="email" id="email" class="form-control dark-control dark" placeholder="Email">
+					</div>
 					<div class="input-group form-group">
 						<!--PASSWORD-->
 						<div class="input-group-prepend">
 							<span class="input-group-text bg-dark"><i class="fas fa-key" aria-hidden="true"> *</i></span>
 						</div>
-						<input id="password_field" type="password" required="" name="password" minlength="6"
-							class="form-control dark-control dark" placeholder="Пароль">
+						<input id="password_field" type="password" required="" name="password" minlength="6" class="form-control dark-control dark" placeholder="Пароль">
 						<div class="input-group-append">
 							<button type="button" class="form-control dark bg-dark show_pwd_button" onclick="show_password()"><i class="fa fa-eye"></i></button>
 
@@ -71,7 +89,7 @@ integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fW
 					</div>
 
 					{% if error != 0 %}
-					
+
 					<script>
 						var first_name = '{{first_name}}';
 						var last_name = '{{last_name}}';
@@ -96,12 +114,7 @@ integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fW
 						Вибачте, людина із цим юзернеймом вже зазареєстрована!
 					</div>
 					{% endif %}
-					<input type="submit" value="Реєстрація!" class="btn btn-outline-secondary btn-block"
-						style="width: 100%;">
-
-					<!-- <div class="d-flex justify-content-center">
-					<a href="#">Forgot your password?</a>
-				</div> -->
+					<input type="submit" value="Реєстрація!" class="btn btn-outline-secondary btn-block" style="width: 100%;">
 				</div>
 			</div>
 		</div>
