@@ -1,6 +1,8 @@
 import datetime
 import json
 import os
+
+from sympy import false
 from .modules.compressor import ImageCompressor
 
 from django.shortcuts import render
@@ -218,9 +220,12 @@ class AjaxLoadMorePosts(View, LoginRequiredMixin):
 			user = User.objects.get(id=post["user_id"])
 			post_obj = NewsPost.objects.get(id=post["id"])
 
+			is_user_post_author = False
+
 			if request.user.is_authenticated:
 				user_upvoted = 'yes' if len(UpVote.objects.filter(news=post_obj).filter(user=request.user)) != 0 else 'no'
 				user_downvoted = 'yes' if len(DownVote.objects.filter(news=post_obj).filter(user=request.user)) != 0 else 'no'
+				is_user_post_author = (user == request.user)
 			else:
 				user_upvoted = 'no'
 				user_downvoted = 'no'
@@ -236,6 +241,7 @@ class AjaxLoadMorePosts(View, LoginRequiredMixin):
 			post["total_raiting"] = get_post_raiting(post_obj)
 			post["user_upvoted"] = user_upvoted
 			post["user_downvoted"] = user_downvoted
+			post['is_user_post_author'] = is_user_post_author
 
 
 

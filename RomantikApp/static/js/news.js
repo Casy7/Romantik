@@ -100,7 +100,7 @@ async function after_last_update_delay(ms) {
 	after_last_update_timer_finished = false;
 	await new Promise(resolve => setTimeout(resolve, ms));
 	after_last_update_timer_finished = true;
-  }
+}
 
 
 $(document).ready(function () {
@@ -166,7 +166,7 @@ $(document).ready(function () {
 });
 
 function addPostToPage(post) {
-	
+
 	user_upvoted_class = "";
 	if (post.user_upvoted == "yes") {
 		user_upvoted_class = "upvoted";
@@ -177,6 +177,10 @@ function addPostToPage(post) {
 		user_downvoted_class = "downvoted";
 	}
 
+	editButton = "";
+	if (post.is_user_post_author) {
+		editButton = `<a href="/post/` + post.id + `/edit" class="link-icon"><img class="icon negative" src="/static/icons/edit.svg" alt="edit"></a>`
+	} 
 
 	raw_post = `
 	<div class="news-post" id="post_` + post.id + `">
@@ -185,27 +189,27 @@ function addPostToPage(post) {
             <div class="inline-panel post-author">
                 <div class="post-avatar-container">
                     
-                    <img class="glyphicon big post-avatar" src="`+post.author_avatar+`">
+                    <img class="glyphicon big post-avatar" src="`+ post.author_avatar + `">
                     
                 </div>
                 <div class="user-name-container">
                     <div>
-                        <p>`+post.author_full_name+`</p>
+                        <p>`+ post.author_full_name + `</p>
                     </div>
-                    <small><a href="/user/`+ post.author_username +`">
-                            @`+ post.author_username +`</a>,
+                    <small><a href="/user/`+ post.author_username + `">
+                            @`+ post.author_username + `</a>,
                         15:57:13,
-                        12.03.2024 (`+ post.beauty_datetime +`)</small>
+                        12.03.2024 (`+ post.beauty_datetime + `)</small>
                 </div>
             </div>
 
             <div class="news-content ck-content">
-			`+ post.content +`
+			`+ post.content + `
             </div>
             <div class="post-control-panel">
                 <div class="vote-panel">
 
-                    <a href="/post/` + post.id + `/edit" class="link-icon"><img class="icon negative" src="/static/icons/edit.svg" alt="edit"></a>
+                    `+ editButton +`
                     
 
 
@@ -237,17 +241,17 @@ function addPostToPage(post) {
 }
 
 function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
+	let cookieValue = null;
+	if (document.cookie && document.cookie !== '') {
+		const cookies = document.cookie.split(';');
+		for (let i = 0; i < cookies.length; i++) {
+			const cookie = cookies[i].trim();
+			// Does this cookie string begin with the name we want?
+			if (cookie.substring(0, name.length + 1) === (name + '=')) {
+				cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+				break;
+			}
+		}
+	}
+	return cookieValue;
 }
