@@ -142,3 +142,13 @@ small {
 	display: flex;
 	flex-basis: 31%;
 }
+
+@media only screen and (max-device-width: 480px) {
+
+	.image-from-tg-container {
+		width: 94vw;
+		min-width: 0px;
+	}
+
+
+}

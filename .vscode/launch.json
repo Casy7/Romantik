@@ -5,6 +5,17 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
+			"name": "Python: TeleframParserTask",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "${workspaceFolder}\\RomantikApp\\code\\tasks\\tg_parser.py",
+			"pathMappings": [
+				{
+				  "localRoot": "${workspaceFolder}\\RomantikApp\\code\\tasks\\", // Maps C:\Users\user1\project1
+				}
+			  ]
+		},
+		{
 			"type": "firefox",
 			"request": "attach",
 			"name": "Attach"
@@ -12,7 +23,7 @@
 		},
 		{
 			"name": "Python: Django",
-			"type": "python",
+			"type": "debugpy",
 			"request": "launch",
 			"program": "${workspaceFolder}\\manage.py",
 			"args": [

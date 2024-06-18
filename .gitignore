@@ -8,6 +8,10 @@
 # Ignore non-static media
 **/media
 
+# Ignore .vscode folder
+**/.vscode
+.vscode/
+
 # Ignore logs
 *.log
 *.pot
