@@ -9,11 +9,7 @@
 			"type": "debugpy",
 			"request": "launch",
 			"program": "${workspaceFolder}\\RomantikApp\\code\\tasks\\tg_parser.py",
-			"pathMappings": [
-				{
-				  "localRoot": "${workspaceFolder}\\RomantikApp\\code\\tasks\\", // Maps C:\Users\user1\project1
-				}
-			  ]
+			"cwd": "${workspaceFolder}\\RomantikApp\\code\\tasks\\"
 		},
 		{
 			"type": "firefox",

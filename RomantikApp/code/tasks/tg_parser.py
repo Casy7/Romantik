@@ -1,4 +1,5 @@
 import datetime
+import time
 from telethon import TelegramClient
 from telethon import events
 import requests
@@ -174,6 +175,16 @@ if __name__ == '__main__':
 
 			json.dump(previous_parsing_results, open('./parser_data.json', 'w'), indent=4, ensure_ascii=False)
 
-	with parser.client:
-		parser.client.loop.run_until_complete(update_posts())
-		parser.client.run_until_disconnected()
+	while True:
+		try:
+			with parser.client:
+				parser.client.loop.run_until_complete(update_posts())
+				parser.client.run_until_disconnected()
+		except (ConnectionError, BrokenPipeError, OSError) as e:
+			print(f"Connection error occurred: {e}")
+			# Логика для повторного подключения, например, задержка перед новой попыткой
+			time.sleep(10)  # Пауза перед следующей попыткой подключения
+			continue  # Попробуйте подключиться заново
+		except KeyboardInterrupt:
+			print("Keyboard interrupt detected, exiting...")
+			break
