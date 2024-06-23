@@ -23,3 +23,6 @@ secret.json
 #Ignore telethon logs
 *.session
 *.session-journal
+
+# Tg data parser - saved posts
+**/tasks/parser_data.json

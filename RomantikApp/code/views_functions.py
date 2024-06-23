@@ -135,14 +135,16 @@ def beautify_datetime(raw_datetime):
 	def insert_u_or_y(number):
 		if number == 0:
 			return ''
-		if 4 < number < 21:
+		elif 4 < number < 21:
 			return ''
 		elif number % 10 == 1:
 			return 'у'
+		elif number % 10 == 0:
+			return ''
 		elif number % 10 < 5:
 			return 'и'
-		else:
-			return ''
+
+		return ''
 
 	def return_ukr_day(days):
 		if days < 4:
