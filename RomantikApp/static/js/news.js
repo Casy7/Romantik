@@ -218,7 +218,7 @@ function addPostToPage(post) {
                     
 
                     
-                    <button class="btn btn-outline-secondary left-control ` + user_downvoted_class + `" type="button" id="downvote_post_` + post.id + `" onclick="vote_post('` + post.id + `', 'downvote')"><img class="mini-icon negative" src="/static/icons/down.svg" alt="down"></button>
+                    <button class="btn btn-outline-secondary left-control ` + user_downvoted_class + ` vote-btn" type="button" id="downvote_post_` + post.id + `" onclick="vote_post('` + post.id + `', 'downvote')"><img class="mini-icon negative" src="/static/icons/down.svg" alt="down"></button>
                     
 
                     <div class="post-raiting-box">
@@ -226,7 +226,7 @@ function addPostToPage(post) {
                         </p>
                     </div>
                     
-                    <button class="btn btn-outline-secondary right-control ` + user_upvoted_class + `" type="button" id="upvote_post_` + post.id + `" onclick="vote_post('` + post.id + `', 'upvote')"><img class="mini-icon negative" src="/static/icons/up.svg" alt="up"></button>
+                    <button class="btn btn-outline-secondary right-control ` + user_upvoted_class + ` vote-btn" type="button" id="upvote_post_` + post.id + `" onclick="vote_post('` + post.id + `', 'upvote')"><img class="mini-icon negative" src="/static/icons/up.svg" alt="up"></button>
                     
 
                     

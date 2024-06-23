@@ -69,8 +69,6 @@ small {
 	flex-direction: column;
 }
 
-
-
 .downvoted {
 	border: 1px solid red;
 }
@@ -142,6 +140,56 @@ small {
 	display: flex;
 	flex-basis: 31%;
 }
+
+.vote-btn:active, .vote-btn:hover, .vote-btn:focus  {
+	background-color: transparent;
+	box-shadow: none;
+}
+
+
+.upvoted {
+    animation-duration: 0.3s;
+    animation-timing-function: linear;
+    animation-name: upvote-post;
+    animation-fill-mode: forwards;
+}
+
+@keyframes upvote-post {
+    from {
+        border: 1px solid #6c757d;
+		border-left: none;
+		box-shadow: 0 0 0 5px rgba(0, 255, 76, 0.5);
+    }
+
+    to {
+        border: 1px solid greenyellow;
+		border-left: none;
+		box-shadow: 0 0 0 0px rgba(0, 255, 76, 0.5);;
+    }
+}
+
+.downvoted {
+    animation-duration: 0.3s;
+    animation-timing-function: linear;
+    animation-name: downvote-post;
+    animation-fill-mode: forwards;
+}
+
+@keyframes downvote-post {
+    from {
+        border: 1px solid #6c757d;
+		border-right: none;
+		box-shadow: 0 0 0 5px rgba(241, 0, 0, 0.589);
+    }
+
+    to {
+        border: 1px solid red;
+		border-right: none;
+		box-shadow: 0 0 0 0px rgba(255, 0, 0, 0.5);;
+    }
+}
+
+
 
 @media only screen and (max-device-width: 480px) {
 

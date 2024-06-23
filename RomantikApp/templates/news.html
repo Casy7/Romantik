@@ -89,12 +89,12 @@
                     {% if user != 'none' %}
 
                     {% if news_post.user_downvoted == 'yes' %}
-                    <button class="btn btn-outline-secondary downvoted left-control" type="button"
+                    <button class="btn btn-outline-secondary downvoted left-control vote-btn" type="button"
                         id="downvote_post_{{news_post.post_id}}"
                         onclick="vote_post('{{news_post.post_id}}', 'downvote')"><img class="mini-icon negative"
                             src="{% static 'icons/down.svg' %}" alt="down"></button>
                     {% else %}
-                    <button class="btn btn-outline-secondary left-control" type="button"
+                    <button class="btn btn-outline-secondary left-control vote-btn" type="button"
                         id="downvote_post_{{news_post.post_id}}"
                         onclick="vote_post('{{news_post.post_id}}', 'downvote')"><img class="mini-icon negative"
                             src="{% static 'icons/down.svg' %}" alt="down"></button>
@@ -105,12 +105,12 @@
                         </p>
                     </div>
                     {% if news_post.user_upvoted == 'yes' %}
-                    <button class="btn btn-outline-secondary upvoted right-control" type="button"
+                    <button class="btn btn-outline-secondary upvoted right-control vote-btn" type="button"
                         id="upvote_post_{{news_post.post_id}}"
                         onclick="vote_post('{{news_post.post_id}}', 'upvote')"><img class="mini-icon negative"
                             src="{% static 'icons/up.svg' %}" alt="up"></button>
                     {% else %}
-                    <button class="btn btn-outline-secondary right-control" type="button"
+                    <button class="btn btn-outline-secondary right-control vote-btn" type="button"
                         id="upvote_post_{{news_post.post_id}}"
                         onclick="vote_post('{{news_post.post_id}}', 'upvote')"><img class="mini-icon negative"
                             src="{% static 'icons/up.svg' %}" alt="up"></button>
