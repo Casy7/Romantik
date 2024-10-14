@@ -30,7 +30,7 @@ secret_settings = {
 try:
     with open(os.path.join(BASE_DIR, 'secret.json')) as f:
         d = json.load(f)
-        secret_settings.update(d)        
+        secret_settings.update(d)
 except:
     pass
 
@@ -40,9 +40,9 @@ SECRET_KEY = secret_settings['secret_key']
 DEBUG = secret_settings['debug']
 
 ALLOWED_HOSTS = [
-	'www.casy7.pythonanywhere.com',
+    'www.casy7.pythonanywhere.com',
     'casy7.pythonanywhere.com',
-	'romantik.space',
+    'romantik.space',
     'www.romantik.space',
     'romantik.pythonanywhere.com',
     'www.romantik.pp.ua',
@@ -76,11 +76,15 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'romantik.urls'
 
 
-TEMPLATES_DIR = os.path.join(BASE_DIR, 'RomantikApp', 'templates')
+TEMPLATES_DIR = [
+    os.path.join(BASE_DIR, 'RomantikApp', 'templates'),
+    os.path.join(BASE_DIR, 'KaptyorkaApp', 'templates')
+]
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATES_DIR],
+        'DIRS': TEMPLATES_DIR,
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -98,7 +102,6 @@ WSGI_APPLICATION = 'romantik.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
 
 
 DATABASES = {
