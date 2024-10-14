@@ -117,7 +117,7 @@
   <link rel="icon" type="image/x-icon" href="{% static 'icons/favicon.ico' %}">
   <!-- GOOGLE SEARCH CONSOLE ID -->
   <meta name="google-site-verification" content="2tQG1LgZd2PIUajDBy29LEbx0bDL5mJs6XXr0PhQIwE" />
-
+  {% block page_style_pre_styles %} {% endblock %}
   {% block page_styles %} {% endblock %}
   {% block page_style_slot_1 %} {% endblock %}
   {% block page_style_slot_2 %} {% endblock %}
@@ -149,7 +149,9 @@
         {% if user.is_superuser %}
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="/admin">Admin panel</a>
+        <a class="dropdown-item" href="/equipment/">Kaptyorka</a>
         {% endif %}
+
       </div>
     </div>
 
@@ -178,7 +180,12 @@
       <li class="nav-item desktop">
         <a class="dropdown-item" href="/admin">Admin panel</a>
       </li>
+      <li class="nav-item desktop">
+        <a class="dropdown-item" href="/equipment/">Kaptyorka</a>
+      </li>
       {% endif %}
+
+      {% block nav_items %} {% endblock %}
     </ul>
 
     <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-right-panel">
@@ -259,6 +266,8 @@
 
 <script src="{% static 'js/base.js' %}" type="text/javascript"></script>
 
+
+{% block page_pre_scripts %} {% endblock %}
 {% block page_scripts %} {% endblock %}
 
 

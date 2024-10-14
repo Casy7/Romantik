@@ -36,12 +36,12 @@ function execute() {
 			// Handle the results here (response.result has the parsed body).
 			// console.log("Response", response);
 			loadedHikesStrData = response;
-			console.log("DATA ::: ", loadedHikesStrData);
+			// console.log("DATA ::: ", loadedHikesStrData);
 			hikesTableData = JSON.parse(loadedHikesStrData.body);
 			// console.log(hikesTableData);
 
 			hikesSheetData = hikesTableData.sheets[0].data[0].rowData;
-			console.log(hikesSheetData);
+			// console.log(hikesSheetData);
 			draw(hikesSheetData);
 
 		},

@@ -16,7 +16,7 @@ from django.core.files.storage import default_storage
 
 from romantik.settings import MEDIA_ROOT, secret_settings
 from .models import *
-from .code.views_functions import *
+from common_code.views_functions import *
 
 
 class HomePage(View):

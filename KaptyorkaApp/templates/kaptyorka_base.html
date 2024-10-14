@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block page_style_pre_styles %} 
+  <link href="{% static 'css/base.css'%}" rel="stylesheet">
+  <link href="{% static 'libs/modules/multiselect/jquery.tree-multiselect.css'%}" rel="stylesheet">
+  <script src="{% static 'libs/modules/jquery/jquery.js' %}" type="text/javascript"></script>
+  <link rel="shortcut icon" href="{% static 'icons/logo_mini.svg'%}">
+{% endblock %}
+
+{% block nav_items %}
+
+        {% if is_superuser %}
+        <li class="nav-item active">
+          <a class="nav-link" href="add_equipment"><img class="glyphicon" src="{% static 'icons/add_equipment.svg' %}"
+              style="max-width: 30px;"><span class="sr-only"></span></a>
+        </li>
+        {% endif %}
+
+        {% if user != 'none' %}
+        <li class="nav-item active">
+          <a class="nav-link" href="new_rent_accounting"><img class="glyphicon"
+              src="{% static 'icons/give_to_a_person.svg' %}" style="max-width: 30px;"><span class="sr-only"></span></a>
+        </li>
+        {% endif %}
+
+        {% if is_superuser %}
+        <li class="nav-item active">
+          <a class="nav-link" href="rent_accountings_management">Manage</a>
+        </li>
+        {% endif %}
+
+        {% if user != 'none' %}
+        <li class="nav-item active">
+          <a class="nav-link" href="my_rent_accountings">My accountings</a>
+        </li>
+        {% endif %}
+
+{% endblock %}
+
+{% block content %}
+  <!-- __________________________________________ NAVBAR __________________________________________ -->
+
+
+
+
+
+
+
+
+
+  <!-- __________________________________________ CONTENT __________________________________________ -->
+
+  <div class="page-content">
+    <div id="content" class="container h-100 content">
+
+      {% if header != 'none' %}
+      <h2>{{ title }}</h2>
+      {% endif %}
+
+      {% block kaptyorka_content %}
+
+      {% endblock %}
+
+
+    </div>
+  </div>
+
+{% endblock %}
+
+
+
+{% block page_pre_scripts %} 
+
+<script src="{% static 'libs/modules/tabs/tabs.js' %}" type="text/javascript"></script>
+<script src="{% static 'libs/modules/spinner/bootstrap-input-spinner.js' %}" type="text/javascript"></script>
+<script src="{% static 'libs/modules/bootstrap-select/js/bootstrap-select.min.js' %}" type="text/javascript"></script>
+<script>
+  $("input[type='number']").inputSpinner()
+</script>
+
+{% endblock %}

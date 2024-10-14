@@ -143,6 +143,10 @@ blockquote {
     margin-bottom: 0px;
 }
 
+.nav-item.desktop {
+    align-content: center;
+}
+
 .navbar_background_image {
     max-height: 60px;
     position: fixed;
@@ -360,17 +364,17 @@ blockquote {
     margin-left: 10px;
     margin-bottom: 10px;
     border-radius: 0px;
-    
+
 }
 
 
-.notice-card > * {
+.notice-card>* {
     font-size: 13px;
 }
 
-.notice-card > p:nth-child(1) {
+.notice-card>p:nth-child(1) {
     margin-top: 10px;
-    }
+}
 
 
 .notice-card.grey-notice-card {

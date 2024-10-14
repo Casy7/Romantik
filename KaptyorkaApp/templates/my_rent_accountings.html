@@ -1,0 +1,40 @@
+{% extends 'kaptyorka_base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/my_rent_accountings.css' %}" />
+
+<div>
+    {%csrf_token%}
+    <div class="container">
+        {% for acc in accountings %}
+        <div class="card bg-dark">
+            <div class="card-body">
+                <p>{{ acc.start_date|date:"d-m-Y" }} - {{ acc.end_date|date:"d-m-Y" }}</p>
+
+                {% for eq in acc.equipment_list %}
+                <div class="row equipment_row">
+                    <div class="col">
+                        <p>{{ eq.name }}</p>
+                    </div>
+                    <div class="col">
+                        <p>{{ eq.price }}₴</p>
+                    </div>      
+                    <div class="col">
+                        <p>{{ eq.amount|default:"1" }} шт.</p>
+                        
+                    </div>                                     
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+        
+    </div>
+
+</div>
+
+
+{% endblock %}

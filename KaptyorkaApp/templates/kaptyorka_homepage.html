@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/form.css' %}" />
+<link rel="stylesheet" href="{% static 'css/home.css' %}" />
+<div class="main-container">
+
+    <div class="card-body">
+        <h1>Ласкаво просимо до таємничого світу Каптьорки!</h1>
+        <p>Тут ви знайдете спорядження для всіх видів спортивного туризму. Не факт, що саме круте, зовсім не факт, що нове, але такеньке, іти з ним мабуть іще можна.</p>
+        <div class="row">
+            <div class="col">
+                <p class="right">Наша команда щодня проводить ремонт і обслуговування спорядження, і ми гарантуємо якість і надійність кожної його одиниці.
+                </p>
+                <p class="right">
+                    Жартую. Як зламається, не спричинивши при цьому серйозних травм — то й вже добре. Нє, відповідальності я за це не несу.
+                </p>
+                <p class="right">
+                    Ну коротше, випадково на цю сторінку ви не потрапите, а ті, хто потрапив сюди не випадково, самі знають що робити. 
+                </p>                
+                <a href="/equipment/new_rent_accounting">
+                    <button class="btn btn-danger big-red-fucking-button">Виписати спорядження</button>
+                </a>
+                <a href="/equipment/add_equipment">
+                    <button class="btn btn-danger big-red-fucking-button">Інвентарізація</button>
+                </a>
+                <a href="/equipment/rent_accountings_management">
+                    <button class="btn btn-danger big-red-fucking-button">Керування записами</button>
+                </a>
+            </div>
+            <div class="col">
+                <img src="{% static 'images/home/equipment.bmp' %}" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}

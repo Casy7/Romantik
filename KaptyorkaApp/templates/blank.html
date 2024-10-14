@@ -1,0 +1,12 @@
+{% extends 'kaptyorka_base.html' %}
+{% load static %}
+
+{% block content %}
+<div>
+    <form method="POST" enctype="multipart/form-data">
+        {%csrf_token%}
+
+
+    </form>
+</div>
+{% endblock %}

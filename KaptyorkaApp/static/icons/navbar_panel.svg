@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="240mm"
+   height="40mm"
+   viewBox="0 0 240 40"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   sodipodi:docname="navbar_[anel.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.1893044"
+     inkscape:cx="435.96913"
+     inkscape:cy="116.03421"
+     inkscape:window-width="1920"
+     inkscape:window-height="1137"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Слой 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:#d40000;stroke-width:0.285001;stroke-miterlimit:2.5"
+       d="M 106.1177,0 H 240 v 39.999999 z"
+       id="path245" />
+    <path
+       style="fill:#f4363b;fill-opacity:1;stroke-width:0.285001;stroke-miterlimit:2.5"
+       d="M 240,27.586153 51.612802,0 H 240 Z"
+       id="path310"
+       sodipodi:nodetypes="cccc" />
+    <path
+       style="fill:#f47136;fill-opacity:1;stroke-width:0.285001;stroke-miterlimit:2.5"
+       d="M 13.125669,0 240,13.793077 V 0 Z"
+       id="path930"
+       sodipodi:nodetypes="cccc" />
+  </g>
+</svg>

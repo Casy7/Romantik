@@ -2,7 +2,6 @@ from re import T
 from django.db import models
 from django.contrib.auth.models import User
 from traitlets import default
-# Create your models here.
 
 class NewsPost(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
