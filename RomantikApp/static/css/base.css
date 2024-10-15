@@ -482,6 +482,10 @@ nav .dropdown-toggle::after {
     width: 20px;
 }
 
+.active-page {
+    font-weight: bold;
+}
+
 .mobile {
     display: none;
 }
@@ -548,5 +552,9 @@ nav .dropdown-toggle::after {
         margin: 0px;
     }
 
-
+    @media only screen and (orientation: landscape) {
+        #content {
+            margin-top: 22vh;
+        }
+    }
 }

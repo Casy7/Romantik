@@ -4,7 +4,7 @@
 <html>
 
 <head>
-  
+
   <!-- TITLE AND PROPERTIES -->
   {% if title != 'none' %}
   <title>Rk: {{ title }}</title>
@@ -138,18 +138,12 @@
       </a>
 
       <div class="dropdown-menu nav-menu-dropdown" id="dropdownNavMainMenu" aria-labelledby="navbarDropdown">
-        {% if page_name != 'home' %}
-        <a class="dropdown-item" href="/">Головна</a>
-        {% endif %}
-        {% if header != 'Новини' %}
-        <a class="dropdown-item" href="/news">Новини</a>
-        {% endif %}
-        {% if header != 'Про нас' %}
-        <a class="dropdown-item" href="/about">Про нас</a>
-        {% endif %}
-        {% if header != 'Походи' %}
-        <a class="dropdown-item" href="/hikes">Походи</a>
-        {% endif %}
+
+        <a class="dropdown-item {% if page_name == 'home' %}active-page{% endif %}"" href="/">Головна</a>
+        <a class="dropdown-item {% if page_name == 'news' %}active-page{% endif %}"" href="/news">Новини</a>
+        <a class="dropdown-item {% if page_name == 'about' %}active-page{% endif %}" href="/about">Про нас</a>
+        <a class="dropdown-item {% if page_name == 'hikes' %}active-page{% endif %}" href="/hikes">Походи</a>
+
         {% if user.is_superuser %}
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="/admin">Admin panel</a>
@@ -165,21 +159,18 @@
 
     <ul class="navbar-nav me-auto mb-2 mb-lg-0 central-nav-panel">
 
-      {% if header != 'Новини' %}
-      <li class="nav-item desktop">
+      <li class="nav-item desktop {% if page_name == 'news' %}active-page{% endif %}"">
         <a class="nav-link" href="/news">Новини</a>
       </li>
-      {% endif %}
-      {% if header != 'Про нас' %}
-      <li class="nav-item desktop">
+
+      <li class="nav-item desktop {% if page_name == 'about' %}active-page{% endif %}">
         <a class="nav-link" href="/about">Про нас</a>
       </li>
-      {% endif %}
-      {% if header != 'Походи' %}
-      <li class="nav-item desktop">
+ 
+      <li class="nav-item desktop {% if page_name == 'hikes' %}active-page{% endif %}">
         <a class="nav-link" href="/hikes">Походи</a>
       </li>
-      {% endif %}
+      
       {% if user.is_superuser %}
       <li class="nav-item desktop">
         <a class="dropdown-item" href="/admin">Admin panel</a>
@@ -224,15 +215,15 @@
         </a>
         {% endif %}
 
-        {% if user == 'none' and header != 'Вхід' %}
-        <a class="dropdown-item" href="/signin">
+        {% if user == 'none'%}
+        <a class="dropdown-item {% if page_name == 'login' %}active-page{% endif %}" href="/signin">
           <img class="glyphicon white" src="{% static 'icons/sign_in.svg' %}">
           Вхід
         </a>
         {% endif %}
 
-        {% if user == 'none' and header != 'Реєстрація' %}
-        <a class="dropdown-item" href="/signup">
+        {% if user == 'none' %}
+        <a class="dropdown-item {% if page_name == 'signup' %}active-page{% endif %}" href="/signup">
           <img class="glyphicon white" src="{% static 'icons/sign_up.svg' %}">
           Реєстрація
         </a>

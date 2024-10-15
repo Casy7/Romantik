@@ -71,7 +71,7 @@ class AjaxGetNewsFromTelegramUpdater(View):
 class NewsPage(View):
 	def get(self, request):
 
-		context = base_context(request, title='Новини', header='Новини')
+		context = base_context(request, title='Новини', header='Новини', page_name='news')
 		
 		news = sorted(NewsPost.objects.all(), key=lambda obj: obj.datetime)
 		news.reverse()
@@ -243,21 +243,6 @@ class AjaxLoadMorePosts(View, LoginRequiredMixin):
 			post["user_downvoted"] = user_downvoted
 			post['is_user_post_author'] = is_user_post_author
 
-
-
-
-				# 'total_raiting': total_raiting,
-				# 'upvotes': upvotes,
-				# 'downvotes': downvotes,
-				# 'user_upvoted': user_upvoted,
-				# 'user_downvoted': user_downvoted,
-				# 'comments_number': comments_number,
-
-				# 'author_avatar': get_avatar(news_post.user),
-				# 'beauty_datetime': beautify_datetime(news_post.datetime)
-
-
-
 		result["posts"] = posts_to_load
 		result["result"] = "success"
 		return HttpResponse(
@@ -365,7 +350,7 @@ class Login(View):
 	def get(self, request):
 
 		context = base_context(
-			request, title='Вхід', header='Вхід', error=0)
+			request, title='Вхід', header='Вхід', page_name='login', error=0)
 		context['error'] = 0
 
 		# context['form'] = self.form_class()
@@ -403,7 +388,7 @@ class SignUp(View):
 	def get(self, request):
 
 		context = base_context(
-			request, title='Реєстрація', header='Реєстрація', error=0)
+			request, title='Реєстрація', header='Реєстрація', page_name='signup', error=0)
 
 		return render(request, "signup.html", context)
 
@@ -452,7 +437,7 @@ class AboutUs(View):
 	def get(self, request):
 
 		context = base_context(
-			request, title='Про нас', header='Про нас', error=0)
+			request, title='Про нас', header='Про нас', page_name='about', error=0)
 
 		return render(request, "about_us.html", context)
 
@@ -461,7 +446,7 @@ class Rules(View):
 	def get(self, request):
 
 		context = base_context(
-			request, title='Правила клубу', header='Правила клубу', error=0)
+			request, title='Правила клубу', header='Правила клубу', page_name='rules', error=0)
 
 		return render(request, "rules.html", context)
 
@@ -470,7 +455,7 @@ class OldRulesUkr(View):
 	def get(self, request):
 
 		context = base_context(
-			request, title='Правила (повні)', header='Правила клубу (повні)', error=0)
+			request, title='Правила (повні)', header='Правила клубу (повні)', page_name='full_rules', error=0)
 
 		return render(request, "old_rules_ukr.html", context)
 
@@ -478,7 +463,7 @@ class OldRules(View):
 	def get(self, request):
 
 		context = base_context(
-			request, title='Правила (повні)', header='Правила клубу (повні, рос.)', error=0)
+			request, title='Правила (повні)', header='Правила клубу (повні, рос.)', page_name='full_rules_ru', error=0)
 
 		return render(request, "old_rules.html", context)
 
@@ -487,7 +472,7 @@ class History(View):
 	def get(self, request):
 
 		context = base_context(
-			request, title='Історія клубу', header='Історія клубу', error=0)
+			request, title='Історія клубу', header='Історія клубу', page_name='story_of_club', error=0)
 
 		return render(request, "history.html", context)
 
@@ -496,7 +481,7 @@ class Contacts(View):
 	def get(self, request):
 
 		context = base_context(
-			request, title='Контакти', header='Контакти', error=0)
+			request, title='Контакти', header='Контакти', page_name='contacts', error=0)
 
 		return render(request, "contacts.html", context)
 
@@ -576,7 +561,7 @@ class FullPost(View):
 class Hikes(View):
 	def get(self, request):
 		context = base_context(request, title='Походи',
-							   header='Походи', error=0)
+							   header='Походи', page_name='hikes', error=0)
 		return render(request, "hikes.html", context)
 
 
