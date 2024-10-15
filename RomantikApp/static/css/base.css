@@ -9,7 +9,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding-top: 78px;
+    /* padding-top: 78px; */
 }
 
 #content {
@@ -486,7 +486,11 @@ nav .dropdown-toggle::after {
     display: none;
 }
 
-@media only screen and (max-device-width: 480px) {
+.admin-nav {
+    background-color: #1f5a95 !important;
+}
+
+@media only screen and ((max-device-width: 767px) or (max-device-height: 480px)) {
 
     .mobile {
         display: initial;

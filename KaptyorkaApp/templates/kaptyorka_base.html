@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block page_style_pre_styles %} 
-  <link href="{% static 'css/base.css'%}" rel="stylesheet" type="text/css">
+  <link href="{% static 'css/kaptyorka_base.css'%}" rel="stylesheet" type="text/css">
   <link href="{% static 'libs/modules/multiselect/jquery.tree-multiselect.css'%}" rel="stylesheet" type="text/css">
   <script src="{% static 'libs/modules/jquery/jquery.js' %}" type="text/javascript" type="text/css"></script>
   <link rel="shortcut icon" href="{% static 'icons/logo_mini.svg'%}">
@@ -11,27 +11,27 @@
 {% block nav_items %}
 
         {% if is_superuser %}
-        <li class="nav-item active">
+        <li class="nav-item desktop">
           <a class="nav-link" href="add_equipment"><img class="glyphicon" src="{% static 'icons/add_equipment.svg' %}"
               style="max-width: 30px;"><span class="sr-only"></span></a>
         </li>
         {% endif %}
 
         {% if user != 'none' %}
-        <li class="nav-item active">
+        <li class="nav-item desktop">
           <a class="nav-link" href="new_rent_accounting"><img class="glyphicon"
               src="{% static 'icons/give_to_a_person.svg' %}" style="max-width: 30px;"><span class="sr-only"></span></a>
         </li>
         {% endif %}
 
         {% if is_superuser %}
-        <li class="nav-item active">
+        <li class="nav-item desktop">
           <a class="nav-link" href="rent_accountings_management">Manage</a>
         </li>
         {% endif %}
 
         {% if user != 'none' %}
-        <li class="nav-item active">
+        <li class="nav-item desktop">
           <a class="nav-link" href="my_rent_accountings">My accountings</a>
         </li>
         {% endif %}
