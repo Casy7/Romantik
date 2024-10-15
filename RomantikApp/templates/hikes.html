@@ -1,18 +1,15 @@
 {% extends 'base.html' %}
-{% block content %}
 {% load static %}
 
+{% block page_styles %}
 <link href="{% static 'css/hikes.css'%}" rel="stylesheet">
+{% endblock %}
 
-
-<script src="https://apis.google.com/js/api.js"></script>
-<script src="https://apis.google.com/js/client:plusone.js" type="application/javascript"></script>
-<script src="{% static 'js/hikes.js' %}"></script>
+{% block content %}
 <h2>Актуальні походи турклубу</h2>
 <p>На цій сторінці ви можете знайти актуальні походи турклубу, які ви можете відвідати. Обирайте похід, набір групи до
     котрого ще відкритий, та просто зв'яжіться з його керівником.</p>
-<small>Дані підтягуються автоматично з <a
-        href="https://docs.google.com/spreadsheets/d/1IG3-IDP8UX5C_vFEPasYYIe9kUuFY-HpmwhRT4welTM/">Таблиці походів
+<small>Дані підтягуються автоматично з <a href="https://docs.google.com/spreadsheets/d/1IG3-IDP8UX5C_vFEPasYYIe9kUuFY-HpmwhRT4welTM/">Таблиці походів
         турклубу</a></small>
 
 <div class="horisontal-scrollable-container">
@@ -24,14 +21,18 @@
         </tbody>
     </table>
 </div>
-
-
+<div class="hikes-list-loading-bar">
+    <img src="{% static 'icons/loading.png' %}" id="hikes_list_loader">
+</div>
 
 <div id="hikes_list_container">
 
-
-
 </div>
+{% endblock %}
 
 
+{% block page_scripts %}
+<script src="https://apis.google.com/js/api.js"></script>
+<script src="https://apis.google.com/js/client:plusone.js" type="application/javascript"></script>
+<script src="{% static 'js/hikes.js' %}"></script>
 {% endblock %}

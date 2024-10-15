@@ -15,9 +15,10 @@ function loadClient() {
 	return gapi.client.load("https://sheets.googleapis.com/$discovery/rest?version=v4")
 		.then(function () {
 
+
 			console.log("GAPI client loaded for API");
 			execute();
-
+			document.getElementById("hikes_list_loader").remove();
 
 		},
 			function (err) { console.error("Error loading GAPI client for API", err); });
@@ -64,7 +65,7 @@ function draw(hikesSheetData) {
 	while (currentRow < tb.length && hasOwnProperty(hikesSheetData[currentRow].values[1], "formattedValue")) {
 
 		let row_height_counter = 0;
-		let $row = $("<tr>", { "class": "hk_line", "scope":"row", id: "hk_line_" + currentRow });
+		let $row = $("<tr>", { "class": "hk_line", "scope": "row", id: "hk_line_" + currentRow });
 
 		if (hasOwnProperty(hikesSheetData[currentRow].values[0], "formattedValue")) {
 			let rowspanCounter = 1;
@@ -79,23 +80,24 @@ function draw(hikesSheetData) {
 				}
 			}
 
-		var $div = $("<th>", { "class": "hk_heading vertical-text", "scope":"row", "rowspan": rowspanCounter });
-		$div.text(tb[currentRow].values[0].formattedValue);
-		$($row).append($div);
+			var $div = $("<th>", { "class": "hk_heading vertical-text", "scope": "row", "rowspan": rowspanCounter });
+			$div.text(tb[currentRow].values[0].formattedValue);
+			$($row).append($div);
 
 
 		}
 
 		for (let i = 1; i < tb[currentRow].values.length; i++) {
-			var $prop = $("<td>", { "class": "hk_value",  "scope":"col" });
+			var $prop = $("<td>", { "class": "hk_value", "scope": "col" });
 			$prop.text(tb[currentRow].values[i].formattedValue);
-			$($row).append($prop);			
+			$($row).append($prop);
 		}
 
 
 		$("#hk_body").append($row);
 		currentRow++;
 	}
+
 
 }
 

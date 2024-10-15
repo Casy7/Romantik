@@ -9,3 +9,9 @@
 .hk_table td {
 	border: 1px solid gray;
 }
+
+.hikes-list-loading-bar {
+	display: flex;
+	justify-content: center;
+
+}
