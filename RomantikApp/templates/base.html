@@ -131,7 +131,7 @@
 <body>
   <!-- __________________________________________ NAVBAR __________________________________________ -->
 
-  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark {% if user.is_superuser %}admin-nav{% endif %}">
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark nav-dark {% if user.is_superuser %}admin-nav{% endif %}">
     <div class="nav-item dropdown mobile">
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="toggleDropdown('dropdownNavMainMenu')">
         <img class="glyphicon white" src="{% static 'icons/menu.svg' %}">
@@ -147,6 +147,7 @@
         {% if user.is_superuser %}
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="/admin">Admin panel</a>
+        <a class="dropdown-item" href="https://www.pythonanywhere.com/user/romantik/webapps/#tab_id_www_romantik_space">Hosting</a>
         <a class="dropdown-item" href="/equipment/">Kaptyorka</a>
         {% endif %}
 
@@ -174,6 +175,9 @@
       {% if user.is_superuser %}
       <li class="nav-item desktop">
         <a class="dropdown-item" href="/admin">Admin panel</a>
+      </li>
+      <li class="nav-item desktop">
+        <a class="dropdown-item" href="https://www.pythonanywhere.com/user/romantik/webapps/#tab_id_www_romantik_space">Hosting</a>
       </li>
       <li class="nav-item desktop">
         <a class="dropdown-item" href="/equipment/">Kaptyorka</a>

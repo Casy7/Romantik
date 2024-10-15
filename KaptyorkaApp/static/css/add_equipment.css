@@ -64,24 +64,28 @@ input.option {
 }
 
 .flex-title {
-    display: flex;
-    flex-grow: 1;
-    flex-direction: row;
+	display: flex;
+	flex-grow: 1;
+	flex-direction: row;
 }
 
 .flex-title .title {
-    flex-grow: 1;
+	flex-grow: 1;
 }
 
 .flex-title .item.addCat {
-    margin-right: 10px;
-    margin-bottom: 0px;
+	margin-right: 10px;
+	margin-bottom: 0px;
 }
 
 .gray {
-    background-color: #777777;
+	background-color: #777777;
 }
 
 .flex-title .title .section[type="checkbox"] {
 	display: none;
+}
+
+#newFolderName {
+	margin-bottom: 20px;
 }

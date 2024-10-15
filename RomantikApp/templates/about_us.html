@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
-{% block content %}
 {% load static %}
+
+{% block page_styles %}
 <link rel="stylesheet" href="{% static 'css/about_us.css' %}" type="text/css" />
 <style>
     .card-dark.rules-card {
@@ -19,7 +20,9 @@
         background-image: url("{% static 'images/about/contacts.jpg' %}");
     }
 </style>
+{% endblock %}
 
+{% block content %}
 <div class="main-container">
     <div class="card-body">
         <h1>Про нас</h1>
@@ -90,9 +93,4 @@
 
     </div>
 </div>
-
-
-
-
-
 {% endblock %}

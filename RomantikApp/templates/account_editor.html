@@ -26,8 +26,7 @@
 
 
 <div id="custom-file-input">
-    <input type="file" class="file-upload" style="display: none;" name="image" id="uploaded_avatar"
-        accept=".jpg, .jpeg, .png">
+    <input type="file" class="file-upload" style="display: none;" name="image" id="uploaded_avatar" accept=".jpg, .jpeg, .png">
 </div>
 <!-- <h2 style="border-top: 1px solid rgb(199, 199, 199);">Профиль</h2> -->
 
@@ -36,8 +35,7 @@
     <div class="img-container">
         <div class="col avatar_col">
             {% if avatar == '' %}
-            <img src="{% static 'icons/default_avatar.png' %}" width="250" id="myimg" class="avatar"
-                default="Фото не выбрано"></img>
+            <img src="{% static 'icons/default_avatar.png' %}" width="250" id="myimg" class="avatar" default="Фото не выбрано"></img>
             {% else %}
             <img src="{{avatar.url}}" width="250" id="myimg" class="avatar" default="Фото не выбрано"></img>
             {% endif %}
@@ -45,8 +43,7 @@
         <div class="col">
             <div class="row avatar_edit">
                 <div class="inline-control inline-label-besides-buttons">
-                    <label type="button" for="uploaded_avatar" class="btn btn-dark upload-btn"><img
-                            class="glyphicon white" src="{% static 'icons/upload.svg' %}">
+                    <label type="button" for="uploaded_avatar" class="btn btn-dark upload-btn"><img class="glyphicon white" src="{% static 'icons/upload.svg' %}">
                     </label>
                 </div>
                 <div class="inline-control" id="del_button">
@@ -61,9 +58,11 @@
 
                 </div>
                 <div class="inline-control" id="publish">
-                    <button type="button" class="btn btn-dark" onclick="publish_avatar()"><img class="glyphicon white"
-                            src="{% static 'icons/publish.svg' %}"></button>
+                    <button type="button" class="btn btn-dark" onclick="publish_avatar()"><img class="glyphicon white" src="{% static 'icons/publish.svg' %}"></button>
                 </div>
+            </div>
+            <div class="row avatar_edit">
+                <a href="/user/{{user.username}}" class="btn btn-dark">Переглянути профіль</a>
             </div>
         </div>
         <script src="{% static 'js/upload_photo.js' %}"></script>
@@ -79,24 +78,21 @@
 
             <tr class="row">
                 <label for="user_first_name" class="dark">Ім'я</label>
-                <input type="text" id="user_first_name" class="form-control bg-dark dark one-word-input-control"
-                    name="first_name" placeholder="Ім'я" value="{{user.first_name}}">
+                <input type="text" id="user_first_name" class="form-control bg-dark dark one-word-input-control" name="first_name" placeholder="Ім'я" value="{{user.first_name}}">
             </tr>
 
             <br>
 
             <tr class="row">
                 <label for="user_last_name" class="dark">Прізвище</label>
-                <input type="text" id="user_last_name" class="form-control bg-dark dark one-word-input-control"
-                    name="last_name" placeholder="Прізвище" value="{{user.last_name}}">
+                <input type="text" id="user_last_name" class="form-control bg-dark dark one-word-input-control" name="last_name" placeholder="Прізвище" value="{{user.last_name}}">
             </tr>
 
             <br>
 
             <tr class="row">
                 <label for="exampleFormControlInput1" class="dark">Про себе</label>
-                <textarea class="form-control bg-dark dark" name="about" placeholder="Декілька слів про себе"
-                    style="height: 100px;">{{ about }}</textarea>
+                <textarea class="form-control bg-dark dark" name="about" placeholder="Декілька слів про себе" style="height: 100px;">{{ about }}</textarea>
             </tr>
 
             <br>
@@ -110,47 +106,45 @@
 
             <tr class="row">
                 <label for="user_email" class="dark">Email</label>
-                <input type="text" id="user_email" class="form-control bg-dark dark one-word-input-control" name="email"
-                    placeholder="" value="{{email}}">
+                <input type="text" id="user_email" class="form-control bg-dark dark one-word-input-control" name="email" placeholder="" value="{{email}}">
                 <label for="is_email_public" class="dark">Зробити публічним</label>
-                <input type="checkbox" {% if is_email_public %}checked="True" {% endif %} value="is_email_public"
-                    id="is_email_public" name="is_email_public">
+                <input type="checkbox" {% if is_email_public %}checked="True" {% endif %} value="is_email_public" id="is_email_public" name="is_email_public">
             </tr>
 
             <br>
 
             <tr class="row">
                 <label for="user_phone" class="dark">Номер телефону</label>
-                <input type="text" id="user_phone" class="form-control bg-dark dark one-word-input-control" name="phone"
-                    placeholder="" value="{{phone}}">
+                <input type="text" id="user_phone" class="form-control bg-dark dark one-word-input-control" name="phone" placeholder="" value="{{phone}}">
                 <label for="is_phone_public" class="dark">Зробити публічним</label>
-                <input type="checkbox" {% if is_phone_public %}checked{% endif %} id="is_phone_public"
-                    name="is_phone_public" value="is_phone_public">
+                <input type="checkbox" {% if is_phone_public %}checked{% endif %} id="is_phone_public" name="is_phone_public" value="is_phone_public">
             </tr>
 
             <br>
 
             <tr class="row">
                 <label for="user_tg_username" class="dark">Telegram username</label>
-                <input type="text" id="user_tg_username" class="form-control bg-dark dark one-word-input-control"
-                    name="telegram" placeholder="" value="{{telegram}}">
+                <input type="text" id="user_tg_username" class="form-control bg-dark dark one-word-input-control" name="telegram" placeholder="" value="{{telegram}}">
                 <label for="is_telegram_public" class="dark">Зробити публічним</label>
-                <input type="checkbox" {% if is_telegram_public %}checked{% endif %} id="is_telegram_public"
-                    name="is_telegram_public" value="is_telegram_public">
+                <input type="checkbox" {% if is_telegram_public %}checked{% endif %} id="is_telegram_public" name="is_telegram_public" value="is_telegram_public">
             </tr>
         </div>
     </div>
 
     <br><br>
     <div class='inline-buttons'>
-        <a href="/my_account/" class="btn btn-outline-secondary btn-block btn-lg indigo outline"
-            style="margin-right: 10px;">Скасувати зміни</a>
+        <a href="/my_account/" class="btn btn-outline-secondary btn-block btn-lg indigo outline" style="margin-right: 10px;">Скасувати зміни</a>
         <input type="submit" class="btn btn-secondary btn-block btn-lg indigo" value="Зберегти зміни">
     </div>
 </form>
 
-<script>
 
+
+{% endblock %}
+
+
+{% block page_scripts %}
+<script>
     function delete_snd() {
         hidden_field = document.createElement("input");
         hidden_field.type = "hidden";
@@ -221,5 +215,4 @@
         });
     }
 </script>
-
 {% endblock %}

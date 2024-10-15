@@ -28,8 +28,8 @@ body {
     padding-top: 49px;
 }
 
-.bg-dark {
-    background-color: #1c1f22 !important;
+.nav-dark {
+    background-color: #1c1f22;
 }
 
 h1, h2, h3, h4, h5, p, small, a, td, li, pre, span, th, tr {
@@ -490,8 +490,8 @@ nav .dropdown-toggle::after {
     display: none;
 }
 
-.admin-nav {
-    background-color: #1f5a95 !important;
+.admin-nav.nav-dark {
+    background-color: #0f6d77;
 }
 
 @media only screen and ((max-device-width: 767px) or (max-device-height: 480px)) {

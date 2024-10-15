@@ -1,4 +1,11 @@
-let trees = $("select#demo2").treeMultiselect({ searchable: true, searchParams: ['section', 'text'], onChange: treeOnChange, freeze: true });
+let trees = $("select#demo2").treeMultiselect({ 
+	searchable: true, 
+	searchParams: ['section', 'text'], 
+	onChange: treeOnChange, 
+	freeze: true,
+	startCollapsed: true
+ });
+
 let tree = trees[0];
 var totalPrice = 0;
 var newItemsNumber = 0;
@@ -12,7 +19,6 @@ class Equipment {
 		this.desc = "";
 		this.price = 0.0;
 		this.amount = 1;
-
 	}
 }
 
@@ -20,12 +26,7 @@ $(function () {
 	addCatButton();
 	updatePrices();
 	$("[data-description='Folder']").hide();
-
 });
-
-
-
-
 
 function getPath(element) {
 	obj_path = "";
@@ -139,12 +140,11 @@ function createNewFolderMenu(path) {
 	let selectedOpt = $(".tree-multiselect").children()[1];
 	$(selectedOpt).empty()
 	$(selectedOpt).append(`<input type="hidden" id="newFolderPath" value=`+path+`></input>`);
-	$(selectedOpt).append("<h4>Добавить новую категорию " + path + "</h4>");
-	$(selectedOpt).append(`<label for="leadLabel">Название</label>`);
-	$(selectedOpt).append(`<input type="text" class="form-control dark" id="newFolderName" placeholder="Карематы">`);
-	$(selectedOpt).append(`<small id="leadInputHelp" class="form-text text-muted">Нахрен я делаю тут эти подсказки</small><br>`);
-	$(selectedOpt).append(`<button class="btn btn-outline-warning" onclick="reloadTree()">Нне</button>`);
-	$(selectedOpt).append(`<button class="btn btn-outline-primary" onclick="addNewFolder()">Ндэ</button>`);
+	$(selectedOpt).append("<h4>Додати нову папку в " + path + "</h4>");
+	$(selectedOpt).append(`<label for="leadLabel">Назва</label>`);
+	$(selectedOpt).append(`<input type="text" class="form-control dark" id="newFolderName" placeholder="напр., Карємати">`);
+	$(selectedOpt).append(`<button class="btn btn-outline-warning" onclick="reloadTree()">Відхилити</button>`);
+	$(selectedOpt).append(`<button class="btn btn-outline-primary" onclick="addNewFolder()">Додати</button>`);
 }
 
 function addNewEquipment() {

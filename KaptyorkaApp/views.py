@@ -1,4 +1,5 @@
 import json
+from turtle import title
 from django import db
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
@@ -88,7 +89,7 @@ def get_all_free_equipment():
 
 class KaptyorkaHomePage(View):
     def get(self, request):
-        context = base_context(request, title='Home')
+        context = base_context(request, title='Kaptyorka', header='Спорядження')
         return render(request, "kaptyorka_homepage.html", context)
 
 
@@ -100,8 +101,7 @@ class AddEquipment(View, LoginRequiredMixin):
 
         if request.user.is_superuser:
 
-            context = base_context(
-                request, title='Add an equipment', header='Add an equipment')
+            context = base_context(request, title='Спорядження', header='Спорядження')
             eq_list = get_all_free_equipment()
             context['eq_list'] = eq_list
             # context['contacts_list'] = contacts_list
@@ -183,7 +183,7 @@ class AddNewEquipment(View, LoginRequiredMixin):
                     price=Decimal("0.00"),
                     img_path="",
                     description=form['obj[desc]'],
-                    amount=int(form['obj[amount]'])                   
+                    amount=int(form['obj[amount]'])
                 )
                 new_equipment.save()
                 new_equipment_id = new_equipment.id

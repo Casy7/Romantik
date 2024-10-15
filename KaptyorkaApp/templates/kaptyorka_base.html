@@ -1,82 +1,49 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block page_style_pre_styles %} 
-  <link href="{% static 'css/kaptyorka_base.css'%}" rel="stylesheet" type="text/css">
-  <link href="{% static 'libs/modules/multiselect/jquery.tree-multiselect.css'%}" rel="stylesheet" type="text/css">
-  <script src="{% static 'libs/modules/jquery/jquery.js' %}" type="text/javascript" type="text/css"></script>
-  <link rel="shortcut icon" href="{% static 'icons/logo_mini.svg'%}">
+{% block page_style_pre_styles %}
+<link href="{% static 'css/kaptyorka_base.css'%}" rel="stylesheet" type="text/css">
+<link href="{% static 'libs/modules/multiselect/jquery.tree-multiselect.css'%}" rel="stylesheet" type="text/css">
+<script src="{% static 'libs/modules/jquery/jquery.js' %}" type="text/javascript" type="text/css"></script>
 {% endblock %}
 
 {% block nav_items %}
+  {% if is_superuser %}
+  <li class="nav-item desktop">
+    <a class="nav-link" href="add_equipment"><img class="glyphicon" src="{% static 'icons/add_equipment.svg' %}" style="max-width: 30px;"><span class="sr-only"></span></a>
+  </li>
+  {% endif %}
 
-        {% if is_superuser %}
-        <li class="nav-item desktop">
-          <a class="nav-link" href="add_equipment"><img class="glyphicon" src="{% static 'icons/add_equipment.svg' %}"
-              style="max-width: 30px;"><span class="sr-only"></span></a>
-        </li>
-        {% endif %}
+  {% if user != 'none' %}
+  <li class="nav-item desktop">
+    <a class="nav-link" href="new_rent_accounting"><img class="glyphicon" src="{% static 'icons/give_to_a_person.svg' %}" style="max-width: 30px;"><span class="sr-only"></span></a>
+  </li>
+  {% endif %}
 
-        {% if user != 'none' %}
-        <li class="nav-item desktop">
-          <a class="nav-link" href="new_rent_accounting"><img class="glyphicon"
-              src="{% static 'icons/give_to_a_person.svg' %}" style="max-width: 30px;"><span class="sr-only"></span></a>
-        </li>
-        {% endif %}
+  {% if is_superuser %}
+  <li class="nav-item desktop">
+    <a class="nav-link" href="rent_accountings_management">Manage</a>
+  </li>
+  {% endif %}
 
-        {% if is_superuser %}
-        <li class="nav-item desktop">
-          <a class="nav-link" href="rent_accountings_management">Manage</a>
-        </li>
-        {% endif %}
-
-        {% if user != 'none' %}
-        <li class="nav-item desktop">
-          <a class="nav-link" href="my_rent_accountings">My accountings</a>
-        </li>
-        {% endif %}
-
+  {% if user != 'none' %}
+  <li class="nav-item desktop">
+    <a class="nav-link" href="my_rent_accountings">My accountings</a>
+  </li>
+  {% endif %}
 {% endblock %}
-
 {% block content %}
-  <!-- __________________________________________ NAVBAR __________________________________________ -->
+  {% block kaptyorka_content %}
 
-
-
-
-
-
-
-
-
-  <!-- __________________________________________ CONTENT __________________________________________ -->
-
-  <div class="page-content">
-    <div id="content" class="container h-100 content">
-
-      {% if header != 'none' %}
-      <h2>{{ title }}</h2>
-      {% endif %}
-
-      {% block kaptyorka_content %}
-
-      {% endblock %}
-
-
-    </div>
-  </div>
-
+  {% endblock %}
 {% endblock %}
 
 
-
-{% block page_pre_scripts %} 
-
+{% block page_scripts %}
 <script src="{% static 'libs/modules/tabs/tabs.js' %}" type="text/javascript"></script>
 <script src="{% static 'libs/modules/spinner/bootstrap-input-spinner.js' %}" type="text/javascript"></script>
 <script src="{% static 'libs/modules/bootstrap-select/js/bootstrap-select.min.js' %}" type="text/javascript"></script>
 <script>
   $("input[type='number']").inputSpinner()
 </script>
-
 {% endblock %}
