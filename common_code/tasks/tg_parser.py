@@ -134,9 +134,9 @@ if __name__ == '__main__':
 	async def update_posts(event=None):
 
 		try:
-			async with open('./parser_data.json') as f:
-				d = await json.load(f)
-				await previous_parsing_results.update(d)
+			with open('./parser_data.json') as f:
+				d = json.load(f)
+				previous_parsing_results.update(d)
 		except:
 			pass
 
@@ -184,10 +184,7 @@ if __name__ == '__main__':
 		try:
 			with parser.client:
 				res = parser.client.loop.run_until_complete(update_posts())
-				if res is not None:
-					parser.client.run_until_disconnected()
-				else:
-					break
+				break
 		except (ConnectionError, BrokenPipeError, OSError) as e:
 			print(f"Connection error occurred: {e}")
 			# Логика для повторного подключения, например, задержка перед новой попыткой
