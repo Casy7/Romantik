@@ -8,8 +8,8 @@
 			"name": "Python: TeleframParserTask",
 			"type": "debugpy",
 			"request": "launch",
-			"program": "${workspaceFolder}\\RomantikApp\\code\\tasks\\tg_parser.py",
-			"cwd": "${workspaceFolder}\\RomantikApp\\code\\tasks\\"
+			"program": "${workspaceFolder}\\common_code\\tasks\\tg_parser.py",
+			"cwd": "${workspaceFolder}\\common_code\\tasks\\"
 		},
 		{
 			"type": "firefox",

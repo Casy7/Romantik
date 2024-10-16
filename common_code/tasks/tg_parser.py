@@ -34,7 +34,7 @@ class TelergamParser:
 				return True
 		return False
 
-	async def download_media_from_message(self, message, path="../../media/telegram_forced/"):
+	async def download_media_from_message(self, message, path="../../RomantikApp/media/telegram_forced/"):
 		media_path = await message.download_media(file=path)
 		media_path = media_path.replace("\\", "/")
 
@@ -85,7 +85,7 @@ class TelergamParser:
 				"media": []
 			}
 
-			saved_path = await message.download_media(file="../../media/telegram_forced/")
+			saved_path = await message.download_media(file="../../RomantikApp/media/telegram_forced/")
 			message_props["media"].append(saved_path)
 
 			result_messages.append(message_props)
@@ -122,7 +122,7 @@ class TelergamParser:
 
 if __name__ == '__main__':
 	try:
-		with open('../../../secret.json') as f:
+		with open('../../secret.json') as f:
 			d = json.load(f)
 			secret_settings.update(d)
 	except:
@@ -145,7 +145,12 @@ if __name__ == '__main__':
 		url = "https://www.romantik.space/get_posts_from_tg/" if secret_settings["production"] else "http://127.0.0.1:8000/get_posts_from_tg/"
 
 		session = requests.Session()
-		get_response = session.get(url)
+		
+		get_response = None
+		try:
+			get_response = session.get(url)
+		except:
+			return None
 
 		csrftoken = session.cookies.get('csrftoken', None)
 
@@ -178,8 +183,11 @@ if __name__ == '__main__':
 	while True:
 		try:
 			with parser.client:
-				parser.client.loop.run_until_complete(update_posts())
-				parser.client.run_until_disconnected()
+				res = parser.client.loop.run_until_complete(update_posts())
+				if res is not None:
+					parser.client.run_until_disconnected()
+				else:
+					break
 		except (ConnectionError, BrokenPipeError, OSError) as e:
 			print(f"Connection error occurred: {e}")
 			# Логика для повторного подключения, например, задержка перед новой попыткой
