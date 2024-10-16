@@ -61,7 +61,20 @@
       title.before(title_container);
       title.on("click", collapse_folder);
       title_container.append(title);
-      title_container.append(`<div class='item addCat'><a type='button' onclick="createNewFolderMenu('` + obj_path + `')"><img class="folder-icon" src="{% static 'icons/new_folder.svg' %}"></a><p class='p-tab'>/</p><a type='button' onclick="createNewItemMenu('` + obj_path + `')"><img class="add-item-btn" src="{% static 'icons/add_equipment.svg' %}"></a></div>`);
+      title_container.append(`
+      <div class='item addCat'>
+        <a type='button' onclick="deleteFolderMenu('` + obj_path + `')">
+          <img class="folder-icon del-folder-icon" src="{% static 'icons/delete_item.svg' %}">
+        </a>
+        <p class='p-tab'>/</p>
+        <a type='button' onclick="createNewFolderMenu('` + obj_path + `')">
+          <img class="folder-icon" src="{% static 'icons/new_folder.svg' %}">
+        </a>
+        <p class='p-tab'>/</p>
+        <a type='button' onclick="createNewItemMenu('` + obj_path + `')">
+          <img class="add-item-btn" src="{% static 'icons/add_equipment.svg' %}">
+        </a>
+      </div>`);
     }
   }
   function editItemMenu(obj) {

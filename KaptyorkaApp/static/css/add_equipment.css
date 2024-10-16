@@ -89,3 +89,15 @@ input.option {
 #newFolderName {
 	margin-bottom: 20px;
 }
+
+.del-folder-icon {
+	width: 14px;
+}
+
+.section .title {
+	display: inline-flex;
+}
+
+.item.addCat p {
+	flex-shrink: 3;
+}

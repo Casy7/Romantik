@@ -146,7 +146,7 @@
 
         {% if user.is_superuser %}
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="/admin">Admin panel</a>
+        <a class="dropdown-item" href="/admin">Admin</a>
         <a class="dropdown-item" href="https://www.pythonanywhere.com/user/romantik/webapps/#tab_id_www_romantik_space">Hosting</a>
         <a class="dropdown-item" href="/equipment/">Kaptyorka</a>
         {% endif %}
@@ -158,9 +158,9 @@
       <img class="base_logo_mini" src="{% static 'icons/logo.svg' %}">
     </a>
 
-    <ul class="navbar-nav me-auto mb-2 mb-lg-0 central-nav-panel">
+    <ul class="navbar-nav me-auto mb-lg-0 central-nav-panel">
 
-      <li class="nav-item desktop {% if page_name == 'news' %}active-page{% endif %}"">
+      <li class="nav-item desktop {% if page_name == 'news' %}active-page{% endif %}">
         <a class="nav-link" href="/news">Новини</a>
       </li>
 
@@ -174,20 +174,20 @@
       
       {% if user.is_superuser %}
       <li class="nav-item desktop">
-        <a class="dropdown-item" href="/admin">Admin panel</a>
+        <a class="admin-item" href="/admin">Admin</a>
       </li>
       <li class="nav-item desktop">
-        <a class="dropdown-item" href="https://www.pythonanywhere.com/user/romantik/webapps/#tab_id_www_romantik_space">Hosting</a>
+        <a class="admin-item" href="https://www.pythonanywhere.com/user/romantik/webapps/#tab_id_www_romantik_space">Hosting</a>
       </li>
       <li class="nav-item desktop">
-        <a class="dropdown-item" href="/equipment/">Kaptyorka</a>
+        <a class="admin-item" href="/equipment/">Kaptyorka</a>
       </li>
       {% endif %}
 
       {% block nav_items %} {% endblock %}
     </ul>
 
-    <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-right-panel">
+    <ul class="navbar-nav me-auto mb-lg-0 nav-right-panel">
 
       {% if header != 'none' %}
       <h4 class="navbar-header">{{ title }}</h4>
