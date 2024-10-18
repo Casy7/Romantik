@@ -139,6 +139,7 @@ small {
 	width: inherit;
 	display: flex;
 	flex-basis: 31%;
+	object-fit: cover;
 }
 
 .vote-btn:active, .vote-btn:hover, .vote-btn:focus  {
