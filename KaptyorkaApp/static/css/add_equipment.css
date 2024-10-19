@@ -40,7 +40,6 @@ input.option {
 
 .section .item {
 	padding-left: 5px !important;
-
 }
 
 .add-item-btn {
@@ -100,4 +99,29 @@ input.option {
 
 .item.addCat p {
 	flex-shrink: 3;
+}
+
+@media screen and (max-width: 481px) {
+	div.tree-multiselect {
+		display: flex;
+		flex-direction: column;
+	}
+	div.tree-multiselect div.selections {
+		width: 100%;
+	}
+	div.tree-multiselect div.selected {
+		width: 100%;
+	}
+	.item {
+		display: flex;
+		overflow: hidden;
+		flex-wrap: nowrap;
+	}
+	.item label {
+		overflow: hidden;
+		white-space: nowrap;
+	}
+	.price-col {
+		display: none;
+	}
 }
