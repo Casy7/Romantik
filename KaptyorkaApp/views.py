@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from common_code.views_functions import *
 
-from decimal import Decimal
+from decimal import Decimal, ROUND_HALF_UP
 
 
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -177,10 +177,13 @@ class AddNewEquipment(View, LoginRequiredMixin):
 
         if form["requestType"] == "add":
             try:
+                curr_price  = Decimal(form['obj[price]'])
+                curr_price = curr_price.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+            
                 new_equipment = Equipment(
                     name=form['obj[name]'],
                     cathegory=db_connection.get_cathegory_by_path(form['obj[path]']),
-                    price=Decimal("0.00"),
+                    price=curr_price,
                     img_path="",
                     description=form['obj[desc]'],
                     amount=int(form['obj[amount]'])
@@ -195,11 +198,14 @@ class AddNewEquipment(View, LoginRequiredMixin):
 
         elif form["requestType"] == "update":
             try:
+
+
                 equipment_id = int(form['obj[id]'])
                 curr_equipment = Equipment.objects.get(id=equipment_id)
                 curr_equipment.name = form['obj[name]']
                 curr_equipment.description = form['obj[desc]']
-                curr_equipment.price = Decimal(form['obj[price]'])
+                curr_price  = Decimal(form['obj[price]'])
+                curr_equipment.price = curr_price.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP) 
                 curr_equipment.amount = int(form['obj[amount]'])
                 curr_equipment.save()
 

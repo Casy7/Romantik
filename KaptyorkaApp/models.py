@@ -21,7 +21,7 @@ class Cathegory(models.Model):
 class Equipment(models.Model):
     name = models.CharField(max_length=50)
     cathegory = models.ForeignKey(Cathegory, models.DO_NOTHING)
-    price = models.DecimalField(max_digits=65535, decimal_places=65535)
+    price = models.DecimalField(max_digits=63, decimal_places=2)
     img_path = models.CharField(max_length=350)
     description = models.CharField(max_length=2000)
     amount = models.IntegerField()
@@ -31,7 +31,7 @@ class Equipment(models.Model):
 class OldPriceOfEquipment(models.Model):
     equipment = models.OneToOneField(Equipment, models.DO_NOTHING, primary_key=True)
     datetime = models.DateTimeField()
-    price = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    price = models.DecimalField(max_digits=63, decimal_places=2, blank=True, null=True)
 
     class Meta:
         unique_together = (('equipment', 'datetime'),)
