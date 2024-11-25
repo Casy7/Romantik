@@ -54,8 +54,8 @@
                             походів проходять по Вт та Чт з 18:15.
                         </p>
                         <p class="justify">
-                            Якщо хочеш докладніше дізнатися, хто ми є і як зараз живемо  — завітай на сторінку
-                            <a href="/about/">«Про нас»</a>. 
+                            Якщо хочеш докладніше дізнатися, хто ми є і як зараз живемо — завітай на сторінку
+                            <a href="/about/">«Про нас»</a>.
                         </p>
                         <p class="justify">
                             Підписуйся на наші соціальні мережі, щоб бути в курсі останніх новин турклубу,
@@ -71,15 +71,35 @@
     <div class="row inline_container center">
         <div class="col block">
             <a href="https://www.instagram.com/tk.romantik/">
-                <img class="size_70 center" src="{% static 'images/home/instagram.svg' %}" alt="">
+                <img class="size_70 center qr-code" src="{% static 'images/home/instagram.svg' %}" alt="">
             </a>
         </div>
         <div class="col block">
             <a href="https://t.me/tk_romantik">
-                <img class="size_70 center" src="{% static 'images/home/telegram.svg' %}" alt="">
+                <img class="size_70 center qr-code" src="{% static 'images/home/telegram.svg' %}" alt="">
             </a>
         </div>
     </div>
+
+    <div class="row inline_container center">
+        <div class="col centered-col">
+            <a href="https://www.tiktok.com/@tk.romantik">
+                <button class="btn btn-outline-secondary">
+                    <img class="icon negative center" src="{% static 'icons/tiktok.svg' %}" alt="">
+                    @tk.romantik
+                </button>
+            </a>
+        </div>
+        <div class="col centered-col">
+            <a href="https://www.youtube.com/@tk.romantyk">
+                <button class="btn btn-outline-secondary">
+                    <img class="icon negative center" src="{% static 'icons/youtube.svg' %}" alt="">
+                    @tk.romantyk
+                </button>
+            </a>
+        </div>
+    </div>
+
     <div class="default-card">
         <p>Або ти завжди можеш написати нам в Телеграмі. З питань, як долучитися до клубу, а також взагалі стосовно
             походів та заходів — <a href="https://t.me/fastakovskiy">@fastakovskiy</a>, Михайло.</p>
@@ -88,4 +108,3 @@
     </div>
 </div>
 {% endblock %}
-

@@ -33,6 +33,19 @@
 	justify-content: normal;
 	overflow-x: scroll;
 }
+
 .card-inline-scroll-container::-webkit-scrollbar {
-    display: none;
+	display: none;
+}
+
+h4 {
+	display: flex;
+	width: 100%;
+	font-size: 30px;
+}
+
+#content li {
+	display: flow-root list-item;
+	width: 100%;
+	font-family: "Roboto-Bold", sans-serif;
 }
