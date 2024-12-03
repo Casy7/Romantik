@@ -392,6 +392,13 @@ blockquote {
 	color: white;
 }
 
+.centered-row {
+    display: flex;
+    align-content: center;
+    flex-direction: row;
+    align-items: center;
+}
+
 .qr-code {
     border-radius: 5px;
 }
