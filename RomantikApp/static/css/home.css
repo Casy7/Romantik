@@ -92,6 +92,18 @@
 		transform: skewY(-2deg);
 		transform-origin: 100%;
 	}
+
+	@media screen and (max-width: 481px) { 
+
+		&::before {
+			transform: skewY(3deg);
+		}
+
+		&::after {
+			transform: skewY(-3deg);
+			transform-origin: 118%;
+		}
+	}
 }
 
 .first-angle-card {
@@ -154,6 +166,8 @@
 	.size_70 {
 		width: 90%;
 	}
-	
 
+	.angle-card-container {
+		margin-top: 53px;
+	}
 }
