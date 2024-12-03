@@ -10,7 +10,7 @@
 }
 
 .size_70 {
-	height: 270px;
+	width: 70%;
 }
 
 .center {
@@ -144,6 +144,10 @@
 
 	.after-map-col {
 		padding-top: 28px;
+	}
+
+	.size_70 {
+		width: 100%;
 	}
 	
 
