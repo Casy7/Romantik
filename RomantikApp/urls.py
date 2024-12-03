@@ -33,7 +33,8 @@ urlpatterns = [
     path('publish_comment/', AjaxPublishComment.as_view(), name='publish_comment'),
 	path('upload_user_avatar/', AjaxUploadUserAvatar.as_view(), name='upload_user_avatar'),
 	
-    path('robots.txt', ReturnRobotsTxt.as_view(), name  ='robots_txt')
+    path('robots.txt', ReturnRobotsTxt.as_view(), name='robots_txt'),
+	path('sitemap.xml', GetSitemap.as_view(), name='sitemap_xml'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

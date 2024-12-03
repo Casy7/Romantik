@@ -669,6 +669,12 @@ class UserProfile(View):
 class ReturnRobotsTxt(View):
 	def get(self, request):
 		return render(request, "robots.txt", content_type="text/plain")
+	
+
+class GetSitemap(View):
+	def get(self, request):
+		return render(request, "sitemap.xml", content_type="text/plain")
+
 
 def handler404(request, exception=""):
 	context = base_context(

@@ -1,2 +1,8 @@
 User-agent: Yandex
 Disallow: /
+
+User-agent: *
+Disallow: /admin/
+Allow: /
+
+Sitemap: https://romantik.space/sitemap.xml
