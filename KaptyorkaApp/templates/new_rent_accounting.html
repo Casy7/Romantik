@@ -74,6 +74,7 @@
                             document.getElementById('end_day').value = addDays(Date(), 10).toDateInputValue();
                         </script>
                     </div>
+
                     <select id="demo2" multiple="multiple">
                         {% for equipment in eq_list %}
                         <option value="eq_{{equipment.0}}" data-section="{{equipment.2}}"
@@ -81,6 +82,7 @@
                             {{equipment.1}}</option>
                         {% endfor %}
                     </select>
+                    
                     <script>
                         var prices = {
                             //{% for equipment in eq_list %}

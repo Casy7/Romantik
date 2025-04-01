@@ -23,8 +23,7 @@ class Equipment {
 }
 
 $(function () {
-	addCatButton()
-	updatePrices()
+	reloadTree();
 	$("[data-description='Folder']").hide()
 })
 
@@ -51,45 +50,71 @@ function getPath(element) {
 }
 
 function reloadTree() {
-	tree.reload()
-	addCatButton()
-	updatePrices()
-	$("div").find(`[data-description='Folder']`).hide()
+	tree.reload();
+	addCatButton();
+
+	updateAllItemsInCartWithControls();
+	updateAllItemsInCatalogWithControls();
+
+	if (exists("#selectedEquipmentBlock")) byId('selectedEquipmentBlock').remove();
+	$(".tree-multiselect .selected").append("<div id='selectedEquipmentBlock'></div>");
+
+	if (exists("#controlBlock")) byId('controlBlock').remove();
+	$(".tree-multiselect .selected").append("<div id='controlBlock'></div>");
+
+
+	if (exists("#controlBlockSeparator")) byId('controlBlock').remove();
+	$(".tree-multiselect .selected").append("<div id='controlBlockSeparator'></div>");
+
+	if (!exists("#controlBlockHr")) $("#controlBlockSeparator").append("<hr id='controlBlockHr'>");
+
+	$("div").find(`[data-description='Folder']`).hide();
 }
 
 function treeOnChange(allSelectedItems, addedItems, removedItems) {
-	$(".tree-multiselect .selected").children().toArray().forEach(addPrice)
-	updatePrice()
+	updateAllItemsInCartWithControls();
+	countTotalPrice();
 }
 
-function addPrice(line) {
-	eqId = line.getAttribute("data-value")
-	var price = prices[eqId][0]
-	totalPrice += Number(price)
 
+function updateAllItemsInCartWithControls() {
+	$(".tree-multiselect .selected .item").toArray().forEach(updateItemInCartWithControls);
+}	
+
+function updateItemInCartWithControls(line) {
+	eqId = line.getAttribute("data-value");
+	
+	// check if this item is it the cart
 	if (line.childElementCount < 3) {
-		line.id = eqId + "selectedLine"
-		sName = line.querySelector(".section-name")
-		line.lastChild.remove()
-		$("#" + line.id).append("<span class='price-col'>" + price + "₴</span>")
-		$("#" + line.id).append(`<p class="amount-limit">/` + prices[eqId][1] + `шт.</p>`)
-		$("#" + line.id).append(`<input id="amount_` + eqId + `" class="amount-selector dark" type="number" min="1" max="` + prices[eqId][1] + `" step="1" value="1" onchange="updatePrice()">`)
+		var price = prices[eqId][0];
+		totalPrice += Number(price);	
+	
+		line.id = eqId + "selectedLine";
+
+		$("#" + line.id).prepend("<label>" + line.childNodes[0].textContent + "</label>");
+		line.childNodes[1].textContent = "";
+
+		sName = line.querySelector(".section-name");
+		line.lastChild.remove();
+		$("#" + line.id).append("<span class='price-col'>" + price + "₴</span>");
+		$("#" + line.id).append(`<p class="amount-limit">/` + prices[eqId][1] + `шт.</p>`);
+		$("#" + line.id).append(`<input id="amount_` + eqId + `" class="amount-selector dark" type="number" min="1" max="` + prices[eqId][1] + `" step="1" value="1" onchange="countTotalPrice()">`);
 	}
 }
 
-function updatePrice() {
-	totalPrice = 0
-	$(".tree-multiselect .selected").children().toArray().forEach(countTotalPrice)
+function countTotalPrice() {
+	totalPrice = 0;
+	$(".tree-multiselect .selected .item").toArray().forEach(countTotalPrice);
 	// selectedEquipmentToJSON();
-	$("#priceField")[0].innerText = "Итоговая цена: " + totalPrice + "₴"
-	$("#priceCDataField")[0].innerText = "Итоговая амортизация: " + totalPrice + "₴"
+	$("#priceField")[0].innerText = "Итоговая цена: " + totalPrice + "₴";
+	$("#priceCDataField")[0].innerText = "Итоговая амортизация: " + totalPrice + "₴";
 
-	$("#priceHiddenField")[0].value = totalPrice
+	$("#priceHiddenField")[0].value = totalPrice;
 	function countTotalPrice(line) {
-		eqId = line.getAttribute("data-value")
-		var price = prices[eqId][0]
+		eqId = line.getAttribute("data-value");
+		var price = prices[eqId][0];
 
-		totalPrice += Number(price) * Number($("#amount_" + eqId)[0].value)
+		totalPrice += Number(price) * Number($("#amount_" + eqId)[0].value);
 	}
 }
 
@@ -106,9 +131,9 @@ function scrollToProps() {
 }
 
 function createNewItemMenu(path) {
-	// reloadTree();
-	
-	let selectedOpt = $(".tree-multiselect").children()[1]
+
+	let selectedOpt = $("#controlBlock");
+
 	$(selectedOpt).empty()
 	$(selectedOpt).append(`<input type="hidden" id="newItemPath" value=` + path + `></input>`)
 	$(selectedOpt).append("<h4 id='addEquipmentHeader'>Додати снар в " + path + "</h4>")
@@ -141,79 +166,79 @@ function createNewItemMenu(path) {
 }
 
 function createNewFolderMenu(path) {
-	let selectedOpt = $(".tree-multiselect").children()[1]
-	$(selectedOpt).empty()
-	$(selectedOpt).append(`<input type="hidden" id="newFolderPath" value=` + path + `></input>`)
-	$(selectedOpt).append("<h4>Додати нову папку в " + path + "</h4>")
-	$(selectedOpt).append(`<label for="leadLabel">Назва</label>`)
-	$(selectedOpt).append(`<input type="text" class="form-control dark" id="newFolderName" placeholder="напр., Карємати">`)
-	$(selectedOpt).append(`<button class="btn btn-outline-warning" onclick="reloadTree()">Відхилити</button>`)
-	$(selectedOpt).append(`<button class="btn btn-outline-primary" onclick="addNewFolder()">Додати</button>`)
+	let selectedOpt = $("#controlBlock");
+	$(selectedOpt).empty();
+	$(selectedOpt).append(`<input type="hidden" id="newFolderPath" value=` + path + `></input>`);
+	$(selectedOpt).append("<h4>Додати нову папку в " + path + "</h4>");
+	$(selectedOpt).append(`<label for="leadLabel">Назва</label>`);
+	$(selectedOpt).append(`<input type="text" class="form-control dark" id="newFolderName" placeholder="напр., Карємати">`);
+	$(selectedOpt).append(`<button class="btn btn-outline-warning" onclick="reloadTree()">Відхилити</button>`);
+	$(selectedOpt).append(`<button class="btn btn-outline-primary" onclick="addNewFolder()">Додати</button>`);
 }
 
 function addNewEquipment() {
-	id = "new_eq_" + newItemsNumber
+	id = "new_eq_" + newItemsNumber;
 
-	eq_name = document.getElementById("newItemName").value
-	eq_path = document.getElementById("newItemPath").value
+	eq_name = document.getElementById("newItemName").value;
+	eq_path = document.getElementById("newItemPath").value;
 
-	let newEquipment = new Equipment(eq_name, eq_path)
-	newEquipment.id = newItemsNumber
-	newEquipment.desc = document.getElementById("newItemDesc").value
+	let newEquipment = new Equipment(eq_name, eq_path);
+	newEquipment.id = newItemsNumber;
+	newEquipment.desc = document.getElementById("newItemDesc").value;
 	if (newEquipment.desc == "") {
-		newEquipment.desc = "---"
+		newEquipment.desc = "---";
 	}
-	newEquipment.amount = document.getElementById("newItemNumber").value
-	newEquipment.price = document.getElementById("newItemPrice").value
+	newEquipment.amount = document.getElementById("newItemNumber").value;
+	newEquipment.price = document.getElementById("newItemPrice").value;
 
-	send_new_equipment("add", "equipment", newEquipment)
-	newItemsNumber++
-	reloadTree()
+	send_new_equipment("add", "equipment", newEquipment);
+	newItemsNumber++;
+	reloadTree();
 }
 
 function editEquipment(itemId, itemPath) {
-	eq_name = document.getElementById("newItemName").value
-	eq_path = document.getElementById("newItemPath").value
+	eq_name = document.getElementById("newItemName").value;
+	eq_path = document.getElementById("newItemPath").value;
 
-	let updatedEquipment = new Equipment(eq_name, eq_path)
+	let updatedEquipment = new Equipment(eq_name, eq_path);
 
-	updatedEquipment.id = itemId.replace("eq_", "")
-	updatedEquipment.desc = document.getElementById("newItemDesc").value
+	updatedEquipment.id = itemId.replace("eq_", "");
+	updatedEquipment.desc = document.getElementById("newItemDesc").value;
 	if (updatedEquipment.desc == "") {
-		updatedEquipment.desc = "---"
+		updatedEquipment.desc = "---";
 	}
 	updatedEquipment.path = itemPath
-	updatedEquipment.amount = document.getElementById("newItemNumber").value
-	updatedEquipment.price = document.getElementById("newItemPrice").value
+	updatedEquipment.amount = document.getElementById("newItemNumber").value;
+	updatedEquipment.price = document.getElementById("newItemPrice").value;
 
-	send_new_equipment("update", "equipment", updatedEquipment)
-	reloadTree()
+	send_new_equipment("update", "equipment", updatedEquipment);
+	reloadTree();
 }
 
 function addNewFolder() {
-	id = "new_fd_" + newFoldersNumber
-	newFoldersNumber++
+	id = "new_fd_" + newFoldersNumber;
+	newFoldersNumber++;
 
-	eq_name = document.getElementById("newFolderName").value.replaceAll(" ", " ­")
-	eq_path = document.getElementById("newFolderPath").value
+	eq_name = document.getElementById("newFolderName").value.replaceAll(" ", " ­");
+	eq_path = document.getElementById("newFolderPath").value;
 
-	let newFolder = new Equipment(eq_name, eq_path)
-	newFolder.desc = "Folder"
-	newFolder.amount = 0
-	newFolder.price = 0
+	let newFolder = new Equipment(eq_name, eq_path);
+	newFolder.desc = "Folder";
+	newFolder.amount = 0;
+	newFolder.price = 0;
 
-	$("select#demo2").append("<option readonly style='display:none' value='" + id + "' data-section='" + newFolder.path + "/" + newFolder.name + "' selected='selected' data-description='" + newFolder.desc + "'>" + newFolder.name + "</option>")
+	$("select#demo2").append("<option readonly style='display:none' value='" + id + "' data-section='" + newFolder.path + "/" + newFolder.name + "' selected='selected' data-description='" + newFolder.desc + "'>" + newFolder.name + "</option>");
 
-	prices[id] = [0, 0]
-	reloadTree()
+	prices[id] = [0, 0];
+	reloadTree();
 }
 
 function deleteEquipment(id) {
-	$("select#demo2 option[value='" + id + "']")[0].remove()
-	let newEquipment = new Equipment("", "")
-	newEquipment.id = id.replaceAll("eq_", "")
-	send_new_equipment("remove", "equipment", newEquipment)
-	reloadTree()
+	$("select#demo2 option[value='" + id + "']")[0].remove();
+	let newEquipment = new Equipment("", "");
+	newEquipment.id = id.replaceAll("eq_", "");
+	send_new_equipment("remove", "equipment", newEquipment);
+	reloadTree();
 }
 
 function send_new_equipment(requestType, objType, obj = "") {

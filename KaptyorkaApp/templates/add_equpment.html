@@ -13,7 +13,7 @@
   <div id="menu2">
     <select id="demo2" multiple="multiple">
       {% for equipment in eq_list %}
-      <option readonly value="eq_{{equipment.0}}" data-section="{{equipment.2}}" data-description="{{equipment.3}}">{{equipment.1}}</option>
+      <option value="eq_{{equipment.0}}" data-section="{{equipment.2}}" data-description="{{equipment.3}}">{{equipment.1}}</option>
       {% endfor %}
       <option readonly value="eq_34233" data-section="Загальне" data-description="Folder">Folder</option>
       <option readonly value="eq_34234" data-section="Гірське" data-description="Folder">Folder</option>
@@ -23,7 +23,7 @@
       <option readonly value="eq_34238" data-section="Інше" data-description="Folder">Folder</option>
     </select>
     <script>
-      var prices = {
+      let prices = {
         "eq_34233": [0, 0],
         "eq_34234": [0, 0],
         "eq_34235": [0, 0],
@@ -34,7 +34,18 @@
         "eq_{{equipment.0}}": ["{{equipment.4}}", "{{equipment.5}}"], 
         //{% endfor %}
         };
+
+        let cart = [];
+  
     </script>
+  </div>
+
+
+  <div class="row total-info-block">
+    <h4 id = "priceField" class="total-info">Итоговая цена: 0₴</h4>
+    <h4 id = "priceCDataField" class="total-info">Итоговая цена: 0₴</h4>
+    <input id = "priceHiddenField" type="hidden" value="[]">
+
   </div>
 </div>
 {% endblock %}
@@ -42,6 +53,9 @@
 
 {% block page_scripts %}
 <script>
+
+
+
   function collapse_folder() {
     if ($(this).parent().parent().hasClass("collapsed")) {
       $(this).parent().parent().removeClass("collapsed");
@@ -77,8 +91,9 @@
       </div>`);
     }
   }
-  function editItemMenu(obj) {
-    let itemId = obj.id.replace("_text", "");
+  function editItemMenu(itemId) {
+    // let itemId = obj.id.replace("_text", "");
+    let obj = document.getElementById(itemId+"_text");
     let itemPath = getPath(obj.parentNode);
     createNewItemMenu("");
     $('#addEquipmentHeader').text("Змінити властивості снара в " + itemPath);
@@ -92,24 +107,37 @@
     });
   }
 
-  function updatePrices() {
-    $(".item").toArray().forEach(countPrice);
+  function updateAllItemsInCatalogWithControls() {
+    $(".selections .item").toArray().forEach(countPrice);
     function countPrice(line) {
       if (line.className == "item") {
         eqId = line.getAttribute("data-value");
-        line.querySelector("label.disabled").id = eqId + "_text"
-        line.querySelector("label.disabled").onclick = function () {
-          editItemMenu(this);
+        line.id = eqId + "line";
+
+
+        // if (exists("#"+ line.id+" label")) {
+        line.querySelector("label").id = eqId + "_text";
+
+        line.querySelector("input[type='checkbox']").disabled = false;
+
+        line.querySelector("label").onclick = function () {
+          addItemToCart(this.id.replace("_text", ""));
         }
         var price = prices[eqId][0];
         var amount = prices[eqId][1];
-        line.id = eqId + "line";
+        
         sName = line.querySelector('.section-name');
+
+        $('#' + line.id).append(`<span id="del_` + eqId + `" class='edit-col'><a type="button" onclick=editItemMenu('` + eqId + `')><img class="delete-icon" src="{% static 'icons/edit.svg' %}"></a></span>`);
         $('#' + line.id).append(`<span id="del_` + eqId + `" class='edit-col'><a type="button" onclick=deleteEquipment('` + eqId + `')><img class="delete-icon" src="{% static 'icons/delete_item.svg' %}"></a></span>`);
         $('#' + line.id).append("<span class='number-col'>" + amount + " шт.</span>");
         $('#' + line.id).append("<span class='price-col'>" + price + "₴\t</span>");
       }
     }
+  }
+
+  function addItemToCart(itemId) {
+    
   }
 </script>
 <script src="{% static 'libs/modules/jquery/jquery-ui.min.js' %}"></script>

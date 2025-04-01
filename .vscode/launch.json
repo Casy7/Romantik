@@ -14,7 +14,14 @@
 		{
 			"type": "firefox",
 			"request": "attach",
-			"name": "Attach"
+			"name": "Firefox: Attach",
+			"port": 8000,
+			"url": "localhost",
+			"webRoot": "${workspaceFolder}",
+			"pathMappings": [{
+                "url": "http://127.0.0.1:8000/equipment/",
+                "path": "${workspaceFolder}/KaptyorkaApp/static/js/add_equipment.js"
+            }]
 			
 		},
 		{

@@ -38,3 +38,12 @@ function toggleDropdown(dropdownId) {
 		$("#"+ dropdownId +" .dropdown-item").removeClass("dropdown-item-animate");
 	}
 }
+
+function exists(querySelectorRule) {
+	var element = document.querySelector(querySelectorRule);
+	return element != null;
+}
+
+function byId(id) {
+	return document.getElementById(id);
+}
