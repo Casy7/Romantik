@@ -155,7 +155,7 @@ class MyRentAccountings(View, LoginRequiredMixin):
         username = request.user.username
         password = request.user.password
         db_connection = DBConnection(username, password)
-        accountings = db_connection.get_all_user_accountings()
+        accountings = RentAccounting.objects.filter(username=request.user.id)
 
         context['accountings'] = accountings
 
@@ -239,9 +239,8 @@ class RentAccountingsManagement(View, LoginRequiredMixin):
 
         username = request.user.username
         password = request.user.password
-        db_connection = DBConnection(username, password)
 
-        context['accountings'] = db_connection.get_all_accountings()
+        context['accountings'] = RentAccounting.objects.all()
 
         return render(request, "rent_accountings_management.html", context)
 

@@ -7,7 +7,9 @@
 <link rel="stylesheet" href="{% static 'css/my_rent_accountings.css' %}" />
 
 <div>
-    {%csrf_token%}
+    {% block csrf_token %}
+{% csrf_token %}
+{% endblock %}
     <div class="container">
         {% for acc in accountings %}
         <div class="card bg-dark">

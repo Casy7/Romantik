@@ -1,3 +1,4 @@
+from pyexpat import model
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -37,13 +38,22 @@ class OldPriceOfEquipment(models.Model):
         unique_together = (('equipment', 'datetime'),)
 
 
+class Client(models.Model):
+    name = models.CharField(max_length=50)
+    phone = models.CharField(max_length=25)
+    telegram = models.CharField(max_length=35)
+    user = models.ForeignKey(User, models.DO_NOTHING, blank=True, null=True)
+
+
 class RentAccounting(models.Model):
-    username = models.ForeignKey(User, models.DO_NOTHING)
+    client = models.ForeignKey(Client, blank=True, null=True, on_delete = models.DO_NOTHING)
     comment = models.CharField(max_length=400)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
     fact_start_date = models.DateTimeField(blank=True, null=True)
     fact_end_date = models.DateTimeField(blank=True, null=True)
+    price = models.DecimalField(max_digits=15, decimal_places=2, default=0.0)
+    is_free = models.BooleanField(default=False)
 
 
 

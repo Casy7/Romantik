@@ -76,7 +76,6 @@ function treeOnChange(allSelectedItems, addedItems, removedItems) {
 	countTotalPrice();
 }
 
-
 function updateAllItemsInCartWithControls() {
 	$(".tree-multiselect .selected .item").toArray().forEach(updateItemInCartWithControls);
 }	
@@ -106,8 +105,7 @@ function countTotalPrice() {
 	totalPrice = 0;
 	$(".tree-multiselect .selected .item").toArray().forEach(countTotalPrice);
 	// selectedEquipmentToJSON();
-	$("#priceField")[0].innerText = "Итоговая цена: " + totalPrice + "₴";
-	$("#priceCDataField")[0].innerText = "Итоговая амортизация: " + totalPrice + "₴";
+	$("#priceField")[0].innerText = "Амортизація: " + totalPrice + "₴";
 
 	$("#priceHiddenField")[0].value = totalPrice;
 	function countTotalPrice(line) {
@@ -250,29 +248,9 @@ function send_new_equipment(requestType, objType, obj = "") {
 			objType: objType,
 			obj: obj,
 		},
-		//DO NOT EDIT!
-		beforeSend: function (xhr, settings) {
-			function getCookie(name) {
-				var cookieValue = null
-				if (document.cookie && document.cookie != "") {
-					var cookies = document.cookie.split(";")
-					for (var i = 0; i < cookies.length; i++) {
-						var cookie = jQuery.trim(cookies[i])
-						// Does this cookie string begin with the name we want?
-						if (cookie.substring(0, name.length + 1) == name + "=") {
-							cookieValue = decodeURIComponent(cookie.substring(name.length + 1))
-							break
-						}
-					}
-				}
-				return cookieValue
-			}
-			if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
-				// Only send the token to relative URLs i.e. locally.
-				xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
-			}
+		beforeSend: function (xhr) {
+			attachCSRFToken(xhr);
 		},
-		//EDITABLE CODE
 		success: function a(json) {
 			// alert(json);
 			// alert(json.exist);

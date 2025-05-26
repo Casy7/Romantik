@@ -72,7 +72,9 @@
 
 
 <form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
+    {% block csrf_token %}
+{% csrf_token %}
+{% endblock %}
     <div class="row">
         <div class="col" style="float: left;min-width: 70%;width: 600px;">
 

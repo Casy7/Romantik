@@ -7,7 +7,9 @@
 <link href="{% static 'css/editor.css'%}" rel="stylesheet">
 <script src="{% static 'js/news.js' %}"></script>
 
+{% block csrf_token %}
 {% csrf_token %}
+{% endblock %}
 <div class="beauty-container">
     {% if is_superuser %}
     <div class="inline-panel elements-right">

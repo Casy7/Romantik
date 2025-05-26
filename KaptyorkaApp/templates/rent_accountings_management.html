@@ -4,7 +4,9 @@
 <link rel="stylesheet" href="{% static 'css/rent_accountings_management.css' %}" />
 
 <div>
-    {%csrf_token%}
+    {% block csrf_token %}
+{% csrf_token %}
+{% endblock %}
 
     <div class="container">
         {% for acc_info in accountings %}

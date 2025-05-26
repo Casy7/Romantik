@@ -5,24 +5,30 @@
 
 <head>
 
-  <!-- TITLE AND PROPERTIES -->
+  <!-- _______________________________________ TITLE AND ICONS ______________________________________ -->
+
   {% if title != 'none' %}
   <title>Rk: {{ title }}</title>
   {% else %}
   <title>Турклуб "Романтик"</title>
   {% endif %}
 
-  <!-- META CLASSES -->
+
+  <!-- ____________________________________________ META ____________________________________________ -->
+
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- GOOGLE SEARCH CONSOLE ID -->
+
+  <!-- __________________________________ GOOGLE SEARCH CONSOLE ID __________________________________ -->
+
   <meta name="google-site-verification" content="2tQG1LgZd2PIUajDBy29LEbx0bDL5mJs6XXr0PhQIwE" />
 
   {% block page_meta %} {% endblock %}
 
-  <!-- STYLES -->
+
+  <!-- ___________________________________________ STYLES ___________________________________________ -->
 
   <link crossorigin="anonymous" href="{% static 'libs/modules/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
   <script crossorigin="anonymous" src="{% static 'libs/modules/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
@@ -129,7 +135,14 @@
 </head>
 
 <body>
-  <!-- __________________________________________ NAVBAR __________________________________________ -->
+
+
+  <!-- __________________________________________ CSRF TOKEN _________________________________________ -->
+
+  {% block csrf_token %} {% endblock %}
+
+
+  <!-- ____________________________________________ NAVBAR ___________________________________________ -->
 
   <nav class="navbar fixed-top navbar-expand-lg navbar-dark nav-dark {% if user.is_superuser %}admin-nav{% endif %}">
     <div class="nav-item dropdown mobile">
@@ -140,9 +153,9 @@
       <div class="dropdown-menu nav-menu-dropdown" id="dropdownNavMainMenu" aria-labelledby="navbarDropdown">
 
         <a class="dropdown-item {% if page_name == 'home' %}active-page{% endif %}" href="/">Головна</a>
-        <a class="dropdown-item {% if page_name == 'news' %}active-page{% endif %}" href="/news">Новини</a>
-        <a class="dropdown-item {% if page_name == 'about' %}active-page{% endif %}" href="/about">Про нас</a>
-        <a class="dropdown-item {% if page_name == 'hikes' %}active-page{% endif %}" href="/hikes">Походи</a>
+        <a class="dropdown-item {% if page_name == 'news' %}active-page{% endif %}" href="/news/">Новини</a>
+        <a class="dropdown-item {% if page_name == 'about' %}active-page{% endif %}" href="/about/">Про нас</a>
+        <a class="dropdown-item {% if page_name == 'hikes' %}active-page{% endif %}" href="/hikes/">Походи</a>
 
         {% if user.is_superuser %}
         <div class="dropdown-divider"></div>
@@ -161,15 +174,15 @@
     <ul class="navbar-nav me-auto mb-lg-0 central-nav-panel">
 
       <li class="nav-item desktop {% if page_name == 'news' %}active-page{% endif %}">
-        <a class="nav-link" href="/news">Новини</a>
+        <a class="nav-link" href="/news/">Новини</a>
       </li>
 
       <li class="nav-item desktop {% if page_name == 'about' %}active-page{% endif %}">
-        <a class="nav-link" href="/about">Про нас</a>
+        <a class="nav-link" href="/about/">Про нас</a>
       </li>
  
       <li class="nav-item desktop {% if page_name == 'hikes' %}active-page{% endif %}">
-        <a class="nav-link" href="/hikes">Походи</a>
+        <a class="nav-link" href="/hikes/">Походи</a>
       </li>
       
       {% if user.is_superuser %}
@@ -238,15 +251,16 @@
   </nav>
 
 
-
-
-  <!-- __________________________________________ CONTENT __________________________________________ -->
+  <!-- ___________________________________________ CONTENT ___________________________________________ -->
 
   <div id="content" class="container page-content background">
 
     {%block content%} {%endblock%}
 
   </div>
+
+
+  <!-- ____________________________________________ FOOTER ___________________________________________ -->
 
   <footer class="text-center text-white">
     <div class="text-center p-3">
@@ -257,17 +271,11 @@
 </body>
 
 
-
-
-<!-- __________________________________________ SCRIPTS __________________________________________ -->
-
-
+  <!-- ___________________________________________ SCRIPTS ___________________________________________ -->
 
 <script src="{% static 'js/base.js' %}" type="text/javascript"></script>
 
-
 {% block page_pre_scripts %} {% endblock %}
 {% block page_scripts %} {% endblock %}
-
 
 </html>

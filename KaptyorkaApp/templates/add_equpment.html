@@ -1,6 +1,8 @@
 {% extends 'kaptyorka_base.html' %}
 {% load static %}
-{%csrf_token%}
+{% block csrf_token %}
+{% csrf_token %}
+{% endblock %}
 
 {% block page_styles %}
 <link rel="stylesheet" href="{% static 'libs/modules/tabs/tabs.css' %}" type="text/css" />
@@ -31,21 +33,28 @@
         "eq_34237": [0, 0],
         "eq_34238": [0, 0],
         //{% for equipment in eq_list %} 
-        "eq_{{equipment.0}}": ["{{equipment.4}}", "{{equipment.5}}"], 
+        "eq_{{equipment.0}}": ["{{equipment.4}}", "{{equipment.5}}"],
         //{% endfor %}
-        };
+      };
 
-        let cart = [];
-  
+      let cart = [];
+
     </script>
   </div>
 
+  <div class="card bg-dark">
 
-  <div class="row total-info-block">
-    <h4 id = "priceField" class="total-info">Итоговая цена: 0₴</h4>
-    <h4 id = "priceCDataField" class="total-info">Итоговая цена: 0₴</h4>
-    <input id = "priceHiddenField" type="hidden" value="[]">
+    <div class="input-group form-group row total-info-block">
+      <h4 id="priceField" class="total-info">Амортизація: 0₴</h4>
+      <input type="text" id="clientName" placeholder="Ім'я Прізвище" class="form-control dark">
+      <input type="text" id="clientPhone" placeholder="Телефон" class="form-control dark">
 
+
+      <input id="priceHiddenField" type="hidden" value="[]">
+
+      <button class="btn btn-primary" type="button" id="addAccounting">Записати</button>
+
+    </div>
   </div>
 </div>
 {% endblock %}
@@ -93,7 +102,7 @@
   }
   function editItemMenu(itemId) {
     // let itemId = obj.id.replace("_text", "");
-    let obj = document.getElementById(itemId+"_text");
+    let obj = document.getElementById(itemId + "_text");
     let itemPath = getPath(obj.parentNode);
     createNewItemMenu("");
     $('#addEquipmentHeader').text("Змінити властивості снара в " + itemPath);
@@ -125,7 +134,7 @@
         }
         var price = prices[eqId][0];
         var amount = prices[eqId][1];
-        
+
         sName = line.querySelector('.section-name');
 
         $('#' + line.id).append(`<span id="del_` + eqId + `" class='edit-col'><a type="button" onclick=editItemMenu('` + eqId + `')><img class="delete-icon" src="{% static 'icons/edit.svg' %}"></a></span>`);
@@ -137,7 +146,7 @@
   }
 
   function addItemToCart(itemId) {
-    
+
   }
 </script>
 <script src="{% static 'libs/modules/jquery/jquery-ui.min.js' %}"></script>
