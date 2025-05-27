@@ -297,7 +297,9 @@ function sendNewAccounting() {
 			attachCSRFToken(xhr);
 		},
 		success: function a(json) {
-
+			if (json.result === "success") {
+				window.location.href = '/equipment/rent_accountings_management/';				
+			}
 		}
 	})
 }

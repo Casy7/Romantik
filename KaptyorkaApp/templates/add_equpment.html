@@ -68,18 +68,6 @@
       </div>
       <input type="text" id="rentComment" placeholder="Коментар до запису" class="form-control dark">
 
-      <select id="example-dropUp" multiple="multiple">
-        <option value="1">Option 1</option>
-        <option value="2">Option 2</option>
-        <option value="3">Option 3</option>
-        <option data-role="divider"></option>
-        <option value="4">Option 4</option>
-        <option value="5">Option 5</option>
-        <option value="6">Option 6</option>
-      </select>
-
-
-
       <button class="btn btn-primary" type="button" id="addAccountingButton">Записати</button>
 
     </div>
@@ -93,14 +81,14 @@
 <script type="text/javascript">
 
 
-  $(document).ready(function () {
-    $('#example-dropUp').multiselect({
-      enableFiltering: true,
-      includeSelectAllOption: true,
-      maxHeight: 400,
-      dropUp: true
-    });
-  });
+  // $(document).ready(function () {
+  //   $('#example-dropUp').multiselect({
+  //     enableFiltering: true,
+  //     includeSelectAllOption: true,
+  //     maxHeight: 400,
+  //     dropUp: true
+  //   });
+  // });
 
 
   const phoneMask = IMask(
@@ -110,7 +98,11 @@
   );
 
 
-  $("input[type='number']").inputSpinner();
+  Date.prototype.toDateInputValue = (function () {
+    var local = new Date(this);
+    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+    return local.toJSON().slice(0, 10);
+  });
 
 
   byId('startDate').value = addDays(new Date(), 0).toDateInputValue();
@@ -121,11 +113,7 @@
     byId('endDate').min = byId('startDate').value;
   }
 
-  Date.prototype.toDateInputValue = (function () {
-    var local = new Date(this);
-    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
-    return local.toJSON().slice(0, 10);
-  });
+
 
   function addDays(date, days) {
     var result = new Date(date);
@@ -225,13 +213,14 @@
 <script src="{% static 'libs/modules/multiselect/jquery.tree-multiselect.js' %}"></script>
 <script src="{% static 'js/add_equipment.js' %}"></script>
 <script src="{% static 'js/equipment_accounting_tree.js' %}"></script>
+<script src="{% static 'libs/modules/spinner/bootstrap-input-spinner.js' %}" type="text/javascript"></script>
 
 <script>
+  $("input[type='number']").inputSpinner();
   $("select#categorySelect").treeMultiselect({ maxSelections: 3, enableSelectAll: true, unselectAllText: true });
 </script>
 
 <script src="{% static 'libs/modules/tabs/tabs.js' %}" type="text/javascript"></script>
-<script src="{% static 'libs/modules/spinner/bootstrap-input-spinner.js' %}" type="text/javascript"></script>
 <script src="{% static 'libs/modules/bootstrap-select/js/bootstrap-select.min.js' %}" type="text/javascript"></script>
 
 

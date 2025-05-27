@@ -29,7 +29,7 @@ urlpatterns = [
     path("add_equipment", AddEquipment.as_view(), name="add_equipment"),
     path("new_rent_accounting", CreateNewRentAccounting.as_view(), name="new_rent_accounting"),
     path("my_rent_accountings", MyRentAccountings.as_view(), name="my_rent_accountings"),
-    path("rent_accountings_management", RentAccountingsManagement.as_view(), name="rent_accountings_management"),
+    path("rent_accountings_management/", RentAccountingsManagement.as_view(), name="rent_accountings_management"),
 
 
 	path('add_accounting/', AjaxAddNewAccounting.as_view(), name='add_accounting'),
