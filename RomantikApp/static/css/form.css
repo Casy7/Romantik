@@ -91,7 +91,6 @@ div.tree-multiselect > div.selected > div.item {
     } */
 
 div.tree-multiselect>div.selected>div.item {
-    /*! background: #EAEAEA; */
     border-radius: 2px;
     padding: 2px 5px;
     overflow: auto;
@@ -168,4 +167,15 @@ p.right {
 .show_pwd_button i.fa-eye ::before {
     -webkit-filter: invert(100%);
     filter: invert(100%);
+}
+
+.form-block {
+    padding: 17px;
+
+}
+
+.form-block input {
+    padding-bottom: 9px;
+    max-width: 450px;
+    margin-bottom: 15px;
 }

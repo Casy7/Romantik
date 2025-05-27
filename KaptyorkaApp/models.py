@@ -30,7 +30,7 @@ class Equipment(models.Model):
 
 
 class OldPriceOfEquipment(models.Model):
-    equipment = models.OneToOneField(Equipment, models.DO_NOTHING, primary_key=True)
+    equipment = models.ForeignKey(Equipment, models.CASCADE)
     datetime = models.DateTimeField()
     price = models.DecimalField(max_digits=63, decimal_places=2, blank=True, null=True)
 
@@ -58,17 +58,17 @@ class RentAccounting(models.Model):
 
 
 class RentedCountableEquipment(models.Model):
-    accounting = models.OneToOneField(RentAccounting, models.DO_NOTHING, primary_key=True)
-    equipment = models.ForeignKey(Equipment, models.DO_NOTHING)
+    accounting = models.ForeignKey(RentAccounting, models.CASCADE)
+    equipment = models.ForeignKey(Equipment, blank=True, null=True, on_delete = models.DO_NOTHING)
     amount = models.IntegerField()
-    returned_amount = models.IntegerField()
+    returned_amount = models.IntegerField(default=0)
 
     class Meta:
         unique_together = (('accounting', 'equipment'),)
 
 
 class RentedEquipment(models.Model):
-    accounting = models.OneToOneField(RentAccounting, models.DO_NOTHING, primary_key=True)
+    accounting = models.ForeignKey(RentAccounting, models.DO_NOTHING, primary_key=True)
     deterioration = models.IntegerField()
     equipment = models.ForeignKey(Equipment, models.DO_NOTHING)
 
@@ -77,7 +77,7 @@ class RentedEquipment(models.Model):
 
 
 class UniqueEquipment(models.Model):
-    id = models.OneToOneField(Equipment, models.DO_NOTHING, primary_key=True)
+    id = models.ForeignKey(Equipment, models.DO_NOTHING, primary_key=True)
     deterioration = models.IntegerField()
 
 

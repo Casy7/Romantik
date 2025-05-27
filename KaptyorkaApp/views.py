@@ -1,4 +1,6 @@
+from http import client
 import json
+from os import name
 from turtle import title
 from django import db
 from django.shortcuts import render
@@ -41,8 +43,8 @@ def get_all_contacts():
 
 
 def beauty_date_interval(date1: datetime, date2: datetime, show_year=False, show_if_this_year=False):
-    months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
-              'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
+    months = ['січня', 'лютого', 'березня', 'квітня', 'травня', 'червня',
+              'липня', 'серпня', 'вересня', 'жовтня', 'листопада', 'грудня']
     result = ''
     result += str(date1.day) + ' '
 
@@ -104,7 +106,7 @@ class AddEquipment(View, LoginRequiredMixin):
             context = base_context(request, title='Спорядження', header='Спорядження')
             eq_list = get_all_free_equipment()
             context['eq_list'] = eq_list
-            # context['contacts_list'] = contacts_list
+
             return render(request, "add_equpment.html", context)
 
         else:
@@ -146,6 +148,53 @@ class CreateNewRentAccounting(View, LoginRequiredMixin):
                 db_connection.add_countable_equipment_to_accounting(eqId, equipment_json[eqId])
 
         return HttpResponseRedirect("/")
+    
+
+class AjaxAddNewAccounting(View, LoginRequiredMixin):
+    def post(self, request):
+        req = request
+        form = request.POST
+
+        doesClientExist = Client.objects.filter(name=form['clientName'])
+
+        rentClient = None
+
+        if doesClientExist:
+            rentClient = doesClientExist[0]
+        else:
+            rentClient = Client(name=form['clientName'])
+            if form['clientPhone'] != '':
+                rentClient.phone = form['clientPhone']
+            rentClient.save()
+        
+        rent_accounting = RentAccounting(
+            client=rentClient,
+            comment=form['comment'],
+            start_date=form['rentStartDate'],
+            end_date=form['rentEndDate'],
+            is_free= True if form['isFree'] == 'true' else False
+        )
+
+        rent_accounting.save()
+
+        rented_equipment_dict = json.loads(form["equipment"])
+
+        for equipment_id in rented_equipment_dict.keys():
+            rentedCountableEquipment = RentedCountableEquipment(
+                accounting=rent_accounting,
+                equipment=Equipment.objects.get(id=equipment_id),
+                amount=rented_equipment_dict[equipment_id],
+            )
+            rentedCountableEquipment.save()
+
+
+        result = {}
+        result["result"] = "success"
+
+        return HttpResponse(
+            json.dumps(result),
+            content_type="application/json"
+        )
 
 
 class MyRentAccountings(View, LoginRequiredMixin):
@@ -235,12 +284,37 @@ class RentAccountingsManagement(View, LoginRequiredMixin):
         if request.user.is_anonymous:
             return HttpResponseRedirect("/")
 
-        context = base_context(request, title='All rent accountings', header='Записи аренды')
+        context = base_context(request, title='Management', header='Записи аренды')
 
-        username = request.user.username
-        password = request.user.password
+        rent_accountings = RentAccounting.objects.all().filter(fact_end_date__isnull=True).order_by('-id')
 
-        context['accountings'] = RentAccounting.objects.all()
+        context['rent_accountings'] = []
+
+        for accounting in rent_accountings:
+            fd_accounting_data = {}
+
+            fd_accounting_data['id'] = accounting.id
+            fd_accounting_data['client_name'] = accounting.client.name
+            fd_accounting_data['comment'] = accounting.comment
+            fd_accounting_data['start_date'] = accounting.start_date
+            fd_accounting_data['date_interval'] = beauty_date_interval(accounting.start_date, accounting.end_date, True, True)
+            fd_accounting_data['is_free'] = accounting.is_free 
+
+            rented_equipment = RentedCountableEquipment.objects.filter(accounting=accounting)
+
+            fd_accounting_data['equipment_list'] = []
+
+            for eq in rented_equipment:
+                fd_accounting_data['equipment_list'].append(
+                    {
+                        'name': eq.equipment.name,
+                        'price': eq.equipment.price,
+                        'amount': eq.amount
+                    }
+                )
+
+
+            context['rent_accountings'].append(fd_accounting_data)
 
         return render(request, "rent_accountings_management.html", context)
 

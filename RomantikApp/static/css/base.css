@@ -32,7 +32,7 @@ body {
     background-color: #1c1f22;
 }
 
-h1, h2, h3, h4, h5, p, small, a, td, li, pre, span, th, tr {
+h1, h2, h3, h4, h5, p, small, a, td, li, pre, span, th, tr, .col {
     color: white;
 }
 
@@ -324,6 +324,10 @@ blockquote {
 
 .col-fixed-size {
     flex-grow: 0;
+}
+
+.col-end {
+    text-align: end;
 }
 
 .beauty-container {

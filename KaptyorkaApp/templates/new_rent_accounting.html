@@ -55,9 +55,7 @@
                         <small id="emailHelp" class="form-text text-muted">День взятия снара и планируемая дата его
                             возврата.</small>
                         <script>
-                            function byId(id) {
-                                return document.getElementById(id);
-                            }
+
                             function setMinEndDate() {
                                 byId('end_day').min = byId('start_day').value;
                             }
@@ -135,6 +133,6 @@
 <script src="{% static 'libs/modules/jquery/jquery-ui.min.js' %}" type="text/javascript"></script>
 <script src="{% static 'libs/modules/multiselect/jquery.tree-multiselect.js' %}" type="text/javascript"></script>
 <script src="{% static 'js/new_user_accounting.js' %}" type="text/javascript"></script>
-<script src="{% static 'js/equipment-accounting-tree.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/equipment_accounting_tree.js' %}" type="text/javascript"></script>
 
 {% endblock %}

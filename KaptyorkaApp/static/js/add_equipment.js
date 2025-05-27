@@ -189,7 +189,7 @@ function addNewEquipment() {
 	newEquipment.amount = document.getElementById("newItemNumber").value;
 	newEquipment.price = document.getElementById("newItemPrice").value;
 
-	send_new_equipment("add", "equipment", newEquipment);
+	sendNewEquipment("add", "equipment", newEquipment);
 	newItemsNumber++;
 	reloadTree();
 }
@@ -209,7 +209,7 @@ function editEquipment(itemId, itemPath) {
 	updatedEquipment.amount = document.getElementById("newItemNumber").value;
 	updatedEquipment.price = document.getElementById("newItemPrice").value;
 
-	send_new_equipment("update", "equipment", updatedEquipment);
+	sendNewEquipment("update", "equipment", updatedEquipment);
 	reloadTree();
 }
 
@@ -235,11 +235,11 @@ function deleteEquipment(id) {
 	$("select#demo2 option[value='" + id + "']")[0].remove();
 	let newEquipment = new Equipment("", "");
 	newEquipment.id = id.replaceAll("eq_", "");
-	send_new_equipment("remove", "equipment", newEquipment);
+	sendNewEquipment("remove", "equipment", newEquipment);
 	reloadTree();
 }
 
-function send_new_equipment(requestType, objType, obj = "") {
+function sendNewEquipment(requestType, objType, obj = "") {
 	$.ajax({
 		url: "/equipment/add_equipment/",
 		type: "POST",
@@ -252,22 +252,19 @@ function send_new_equipment(requestType, objType, obj = "") {
 			attachCSRFToken(xhr);
 		},
 		success: function a(json) {
-			// alert(json);
-			// alert(json.exist);
 			if (json.result === "success") {
 				if (requestType == "add") {
-					new_id = "eq_" + json.new_id
-					$("select#demo2").append("<option readonly value='" + new_id + "' data-section='" + obj.path + "' selected='selected' data-description='" + obj.desc + "'>" + obj.name + "</option>")
-					prices[new_id] = [obj.price, obj.amount]
+					new_id = "eq_" + json.new_id;
+					$("select#demo2").append("<option readonly value='" + new_id + "' data-section='" + obj.path + "' selected='selected' data-description='" + obj.desc + "'>" + obj.name + "</option>");
+					prices[new_id] = [obj.price, obj.amount];
 				} else if (requestType == "update") {
-					itemOption = $("select#demo2")[0].querySelector("option[value='eq_" + obj.id + "']")
-					itemOption.setAttribute("data-description", obj.desc)
-					itemOption.setAttribute("data-section", obj.path)
-					itemOption.innerText = obj.name
-					prices["eq_" + obj.id] = [obj.price, obj.amount]
+					itemOption = $("select#demo2")[0].querySelector("option[value='eq_" + obj.id + "']");
+					itemOption.setAttribute("data-description", obj.desc);
+					itemOption.setAttribute("data-section", obj.path);
+					itemOption.innerText = obj.name;
+					prices["eq_" + obj.id] = [obj.price, obj.amount];
 				}
-				// alert("Ну, чё. Намана");
-				reloadTree()
+				reloadTree();
 			} else {
 				alert("Изменения не сохранены")
 				alert("Ошибка сегментации диска. Компьютер будет перезагружен.")
@@ -275,3 +272,37 @@ function send_new_equipment(requestType, objType, obj = "") {
 		},
 	})
 }
+
+function sendNewAccounting() {
+	let clientName = document.getElementById("clientName").value;
+	let clientPhone = document.getElementById("clientPhone").value;
+	let rentStartDate = document.getElementById("startDate").value;
+	let rentEndDate = document.getElementById("endDate").value;
+	let isFree = document.getElementById("isFree").checked;
+	let rentComment = document.getElementById("rentComment").value;
+
+	$.ajax({
+		url: "/equipment/add_accounting/",
+		type: "POST",
+		data: {
+			equipment: JSON.stringify(selectedEquipmentToJSON()),
+			clientName: clientName,
+			clientPhone: clientPhone,
+			rentStartDate: rentStartDate,
+			rentEndDate: rentEndDate,
+			isFree: isFree,
+			comment: rentComment
+		},
+		beforeSend: function (xhr) {
+			attachCSRFToken(xhr);
+		},
+		success: function a(json) {
+
+		}
+	})
+}
+
+document.getElementById("addAccountingButton").addEventListener("click", () => {
+	sendNewAccounting();
+});
+

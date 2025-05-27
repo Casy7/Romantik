@@ -1,8 +1,6 @@
-$("select#demo2").treeMultiselect({ searchable: true, searchParams: ['section', 'text'], onChange: treeOnChange });
 
-var totalPrice = 0;
 
-$(".item").toArray().forEach(countPrice);
+
 function countPrice(line) {
     if (line.className == "item") {
         eqId = line.getAttribute("data-value");
@@ -14,13 +12,6 @@ function countPrice(line) {
         $('#' + line.id).append("<span class='price-col'>" + price + "₴\t</span>");
     }
 }
-
-function treeOnChange(allSelectedItems, addedItems, removedItems) {
-
-    $(".tree-multiselect .selected").children().toArray().forEach(addPrice);
-    updatePrice();
-}
-
 
 function getTableConfirmationData(){
     $('#equipmentListConfilrmationLine').empty();
@@ -54,7 +45,7 @@ function addPrice(line) {
 
 function updatePrice() {
     totalPrice = 0;
-    $(".tree-multiselect .selected").children().toArray().forEach(countTotalPrice);
+    document.querySelectorAll(".tree-multiselect .selected .item").forEach(countTotalPrice);
     selectedEquipmentToJSON();
     getTableConfirmationData();
     $("#priceField")[0].innerText = "Итоговая цена: " + totalPrice + "₴";
@@ -73,13 +64,13 @@ function updatePrice() {
 
 function selectedEquipmentToJSON() {
     var equipmentDict = {};
-    $(".tree-multiselect .selected").children().toArray().forEach(addItemToJSON);
+    document.querySelectorAll(".tree-multiselect .selected .item").forEach(addItemToJSON);
     function addItemToJSON(line) {
         eqId = line.getAttribute("data-value");
         var price = prices[eqId][0];
         backendEqId = eqId.substr(3, eqId.length - 1);
         equipmentDict[backendEqId] = Number($("#amount_" + eqId)[0].value);
     }
-    $("#equipmentJSONHiddenField")[0].value = JSON.stringify(equipmentDict);
+    // $("#equipmentJSONHiddenField")[0].value = JSON.stringify(equipmentDict);
     return equipmentDict;
 }

@@ -30,6 +30,9 @@ urlpatterns = [
     path("new_rent_accounting", CreateNewRentAccounting.as_view(), name="new_rent_accounting"),
     path("my_rent_accountings", MyRentAccountings.as_view(), name="my_rent_accountings"),
     path("rent_accountings_management", RentAccountingsManagement.as_view(), name="rent_accountings_management"),
+
+
+	path('add_accounting/', AjaxAddNewAccounting.as_view(), name='add_accounting'),
 	re_path('add_equipment/', AddNewEquipment.as_view(), name='add_equipment'),
     re_path('set_rent_time/', SetRentTime.as_view(), name='set_rent_time'),
 

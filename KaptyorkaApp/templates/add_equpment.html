@@ -1,7 +1,9 @@
 {% extends 'kaptyorka_base.html' %}
+
 {% load static %}
+
 {% block csrf_token %}
-{% csrf_token %}
+  {% csrf_token %}
 {% endblock %}
 
 {% block page_styles %}
@@ -44,15 +46,41 @@
 
   <div class="card bg-dark">
 
-    <div class="input-group form-group row total-info-block">
+    <div class="form-block">
       <h4 id="priceField" class="total-info">Амортизація: 0₴</h4>
       <input type="text" id="clientName" placeholder="Ім'я Прізвище" class="form-control dark">
-      <input type="text" id="clientPhone" placeholder="Телефон" class="form-control dark">
-
-
+      <input id="clientPhone" placeholder="Телефон" class="form-control dark">
       <input id="priceHiddenField" type="hidden" value="[]">
 
-      <button class="btn btn-primary" type="button" id="addAccounting">Записати</button>
+      <div class="row datepicker-row">
+        <small id="emailHelp" class="form-text text-muted">Дата оренди та орієнтовна дата повернення</small>
+        <div class="col">
+          <input type="date" id="startDate" class="form-control dark-control dark datepicker" onchange="setMinEndDate()">
+        </div>
+        <div class="col">
+          <input type="date" id="endDate" class="form-control dark-control dark datepicker" onchange="setMinEndDate()">
+        </div>
+      </div>
+
+      <div>
+        <input type="checkbox" id="isFree" name="is-free" />
+        <label for="isFree">На заходи клубу (без амортизації)</label>
+      </div>
+      <input type="text" id="rentComment" placeholder="Коментар до запису" class="form-control dark">
+
+      <select id="example-dropUp" multiple="multiple">
+        <option value="1">Option 1</option>
+        <option value="2">Option 2</option>
+        <option value="3">Option 3</option>
+        <option data-role="divider"></option>
+        <option value="4">Option 4</option>
+        <option value="5">Option 5</option>
+        <option value="6">Option 6</option>
+      </select>
+
+
+
+      <button class="btn btn-primary" type="button" id="addAccountingButton">Записати</button>
 
     </div>
   </div>
@@ -61,7 +89,49 @@
 
 
 {% block page_scripts %}
-<script>
+<script src="https://unpkg.com/imask"></script>
+<script type="text/javascript">
+
+
+  $(document).ready(function () {
+    $('#example-dropUp').multiselect({
+      enableFiltering: true,
+      includeSelectAllOption: true,
+      maxHeight: 400,
+      dropUp: true
+    });
+  });
+
+
+  const phoneMask = IMask(
+    document.getElementById('clientPhone'), {
+    mask: '+{380} (00) 000-00-00'
+  }
+  );
+
+
+  $("input[type='number']").inputSpinner();
+
+
+  byId('startDate').value = addDays(new Date(), 0).toDateInputValue();
+  byId('endDate').value = addDays(Date(), 10).toDateInputValue();
+
+
+  function setMinEndDate() {
+    byId('endDate').min = byId('startDate').value;
+  }
+
+  Date.prototype.toDateInputValue = (function () {
+    var local = new Date(this);
+    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+    return local.toJSON().slice(0, 10);
+  });
+
+  function addDays(date, days) {
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+  }
 
 
 
@@ -100,6 +170,7 @@
       </div>`);
     }
   }
+
   function editItemMenu(itemId) {
     // let itemId = obj.id.replace("_text", "");
     let obj = document.getElementById(itemId + "_text");
@@ -149,19 +220,19 @@
 
   }
 </script>
+
 <script src="{% static 'libs/modules/jquery/jquery-ui.min.js' %}"></script>
 <script src="{% static 'libs/modules/multiselect/jquery.tree-multiselect.js' %}"></script>
 <script src="{% static 'js/add_equipment.js' %}"></script>
+<script src="{% static 'js/equipment_accounting_tree.js' %}"></script>
+
 <script>
   $("select#categorySelect").treeMultiselect({ maxSelections: 3, enableSelectAll: true, unselectAllText: true });
 </script>
 
-
 <script src="{% static 'libs/modules/tabs/tabs.js' %}" type="text/javascript"></script>
 <script src="{% static 'libs/modules/spinner/bootstrap-input-spinner.js' %}" type="text/javascript"></script>
 <script src="{% static 'libs/modules/bootstrap-select/js/bootstrap-select.min.js' %}" type="text/javascript"></script>
-<script>
-  $("input[type='number']").inputSpinner()
-</script>
+
 
 {% endblock %}
