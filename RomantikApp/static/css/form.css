@@ -104,7 +104,7 @@ p.right {
 .price-col, .edit-col, .number-col {
     float: inline-end;
     padding-right: 15px;
-    min-width: 60px;
+    min-width: 30px;
     text-align: right;
 }
 

@@ -83,8 +83,8 @@ function updateAllItemsInCartWithControls() {
 function updateItemInCartWithControls(line) {
 	eqId = line.getAttribute("data-value");
 	
-	// check if this item is it the cart
-	if (line.childElementCount < 3) {
+	// check if controls have already have been added e.g. this item is already in the cart
+	if (!line.querySelectorAll(".cart-item-controls").length) {
 		var price = prices[eqId][0];
 		totalPrice += Number(price);	
 	
@@ -95,9 +95,15 @@ function updateItemInCartWithControls(line) {
 
 		sName = line.querySelector(".section-name");
 		line.lastChild.remove();
-		$("#" + line.id).append("<span class='price-col'>" + price + "₴</span>");
-		$("#" + line.id).append(`<p class="amount-limit">/` + prices[eqId][1] + `шт.</p>`);
-		$("#" + line.id).append(`<input id="amount_` + eqId + `" class="amount-selector dark" type="number" min="1" max="` + prices[eqId][1] + `" step="1" value="1" onchange="countTotalPrice()">`);
+		$("#" + line.id).append(`
+			<div class="cart-item-controls">
+				<span class='price-col'>` + price + `₴</span>
+				<p class="amount-limit">/` + prices[eqId][1] + `шт.</p>
+				<input id="amount_` + eqId + `" class="amount-selector dark" type="number" min="1" max="` + prices[eqId][1] + `" step="1" value="1" onchange="countTotalPrice()">
+			</div>
+			`
+
+		);
 	}
 }
 

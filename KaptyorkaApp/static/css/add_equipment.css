@@ -1,4 +1,4 @@
-.addCat {
+.item-folder {
 	background-color: #4f5555;
 }
 
@@ -10,23 +10,34 @@
 	text-align: center;
 }
 
-.item.addCat {
+.item-folder {
 	display: inline-flex;
 	margin-bottom: 0px;
 	background-color: transparent;
 }
 
-.item.addCat a {
+.item-folder a {
 	text-decoration: underline;
 	color: #aeaeae;
 }
 
-label.disabled {
-	color: white !important;
+.selections .item label {
+	display: block ruby;
+	width: 100%;
 }
 
-input.option {
-	/* display: none !important; */
+div.tree-multiselect>div.selections div.item label {
+	cursor: pointer;
+	display: flex;
+	overflow: hidden;
+	width: 1000px;
+	flex-grow: 677;
+	flex-wrap: nowrap;
+	white-space: nowrap;
+}
+
+label.disabled {
+	color: white !important;
 }
 
 .btn.btn-outline-warning {
@@ -72,7 +83,7 @@ input.option {
 	flex-grow: 1;
 }
 
-.flex-title .item.addCat {
+.flex-title .item-folder {
 	margin-right: 10px;
 	margin-bottom: 0px;
 }
@@ -101,26 +112,55 @@ input.option {
 	flex-shrink: 3;
 }
 
+.selected .item {
+	display: inline-flex;
+	width: 100%;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.selections .item {
+	display: inline-flex;
+	width: 100%;
+	align-content: center;
+	justify-content: left;
+}
+
+.catalog-item-controls {
+	width: 100%;
+	display: flex;
+	flex-wrap: nowrap;
+}
+
+.catalog-item-controls .number-col {
+	white-space: nowrap;
+}
+
 @media screen and (max-width: 481px) {
 	div.tree-multiselect {
 		display: flex;
 		flex-direction: column;
 	}
+
 	div.tree-multiselect div.selections {
 		width: 100%;
 	}
+
 	div.tree-multiselect div.selected {
 		width: 100%;
 	}
+
 	.item {
 		display: flex;
 		overflow: hidden;
 		flex-wrap: nowrap;
 	}
+
 	.item label {
 		overflow: hidden;
 		white-space: nowrap;
 	}
+
 	.price-col {
 		display: none;
 	}

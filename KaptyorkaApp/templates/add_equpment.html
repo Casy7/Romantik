@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block csrf_token %}
-  {% csrf_token %}
+{% csrf_token %}
 {% endblock %}
 
 {% block page_styles %}
@@ -17,7 +17,7 @@
   <div id="menu2">
     <select id="demo2" multiple="multiple">
       {% for equipment in eq_list %}
-      <option value="eq_{{equipment.0}}" data-section="{{equipment.2}}" data-description="{{equipment.3}}">{{equipment.1}}</option>
+      <option value="eq_{{equipment.0}}" class="item-text" data-section="{{equipment.2}}" data-description="{{equipment.3}}">{{equipment.1}}</option>
       {% endfor %}
       <option readonly value="eq_34233" data-section="Загальне" data-description="Folder">Folder</option>
       <option readonly value="eq_34234" data-section="Гірське" data-description="Folder">Folder</option>
@@ -143,7 +143,7 @@
       title.on("click", collapse_folder);
       title_container.append(title);
       title_container.append(`
-      <div class='item addCat'>
+      <div class='item-folder'>
         <a type='button' onclick="deleteFolderMenu('` + obj_path + `')">
           <img class="folder-icon del-folder-icon" src="{% static 'icons/delete_item.svg' %}">
         </a>
@@ -196,10 +196,14 @@
 
         sName = line.querySelector('.section-name');
 
-        $('#' + line.id).append(`<span id="del_` + eqId + `" class='edit-col'><a type="button" onclick=editItemMenu('` + eqId + `')><img class="delete-icon" src="{% static 'icons/edit.svg' %}"></a></span>`);
-        $('#' + line.id).append(`<span id="del_` + eqId + `" class='edit-col'><a type="button" onclick=deleteEquipment('` + eqId + `')><img class="delete-icon" src="{% static 'icons/delete_item.svg' %}"></a></span>`);
-        $('#' + line.id).append("<span class='number-col'>" + amount + " шт.</span>");
-        $('#' + line.id).append("<span class='price-col'>" + price + "₴\t</span>");
+        $('#' + line.id).append(`
+        <div class="catalog-item-controls">
+          <span id="del_` + eqId + `" class='edit-col'><a type="button" onclick=editItemMenu('` + eqId + `')><img class="delete-icon" src="{% static 'icons/edit.svg' %}"></a></span>
+          <span id="del_` + eqId + `" class='edit-col'><a type="button" onclick=deleteEquipment('` + eqId + `')><img class="delete-icon" src="{% static 'icons/delete_item.svg' %}"></a></span>
+          <span class='number-col'>` + amount + ` шт.</span>
+          <span class='price-col'>` + price + `₴\t</span>
+        </div>`
+        );
       }
     }
   }
